@@ -81,7 +81,7 @@ read.tps = function(data) {
 }
 
 #need to figure out how to read the file inside the project
-landmarks <- read.tps("/Users/gayoungp/CTtps/analysis/data/raw_data/A_BG_2.tps")
+landmarks <- read.tps(here("analysis/data/raw_data/A_BG_2.tps"))
 
 
 
@@ -119,7 +119,7 @@ BL <- bl_dist(landmarks)
 #Compare multiple artifacts 
 #Open multiple tps files 
 #This will need to be changed to read files inside the project
-datadir <- "/Users/gayoungp/CTtps/analysis/data/raw_data/"
+datadir <- here("/analysis/data/raw_data/")
 files <- dir(datadir, pattern = "*.tps")
 
 #gather ML and BL of all artifacts
