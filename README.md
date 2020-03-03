@@ -25,10 +25,15 @@ Please cite this compendium as:
 ### How to download or install
 
 You can download the compendium as a zip from from this URL:
-</archive/master.zip>
+<https://github.com/parkgayoung/CTtps/archive/master.zip>
 
 Or you can install this compendium as an R package, CTtps, from GitHub
 with:
+
+``` r
+# install.packages("devtools")
+devtools::install_github("parkgayoung/CTtps")
+```
 
 ### Licenses
 
