@@ -71,7 +71,7 @@ read.tps = function(data) {
   
   for (i in 1:l) {
     landmarks[i] = list(data.frame(
-      read.table(file = data, header=F, skip = LM[i],
+      read.table(file = data, header = F, skip = LM[i],
                  nrows = nrows[i], col.names = c("X", "Y")),
       IMAGE = as.character(images[i]),
       ID = ID[i],
@@ -117,7 +117,6 @@ BL <- bl_dist(landmarks)
 
 
 #Compare multiple artifacts 
-
 #Open multiple tps files 
 #This will need to be changed to read files inside the project
 datadir <- "/Users/gayoungp/CTtps/analysis/data/raw_data/"
