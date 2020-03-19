@@ -31,7 +31,9 @@ knitr::opts_chunk$set(
   fig.path = "../figures/"
 )
 
-library(CTtps) # Or use devtools::load_all('.', quiet = T) if your code is in script files, rather than as functions in the `/R` diretory
+#library(CTtps) # Or use devtools::load_all('.', quiet = T) if your code is in script files, rather than as functions in the `/R` diretory
+
+library(here)
 ```
 
 # Introduction
@@ -140,6 +142,16 @@ df <- data.frame(ML, BL, files)
 plot(df$ML, df$BL)
 
 
+# Correlations with significance levels
+library(Hmisc)
+rcorr(ML,BL, type = "pearson") # type can be pearson or spearman
+
+# Coefficient of variation (CV)
+library(goeveg)
+CV_ML <- cv(ML, na.rm = FALSE) #na.rm: logical. Should missing values be removed?
+CV_BL <- cv(BL, na.rm = FALSE)
+
+plot(CV_ML, CV_BL)
 ```
 
 
