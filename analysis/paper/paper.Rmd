@@ -96,7 +96,7 @@ landmarks <- read.tps(here("analysis/data/raw_data/A_BG_2.tps"))
 #TW: tang width: dimension between each wing, perpendicular to the width  axis  3 - 10
 #SW: stem width: width of the basal end of the point, 5mm above the end  5 - 8
 
-#distance between landmarks
+#distance between landmarks(euclidean)
 
 landmark_dist = function(landmarks, pt1, pt2) {
   sqrt(
@@ -104,6 +104,13 @@ landmark_dist = function(landmarks, pt1, pt2) {
       (landmarks$Y[pt1] - landmarks$Y[pt2])^2
   ) * as.numeric(levels(landmarks$SCALE))
 }
+
+# distance between two y axis 
+vertical_dist = function(landmarks, pt1, pt2) {
+  d = abs(landmarks$Y[pt1] - landmarks$Y[pt2])
+  d * as.numeric(levels(landmarks$SCALE))
+}
+
 
 #Maximum length of sp: ML, distance between landmark 1-7
 ML <- landmark_dist(landmarks, 1, 7)
@@ -117,11 +124,7 @@ bl_dist = function(landmarks) {
 
 BL <- bl_dist(landmarks)
 
-# distance between two y axis 
-vertical_dist = function(landmarks, pt1, pt2) {
-  d = abs(landmarks$Y[pt1] - landmarks$Y[pt2])
-  d * as.numeric(levels(landmarks$SCALE))
-}
+
 
 # Tang length of sp: TL, distance between landmark 10-7 or 3-7, (y axis)
 tl_dist <- function(landmarks) {
@@ -132,7 +135,23 @@ tl_dist <- function(landmarks) {
 
 TL <- tl_dist
 
-# Maximum length of stem: 
+# Maximum length of stem: SL, distance between landmark 9-7 or 4-7 (y axis)
+sl_dist <- function(landmarks) {
+  s1 = vertical_dist(landmarks, 9, 7)
+  s2 = vertical_dist(landmarks, 4, 7)
+  max(s1, s2)
+}
+
+SL <- sl_dist
+
+# Mid width: MW, distance between landmark 2-11
+MW <- landmark_dist(landmarks, 2, 11)
+
+# Maximum width of Tang: TW, distance between landmark 3-10
+TW <- landmark_dist(landmarks, 3, 10)
+
+# Stem width: SW, distance between landmark 5-8
+SW <- landmark_dist(landmarks, 5, 8)
 
 #Compare multiple artifacts 
 #Open multiple tps files 
@@ -143,24 +162,32 @@ files <- dir(datadir, pattern = "*.tps")
 #gather ML and BL of all artifacts
 ML = c()
 BL = c()
+TL = c()
+SL = c()
+MW = c()
+TW = c()
+SW = c()
 for (i in 1:length(files)) {
   filename <- paste(datadir, files[i], sep = "")
   print(filename)
   landmarks <- read.tps(filename)
   ML <- c(ML, landmark_dist(landmarks, 1, 7))
   BL <- c(BL, bl_dist(landmarks))
+  TL <- c(TL, tl_dist(landmarks))
+  SL <- c(SL, sl_dist(landmarks))
+  MW <- c(MW, landmark_dist(landmarks, 2, 11))
+  TW <- c(TW, landmark_dist(landmarks, 3, 10))
+  SW <- c(SW, landmark_dist(landmarks, 5, 8))
 }
 
-#list of ML and BL
-df <- data.frame(ML, BL, files)
-
-#Making a plot for ML and BL
-plot(df$ML, df$BL)
-
+#list of all attributes
+df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files)
 
 # Correlations with significance levels
 library(Hmisc)
 rcorr(ML,BL, type = "pearson") # type can be pearson or spearman
+
+
 
 # Coefficient of variation (CV)
 library(goeveg)
