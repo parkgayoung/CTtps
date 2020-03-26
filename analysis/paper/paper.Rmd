@@ -117,6 +117,22 @@ bl_dist = function(landmarks) {
 
 BL <- bl_dist(landmarks)
 
+# distance between two y axis 
+vertical_dist = function(landmarks, pt1, pt2) {
+  d = abs(landmarks$Y[pt1] - landmarks$Y[pt2])
+  d * as.numeric(levels(landmarks$SCALE))
+}
+
+# Tang length of sp: TL, distance between landmark 10-7 or 3-7, (y axis)
+tl_dist <- function(landmarks) {
+  t1 = vertical_dist(landmarks, 10, 7)
+  t2 = vertical_dist(landmarks, 3, 7)
+  max(t1, t2)
+}
+
+TL <- tl_dist
+
+# Maximum length of stem: 
 
 #Compare multiple artifacts 
 #Open multiple tps files 
@@ -155,7 +171,11 @@ plot(CV_ML, CV_BL)
 ```
 
 
+```{r}
+# artifacts from SYG6 site
 
+
+```
 
 # Results
 
