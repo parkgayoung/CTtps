@@ -188,7 +188,6 @@ library(Hmisc)
 rcorr(ML,BL, type = "pearson") # type can be pearson or spearman
 
 
-
 # Coefficient of variation (CV)
 library(goeveg)
 CV_ML <- cv(ML, na.rm = FALSE) #na.rm: logical. Should missing values be removed?
@@ -199,7 +198,29 @@ plot(CV_ML, CV_BL)
 
 
 ```{r}
+
 # artifacts from SYG6 site
+SYG6_files <- dir(datadir, pattern = "SYG6_*")
+
+ML = c()
+BL = c()
+TL = c()
+SL = c()
+MW = c()
+TW = c()
+SW = c()
+for (i in 1:length(SYG6_files)) {
+  filename <- paste(datadir, SYG6_files[i], sep = "")
+  print(filename)
+  landmarks <- read.tps(filename)
+  ML <- c(ML, landmark_dist(landmarks, 1, 7))
+  BL <- c(BL, bl_dist(landmarks))
+  TL <- c(TL, tl_dist(landmarks))
+  SL <- c(SL, sl_dist(landmarks))
+  MW <- c(MW, landmark_dist(landmarks, 2, 11))
+  TW <- c(TW, landmark_dist(landmarks, 3, 10))
+  SW <- c(SW, landmark_dist(landmarks, 5, 8))
+}
 
 
 ```
