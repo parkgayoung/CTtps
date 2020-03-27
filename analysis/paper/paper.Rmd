@@ -212,7 +212,14 @@ ggbiplot(PCA, obs.scale = 1, var.scale = 1,          ellipse = TRUE, circle = TR
 scale_color_discrete (name = '') +
   theme(legend.direction = 'horizontal', legend.position = 'top')
 
-###I need to figure out how to group them
+#https://towardsdatascience.com/principal-component-analysis-pca-101-using-r-361f4c53a9ff <- another way of PCA, relationship with two variables
+
+#using ggfortify package
+library(ggfortify) 
+autoplot(prcomp(DF))
+
+
+###I need to figure out how to group them  -- by phase?
 
 ```
 
