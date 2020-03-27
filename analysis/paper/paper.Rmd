@@ -249,6 +249,29 @@ for (i in 1:length(SYG6_files)) {
   SW <- c(SW, landmark_dist(landmarks, 5, 8))
 }
 
+#list of all attributes
+df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files)
+#list of all attributes without ID
+DF <- df[,1:7]
+
+# Correlations with significance levels
+library(Hmisc)
+rcorr(ML,BL, type = "pearson") # type can be pearson or spearman
+
+#simpler way to calculate Correlataion, you can use
+cor(DF)
+
+#a scatterplot matrix of Correlation
+pairs(DF)
+
+#simpler way to calculate Correlataion, you can use
+cor(DF)
+
+#a scatterplot matrix of Correlation
+pairs(DF)
+
+#simpler way to calculate CV
+sd(ML)/mean(ML)
 
 ```
 
