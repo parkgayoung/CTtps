@@ -95,8 +95,6 @@ files <- dir(datadir, pattern = "*.tps")
 
 
 
-
-
 ```{r}
 #attributes of the points by calculating distance between landmakrs
 
@@ -252,6 +250,7 @@ SYG6 site data and analysis
 # artifacts from SYG6 site
 SYG6_files <- dir(datadir, pattern = "SYG6_*")
 
+
 ML = c()
 BL = c()
 TL = c()
@@ -303,7 +302,7 @@ I'm working on how to read oulines and how to use them for anlaysis
 
 ```{r}
 # reading landmarks and outline in tps, code from Morpho package, adjust readallTPS function. 
-readalltps = function (file) 
+readalltps = function(file) 
 {
     out = list()
     exOut <- FALSE
@@ -372,8 +371,20 @@ readalltps = function (file)
     return(out)
 }
 
+#try to read all data(landmarks and outlines) from one file
 lm_trial <- readalltps(here("analysis/data/raw_data/A_BG_2.tps"))
 
+#read all files from raw_data
+
+lm_landmarks <- readalltps(here("analysis/data/raw_data"))
+
+lm_landmarks = c()
+for (i in 1:length(files)) {
+  filename <- paste(datadir, files[i], sep = "")
+  print(filename)
+  landmarks <- readalltps(filename)
+ lm_landmarks <- c(lm_landmarks, landmarks)
+}
 
 ```
 
