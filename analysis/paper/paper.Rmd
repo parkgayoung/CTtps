@@ -34,6 +34,8 @@ knitr::opts_chunk$set(
 #library(CTtps) # Or use devtools::load_all('.', quiet = T) if your code is in script files, rather than as functions in the `/R` diretory
 
 library(here)
+
+library(tidyverse)
 ```
 
 # Introduction
@@ -84,9 +86,19 @@ read.tps = function(data) {
 
 #need to figure out how to read the file inside the project
 landmarks <- read.tps(here("analysis/data/raw_data/A_BG_2.tps"))
-  
+
+#Compare multiple artifacts 
+#Open multiple tps files. This will need to be changed to read files inside the project
+datadir <- here("/analysis/data/raw_data/")
+files <- dir(datadir, pattern = "*.tps")
+```
 
 
+
+
+
+```{r}
+#attributes of the points by calculating distance between landmakrs
 
 #Understanding each landmark
 #ML: maximum length, tip to bottom, perpendicular to the length axis 1- 7
@@ -154,11 +166,7 @@ TW <- landmark_dist(landmarks, 3, 10)
 # Stem width: SW, distance between landmark 5-8
 SW <- landmark_dist(landmarks, 5, 8)
 
-#Compare multiple artifacts 
-#Open multiple tps files 
-#This will need to be changed to read files inside the project
-datadir <- here("/analysis/data/raw_data/")
-files <- dir(datadir, pattern = "*.tps")
+
 
 #gather ML and BL of all artifacts
 ML = c()
@@ -183,7 +191,7 @@ for (i in 1:length(files)) {
 
 #list of all attributes
 df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files)
-library(tidyverse)
+
 df_sitename <- df %>% 
   mutate(files = str_remove_all(files, "A_|1|2|.tps")) %>% 
   separate(files, into = c("sitename", "files"), sep = "_") %>% 
@@ -191,7 +199,12 @@ df_sitename <- df %>%
 
 #list of all attributes without ID
 DF <- df[,1:7]
+```
 
+
+
+Correlation, Coefficient or variation, PCA
+```{r}
 # Correlations with significance levels
 library(Hmisc)
 rcorr(ML,BL, type = "pearson") # type can be pearson or spearman
@@ -231,6 +244,8 @@ autoplot(prcomp(DF))
 
 ```
 
+
+SYG6 site data and analysis
 
 ```{r}
 
@@ -282,6 +297,89 @@ pairs(DF)
 sd(ML)/mean(ML)
 
 ```
+
+
+I'm working on how to read oulines and how to use them for anlaysis
+
+```{r}
+# reading landmarks and outline in tps, code from Morpho package, adjust readallTPS function. 
+readalltps = function (file) 
+{
+    out = list()
+    exOut <- FALSE
+    noutline <- 0
+    input <- readLines(file)
+    LM <- grep("LM=", input)
+    LMstring <- input[LM]
+    nLM <- sapply(LMstring, strsplit, split = "=")
+    nLM <- unlist(nLM)
+    nLM <- as.integer(nLM[-which(nLM == "LM")])
+    nobs <- length(nLM)
+    ID <- grep("ID=", input)
+    IDstring <- input[ID]
+    nID <- sapply(IDstring, function(x) {
+        x <- gsub("=", "_", x)
+    })
+    nID <- gsub(" ", "", unlist(nID))
+    out$ID <- nID
+    outline <- grep("CURVES=", input)
+    if (length(outline) > 0) {
+        exOut <- TRUE
+        outlinestring <- input[outline]
+        noutline <- sapply(outlinestring, strsplit, split = "=")
+        noutline <- unlist(noutline)
+        noutline <- as.integer(noutline[-which(noutline == "CURVES")])
+        LMoutline <- (sapply(outline, function(x) {
+            x <- max(which(LM < x))
+        }))
+    }
+    LMdata <- list()
+    for (i in 1:nobs) {
+        if (nLM[i] > 0) {
+            LMdata[[i]] <- as.numeric(unlist(strsplit(unlist(input[c((LM[i] + 
+                1):(LM[i] + nLM[i]))]), split = " ")))
+            LMdata[[i]] <- matrix(LMdata[[i]], nLM[i], 2, byrow = TRUE)
+        }
+        else LMdata[[i]] <- NA
+    }
+    names(LMdata) <- nID
+    out$LM <- LMdata
+    if (exOut) {
+        outlineData <- list()
+        for (i in 1:nobs) {
+            if (i %in% LMoutline) {
+                i1 <- grep(i, LMoutline)
+                outlinetmp <- list()
+                ptr <- outline[i1] + 1
+                j <- 1
+                while (j <= noutline[i1]) {
+                  tmpnr <- as.integer(unlist(strsplit(input[ptr], 
+                    split = "="))[2])
+                  outlinetmp[[j]] <- matrix(as.numeric(unlist(strsplit(input[(ptr + 
+                    1):(ptr + tmpnr)], split = " "))), tmpnr, 
+                    2, byrow = TRUE)
+                  ptr <- ptr + tmpnr + 1
+                  j <- j + 1
+                }
+                outlineData[[i]] <- outlinetmp
+            }
+            else outlineData[[i]] <- NA
+        }
+        names(outlineData) <- nID
+        out$outlines <- outlineData
+    }
+    cat(paste("Read", nobs, "datasets with", sum(noutline), "outlines\n"))
+    return(out)
+}
+
+lm_trial <- readalltps(here("analysis/data/raw_data/A_BG_2.tps"))
+
+
+```
+
+
+
+
 
 # Results
 
