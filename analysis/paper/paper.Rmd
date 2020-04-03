@@ -34,7 +34,6 @@ knitr::opts_chunk$set(
 #library(CTtps) # Or use devtools::load_all('.', quiet = T) if your code is in script files, rather than as functions in the `/R` diretory
 
 library(here)
-
 library(tidyverse)
 ```
 
@@ -50,7 +49,7 @@ Here is a citation [@Marwick2017]
 
 # Methods
 
-
+Reading tps data and phase information of each artifact 
 ```{r}
 #reading landmarks in tps, code from https://gist.github.com/mrdwab/2062329
 
@@ -97,9 +96,8 @@ files <- dir(datadir, pattern = "*.tps")
 ```
 
 
-
+Computing size attributes of the points by calculating distance between landmakrs
 ```{r}
-#attributes of the points by calculating distance between landmakrs
 
 #Understanding each landmark
 #ML: maximum length, tip to bottom, perpendicular to the length axis 1- 7
@@ -138,8 +136,6 @@ bl_dist = function(landmarks) {
 
 BL <- bl_dist(landmarks)
 
-
-
 # Tang length of sp: TL, distance between landmark 10-7 or 3-7, (y axis)
 tl_dist <- function(landmarks) {
   t1 = vertical_dist(landmarks, 10, 7)
@@ -167,9 +163,13 @@ TW <- landmark_dist(landmarks, 3, 10)
 # Stem width: SW, distance between landmark 5-8
 SW <- landmark_dist(landmarks, 5, 8)
 
+```
 
 
-#gather ML and BL of all artifacts
+
+Gather attributes from  all artifacts
+```{r}
+
 ML = c()
 BL = c()
 TL = c()
@@ -193,10 +193,11 @@ for (i in 1:length(files)) {
 #list of all attributes
 df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files, SPstage$Stage)
 
+#trim the name of each artifact.
 df_sitename <- df %>% 
-  mutate(files = str_remove_all(files, "A_|1|2|.tps")) %>% 
-  separate(files, into = c("sitename", "files"), sep = "_") %>% 
-  select(-files)
+  mutate (files = str_remove_all(files, "A_|1|2|.tps")) %>% 
+  separate (files, into = c("sitename", "files"), sep = "_") %>% 
+  select (-files)
 
 #list of all attributes without ID
 DF <- df[,1:7]
@@ -204,10 +205,11 @@ DF <- df[,1:7]
 
 
 
-Correlation, Coefficient or variation, PCA
+Computing Pearson's correlation 
 ```{r}
 # Correlations with significance levels
-library(Hmisc)
+# I can move the library(pkg) to the top with other libraries but I'm leaving here for my reference for a while
+library(Hmisc) 
 rcorr(ML,BL, type = "pearson") # type can be pearson or spearman
 
 #simpler way to calculate Correlataion, you can use
@@ -216,26 +218,35 @@ cor(DF)
 #a scatterplot matrix of Correlation
 pairs(DF)
 
+```
+
+Computing Coefficient or variation
+```{r}
 # Coefficient of variation (CV)
 library(goeveg)
 CV_ML <- cv(ML, na.rm = FALSE) #na.rm: logical. Should missing values be removed?
 CV_BL <- cv(BL, na.rm = FALSE)
+CV_TL <- cv(TL, na.rm = FALSE)
+CV_SL <- cv(SL, na.rm = FALSE)
+CV_MW <- cv(MW, na.rm = FALSE)
+CV_TW <- cv(TW, na.rm = FALSE)
+CV_SW <- cv(SW, na.rm = FALSE)
 
 #simpler way to calculate CV
 sd(ML)/mean(ML)
+```
 
-#PCA 
+
+Principal component analysis
+```{r}
 library(ggbiplot)
+
 PCA <- prcomp(DF, center = TRUE,scale. = TRUE)
 
+#group them by three phase
 library(ggfortify) 
-autoplot(prcomp(DF), data = df_sitename, colour = 'SPstage.Stage') 
+autoplot(prcomp(DF), data = df_sitename, colour = as.factor(df_sitename$SPstage.Stage)) 
 
-
-#https://towardsdatascience.com/principal-component-analysis-pca-101-using-r-361f4c53a9ff <- another way of PCA, relationship with two variables
-
-
-###I need to figure out how to group them  -- by phase?
 
 ```
 
