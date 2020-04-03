@@ -232,9 +232,18 @@ CV_MW <- cv(MW, na.rm = FALSE)
 CV_TW <- cv(TW, na.rm = FALSE)
 CV_SW <- cv(SW, na.rm = FALSE)
 
-#simpler way to calculate CV
-sd(ML)/mean(ML)
+#simpler way to calculate CV (%)
+sd(ML)/mean(ML)*100
+sd(BL)/mean(BL)*100
+sd(TL)/mean(TL)*100
+sd(SL)/mean(SL)*100
+sd(MW)/mean(MW)*100
+sd(TW)/mean(TW)*100
+sd(SW)/mean(SW)*100
+
+
 ```
+CV for all attributes are distributed from 23-31%
 
 
 Principal component analysis
@@ -300,10 +309,20 @@ cor(DF)
 #a scatterplot matrix of Correlation
 pairs(DF)
 
-#simpler way to calculate CV
-sd(ML)/mean(ML)
+# CV%
+sd(ML)/mean(ML)*100
+sd(BL)/mean(BL)*100
+sd(TL)/mean(TL)*100
+sd(SL)/mean(SL)*100
+sd(MW)/mean(MW)*100
+sd(TW)/mean(TW)*100
+sd(SW)/mean(SW)*100
 
+#CV ranges are 20-33% more broad...
 ```
+
+
+
 
 
 I'm working on how to read oulines and how to use them for anlaysis
@@ -395,7 +414,6 @@ for (i in 1:length(files)) {
 }
 
 ```
-
 
 
 
