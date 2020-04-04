@@ -39,7 +39,19 @@ library(tidyverse)
 
 # Introduction
 
-Here is a citation [@Marwick2017]
+- What are our research questions?
+
+- What is our archaeological background?
+
+- What is our conceptual framework?
+
+- What are our methods?
+
+- What are our results? 
+
+- What is the answer to our questions??
+
+
 
 # Background
 
@@ -203,7 +215,47 @@ df_sitename <- df %>%
 DF <- df[,1:7]
 ```
 
+Make a table of the CV for all variables on all artefacts from all sites
 
+```{r}
+# all artefacts from all sites
+map_df(DF, cv)
+```
+
+Make a table of CVs for all variable grouped by site
+
+```{r}
+cv_by_site_df  <- 
+df_sitename %>% 
+  select(-SPstage.Stage) %>% 
+  group_by(sitename) %>% 
+  add_tally() %>% 
+  filter( n > 1) %>% 
+  select(-n) %>% 
+  nest(-sitename) %>% 
+  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
+  
+cv_by_site_df_unnest <-   
+cv_by_site_df %>% 
+  unnest(cv_by_site)
+```
+
+Make a table of CVs for all variable grouped by phase
+```{r}
+cv_by_stage_df  <- 
+df_sitename %>% 
+  select(-sitename) %>% 
+  group_by(SPstage.Stage) %>% 
+  add_tally() %>% 
+  filter( n > 1) %>% 
+  select(-n) %>% 
+  nest(-SPstage.Stage) %>% 
+  mutate(cv_by_stage = map(data, ~map_df(.x, cv)))
+  
+cv_by_stage_df_unnest <-   
+cv_by_stage_df %>% 
+  unnest(cv_by_stage)
+```
 
 Computing Pearson's correlation 
 ```{r}
@@ -223,7 +275,15 @@ pairs(DF)
 Computing Coefficient or variation
 ```{r}
 # Coefficient of variation (CV)
-library(goeveg)
+
+cv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100
+
+# we've got DF a data frame with cols as variables
+# rows and specimens, and values as dimensions
+# need to add a column of site ID
+map(DF, cv)
+
+
 CV_ML <- cv(ML, na.rm = FALSE) #na.rm: logical. Should missing values be removed?
 CV_BL <- cv(BL, na.rm = FALSE)
 CV_TL <- cv(TL, na.rm = FALSE)
@@ -232,8 +292,8 @@ CV_MW <- cv(MW, na.rm = FALSE)
 CV_TW <- cv(TW, na.rm = FALSE)
 CV_SW <- cv(SW, na.rm = FALSE)
 
-#simpler way to calculate CV (%)
-sd(ML)/mean(ML)*100
+
+sd(DF$ML)/mean(DF$ML)*100
 sd(BL)/mean(BL)*100
 sd(TL)/mean(TL)*100
 sd(SL)/mean(SL)*100
@@ -250,15 +310,48 @@ Principal component analysis
 ```{r}
 library(ggbiplot)
 
-PCA <- prcomp(DF, center = TRUE,scale. = TRUE)
+PCA <- prcomp(DF, center = TRUE, scale = TRUE)
 
 #group them by three phase
 library(ggfortify) 
-autoplot(prcomp(DF), data = df_sitename, colour = as.factor(df_sitename$SPstage.Stage)) 
+ap <- 
+autoplot(prcomp(DF, center = TRUE, scale = TRUE), 
+         data = df_sitename, 
+         colour = as.factor(df_sitename$SPstage.Stage))
 
 
+pca_col <- data.frame(PCA$x, phase = as.factor(df_sitename$SPstage.Stage))
+
+gg <- 
+ggplot(pca_col ,
+       aes(PC1,
+           PC2,
+       colour = phase)) +
+  geom_point()
+
+gg
+
+# remove stage 1 artefact
+xx_pca <- 
+df_sitename %>% 
+  filter(SPstage.Stage != 1) %>% 
+  select(-sitename) %>% 
+  prcomp(., center = TRUE, scale = TRUE)
+
+xx_pca1 <- data.frame(xx_pca$x,stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage !=1]))
+
+gg_stage <- 
+ggplot(xx_pca1 ,
+       aes(PC1,
+           PC2,
+       colour = stage)) +
+  geom_point() +
+  stat_ellipse()
+
+gg_stage
 ```
 
+We see some differences in artefact shape and size. Now we need to examins the PCA output numbers to describe in more details. 
 
 SYG6 site data and analysis
 
@@ -402,8 +495,10 @@ readalltps = function(file)
 lm_trial <- readalltps(here("analysis/data/raw_data/A_BG_2.tps"))
 
 #read all files from raw_data
+tps_files <- list.files(here("analysis/data/raw_data"), full.names = TRUE)
+lm_landmarks <- map(tps_files, readalltps)
+names(lm_landmarks) <- list.files(here("analysis/data/raw_data"))
 
-lm_landmarks <- readalltps(here("analysis/data/raw_data"))
 
 lm_landmarks = c()
 for (i in 1:length(files)) {
