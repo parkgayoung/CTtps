@@ -359,6 +359,9 @@ scatter3D(pca_col$PC1, pca_col$PC2, pca_col$PC3, bty = "g", pch = 18, col = gg.c
           main = "PCA", xlab = "PC1",
           ylab = "PC2", zlab = "PC3")
 
+library(plotly)
+plot_ly(pca_col, x = ~PC1, y = ~PC2, z = ~PC3, colors = "Dark2", size = I(120)) %>%  add_markers(color = ~phase)
+
 ```
 
 
