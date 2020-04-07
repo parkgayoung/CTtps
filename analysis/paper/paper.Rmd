@@ -215,47 +215,6 @@ df_sitename <- df %>%
 DF <- df[,1:7]
 ```
 
-Make a table of the CV for all variables on all artefacts from all sites
-
-```{r}
-# all artefacts from all sites
-map_df(DF, cv)
-```
-
-Make a table of CVs for all variable grouped by site
-
-```{r}
-cv_by_site_df  <- 
-df_sitename %>% 
-  select(-SPstage.Stage) %>% 
-  group_by(sitename) %>% 
-  add_tally() %>% 
-  filter( n > 1) %>% 
-  select(-n) %>% 
-  nest(-sitename) %>% 
-  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
-  
-cv_by_site_df_unnest <-   
-cv_by_site_df %>% 
-  unnest(cv_by_site)
-```
-
-Make a table of CVs for all variable grouped by phase
-```{r}
-cv_by_stage_df  <- 
-df_sitename %>% 
-  select(-sitename) %>% 
-  group_by(SPstage.Stage) %>% 
-  add_tally() %>% 
-  filter( n > 1) %>% 
-  select(-n) %>% 
-  nest(-SPstage.Stage) %>% 
-  mutate(cv_by_stage = map(data, ~map_df(.x, cv)))
-  
-cv_by_stage_df_unnest <-   
-cv_by_stage_df %>% 
-  unnest(cv_by_stage)
-```
 
 Computing Pearson's correlation 
 ```{r}
@@ -305,6 +264,47 @@ sd(SW)/mean(SW)*100
 ```
 CV for all attributes are distributed from 23-31%
 
+Make a table of the CV for all variables on all artefacts from all sites
+
+```{r}
+# all artefacts from all sites
+map_df(DF, cv)
+```
+
+Make a table of CVs for all variable grouped by site
+
+```{r}
+cv_by_site_df  <- 
+df_sitename %>% 
+  select(-SPstage.Stage) %>% 
+  group_by(sitename) %>% 
+  add_tally() %>% 
+  filter( n > 1) %>% 
+  select(-n) %>% 
+  nest(-sitename) %>% 
+  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
+  
+cv_by_site_df_unnest <-   
+cv_by_site_df %>% 
+  unnest(cv_by_site)
+```
+
+Make a table of CVs for all variable grouped by phase
+```{r}
+cv_by_stage_df  <- 
+df_sitename %>% 
+  select(-sitename) %>% 
+  group_by(SPstage.Stage) %>% 
+  add_tally() %>% 
+  filter( n > 1) %>% 
+  select(-n) %>% 
+  nest(-SPstage.Stage) %>% 
+  mutate(cv_by_stage = map(data, ~map_df(.x, cv)))
+  
+cv_by_stage_df_unnest <-   
+cv_by_stage_df %>% 
+  unnest(cv_by_stage)
+```
 
 Principal component analysis
 ```{r}
@@ -350,6 +350,17 @@ ggplot(xx_pca1 ,
 
 gg_stage
 ```
+
+PCA for 3 factors
+```{r}
+library(plot3D)
+
+scatter3D(pca_col$PC1, pca_col$PC2, pca_col$PC3, bty = "g", pch = 18, col = gg.col(100), 
+          main = "PCA", xlab = "PC1",
+          ylab = "PC2", zlab = "PC3")
+
+```
+
 
 We see some differences in artefact shape and size. Now we need to examins the PCA output numbers to describe in more details. 
 
