@@ -249,20 +249,7 @@ DF <- df[,1:7]
 ```
 
 
-Computing Pearson's correlation 
-```{r}
-# Correlations with significance levels
-# I can move the library(pkg) to the top with other libraries but I'm leaving here for my reference for a while
-library(Hmisc) 
-rcorr(ML, BL, type = "pearson") # type can be pearson or spearman
 
-#simpler way to calculate Correlataion, you can use
-cor(DF)
-
-#a scatterplot matrix of Correlation
-pairs(DF)
-
-```
 
 Computing Coefficient or variation
 ```{r}
@@ -337,6 +324,40 @@ df_sitename %>%
 cv_by_stage_df_unnest <-   
 cv_by_stage_df %>% 
   unnest(cv_by_stage)
+```
+
+Computing Pearson's correlation 
+```{r}
+library(Hmisc)
+COR <- rcorr(as.matrix(DF))
+
+#a simple function for formatting a correlation matrix into a table with 4 columns containing from (http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software)
+flattenCorrMatrix <- function(cormat, pmat) {
+  ut <- upper.tri(cormat)
+  data.frame(
+    row = rownames(cormat)[row(cormat)[ut]],
+    column = rownames(cormat)[col(cormat)[ut]],
+    cor  =(cormat)[ut],
+    p = pmat[ut]
+    )
+}
+
+flattenCorrMatrix(COR$r, COR$P)
+
+#simpler way to calculate Correlataion, you can use
+SCOR <- cor(DF)
+
+
+#a scatterplot matrix of Correlation
+pairs(DF)
+
+# Plot for SCOR
+library(corrplot)
+corrplot(SCOR, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+corrplot(COR$r, type="upper", order="hclust", 
+         p.mat = COR$P, sig.level = 0.01, insig = "blank")
 ```
 
 Principal component analysis
@@ -443,10 +464,6 @@ for (i in 1:length(SYG6_files)) {
 df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files)
 #list of all attributes without ID
 DF <- df[,1:7]
-
-# Correlations with significance levels
-library(Hmisc)
-rcorr(ML,BL, type = "pearson") # type can be pearson or spearman
 
 #simpler way to calculate Correlataion, you can use
 cor(DF)
