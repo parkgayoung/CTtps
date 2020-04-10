@@ -62,24 +62,28 @@ library(tidyverse)
 
 4. What are our methods?
 - Framework: Bettinger&Eerkens
-- Two models: Guided variation and Model-based bias =>  Multi-point Origin (in situ) and Single-point Origin (migration model)
+- Two models: Guided variation and Model-based bias =>  Multi-point Origin (in situ or in between one) and Single-point Origin (migration model)
 - Test by Correlation and Variation (Pearson's r, PCA, Coefficient of Variation) 
 - data collection, sites, artifact #
 - attributes: landmarks (tps software)
 
 5. What are our results? 
 - overall change through time, grouping (chronology, typology)
-- correlation
-- PCA
-- CV 
+- correlation: postively correlated(?)
+- PCA: 2,3 phases are highly overlapped, high redundancy. The individual phase are scattered, low redundancy. Variables of Dimension 1 is positively correlated
+- CV:values are around 20(ML)-34(SL). Compared to 2nd phase, 3rd phase has slightly lower variation.   
 
 6. What is the answer to our questions??
 - low correlation + high variation? High correlation + low variation?
+- What are the criteria for correlation and variation
 - How was SP spread in Korea, did they have single orgin or multiple origins?
 
 7. What is limitation of this study?
 - Maybe applying CV for SP is not ideal. It can be depending on individual knapper's skill and raw materials
+- CV of one site (SYG6) - no big difference with the value of all data
 - CV: lithis vs pottery
+
+- couldn't include thickness and weight
 
 
 # Background
@@ -250,7 +254,7 @@ Computing Pearson's correlation
 # Correlations with significance levels
 # I can move the library(pkg) to the top with other libraries but I'm leaving here for my reference for a while
 library(Hmisc) 
-rcorr(ML,BL, type = "pearson") # type can be pearson or spearman
+rcorr(ML, BL, type = "pearson") # type can be pearson or spearman
 
 #simpler way to calculate Correlataion, you can use
 cor(DF)
