@@ -39,18 +39,47 @@ library(tidyverse)
 
 # Introduction
 
-- What are our research questions?
+1. What are our research questions?
+- Understanding technological transition during the Late Pleistocene in Korea base on Cultural transmission. 
+- What are the social contexts led to the technological transition
 
-- What is our archaeological background?
+2. What is our archaeological background?
+-SP was started in Korean Peninsula -> spread to Japan
+-Why SP important, Why we care
+-Current explantion of SP dispersal: migration vs in situ, in between
+ The evidence of the two main models: proportion of SP in assemblage, Y chromosome (two groups of people), composition of assemblage (blade to flake ratio)
+ -> no explanation about any mechanism/process/driver for the new technology
+ -> lack of details of the lithic technology, human behavior
 
-- What is our conceptual framework?
+3. What is our conceptual framework?
+- Evolutionary concepts that links stone artifacts to human behavior
+- Cultural Evolution : the idea that cultural change constitutes an evolutionary process
+- Same general concept of biological evolution: genetic change in population that is inherited over generations. Apply this concept to artifacts or cultural phenomena
+- In this paper, I will use Cultural Transmission 
+- Cultural Transmssion: way that people learn and pass on information
+- Transmission biases
+- similar study (CT in stone artifacts) : Mesoudi&O'Brien, Bettinger&Eerkens, Garvey
 
-- What are our methods?
+4. What are our methods?
+- Framework: Bettinger&Eerkens
+- Two models: Guided variation and Model-based bias =>  Multi-point Origin (in situ) and Single-point Origin (migration model)
+- Test by Correlation and Variation (Pearson's r, PCA, Coefficient of Variation) 
+- data collection, sites, artifact #
+- attributes: landmarks (tps software)
 
-- What are our results? 
+5. What are our results? 
+- overall change through time, grouping (chronology, typology)
+- correlation
+- PCA
+- CV 
 
-- What is the answer to our questions??
+6. What is the answer to our questions??
+- low correlation + high variation? High correlation + low variation?
+- How was SP spread in Korea, did they have single orgin or multiple origins?
 
+7. What is limitation of this study?
+- Maybe applying CV for SP is not ideal. It can be depending on individual knapper's skill and raw materials
+- CV: lithis vs pottery
 
 
 # Background
@@ -364,8 +393,19 @@ plot_ly(pca_col, x = ~PC1, y = ~PC2, z = ~PC3, colors = "Dark2", size = I(120)) 
 
 ```
 
-
 We see some differences in artefact shape and size. Now we need to examins the PCA output numbers to describe in more details. 
+
+PCA with corrplot package to understand the individual variables
+```{r}
+library(factoextra) #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
+
+fviz_pca_var(PCA, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+
+```
+
+
+
 
 SYG6 site data and analysis
 
