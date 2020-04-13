@@ -361,6 +361,13 @@ corrplot(COR$r, type="upper", order="hclust",
 ```
 
 Principal component analysis
+
+Principal Component Analysis is a technique to extract relevant information from a multivariate dataset and to express this information as a set of few new variables called principal components or dimensions [@cascalheira2018use].
+
+In archaeology, PCA has been often used for~
+
+We applied PCA to our dataset to identify correlations between variables that would represent the existence of patterns in the points, which could possilby be translated into more ~ , in addition to correlation analysis.
+
 ```{r}
 library(ggbiplot)
 
@@ -392,22 +399,23 @@ ggplot(xx_pca1 ,
 gg_stage
 ```
 
+Contribution of variables for each of first two PCA demensions
+```{r}
+PC1_v <- fviz_contrib(xx_pca, choice = "var", axes = 1, top = 7)
+PC2_v <- fviz_contrib(xx_pca, choice = "var", axes = 2, top = 7)
 
+grid.arrange(PC1_v, PC2_v, nrow =1)
 
+```
+
+We see some differences in artefact shape and size. Now we need to examins the PCA output numbers to describe in more details. 
 
 ```{r}
 
 library(factoextra) #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
 
-
-xx_pca2 <- 
-df_sitename %>% 
-  filter(SPstage.Stage != 1) %>% 
-  select(-sitename, -SPstage.Stage) %>% 
-  prcomp(., center = TRUE, scale = TRUE)
-
-
-fviz_pca_var(xx_pca2, col.var = "contrib",
+# Color variables by the continuous variable
+fviz_pca_var(xx_pca, col.var = "contrib",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
 
 ```
@@ -426,16 +434,9 @@ plot_ly(pca_col, x = ~PC1, y = ~PC2, z = ~PC3, colors = "Dark2", size = I(120)) 
 
 ```
 
-We see some differences in artefact shape and size. Now we need to examins the PCA output numbers to describe in more details. 
 
-PCA with corrplot package to understand the individual variables
-```{r}
-library(factoextra) #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
 
-fviz_pca_var(PCA, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
 
-```
 
 
 
