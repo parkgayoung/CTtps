@@ -364,6 +364,7 @@ Principal component analysis
 ```{r}
 library(ggbiplot)
 
+
 PCA <- prcomp(DF, center = TRUE, scale = TRUE)
 
 #group them by three phase
@@ -373,7 +374,7 @@ library(ggfortify)
 xx_pca <- 
 df_sitename %>% 
   filter(SPstage.Stage != 1) %>% 
-  select(-sitename) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
   prcomp(., center = TRUE, scale = TRUE)
 
 xx_pca1 <- 
@@ -391,11 +392,22 @@ ggplot(xx_pca1 ,
 gg_stage
 ```
 
+
+
+
 ```{r}
 
 library(factoextra) #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
 
-fviz_pca_var(xx_pca, col.var = "contrib",
+
+xx_pca2 <- 
+df_sitename %>% 
+  filter(SPstage.Stage != 1) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  prcomp(., center = TRUE, scale = TRUE)
+
+
+fviz_pca_var(xx_pca2, col.var = "contrib",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
 
 ```
