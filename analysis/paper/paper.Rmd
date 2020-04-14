@@ -248,7 +248,10 @@ df_sitename <- df %>%
 DF <- df[,1:7]
 ```
 
-
+Box plot for each attributes
+```{r}
+boxplot(DF, main = "Variaiton for each attributes", col = "gold")
+```
 
 
 Computing Coefficient or variation
