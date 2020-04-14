@@ -399,12 +399,16 @@ ggplot(xx_pca1 ,
 gg_stage
 ```
 
-Contribution of variables for each of first two PCA demensions
+Contribution of variables for each of four PCA demensions
 ```{r}
+library(gridExtra)
+
 PC1_v <- fviz_contrib(xx_pca, choice = "var", axes = 1, top = 7)
 PC2_v <- fviz_contrib(xx_pca, choice = "var", axes = 2, top = 7)
+PC3_v <- fviz_contrib(xx_pca, choice = "var", axes = 3, top = 7)
+PC4_v <- fviz_contrib(xx_pca, choice = "var", axes = 4, top = 7)
 
-grid.arrange(PC1_v, PC2_v, nrow =1)
+grid.arrange(PC1_v, PC2_v, PC3_v, PC4_v, nrow =2)
 
 ```
 
