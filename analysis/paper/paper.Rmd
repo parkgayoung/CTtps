@@ -266,24 +266,6 @@ cv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100
 map(DF, cv)
 
 
-CV_ML <- cv(ML, na.rm = FALSE) #na.rm: logical. Should missing values be removed?
-CV_BL <- cv(BL, na.rm = FALSE)
-CV_TL <- cv(TL, na.rm = FALSE)
-CV_SL <- cv(SL, na.rm = FALSE)
-CV_MW <- cv(MW, na.rm = FALSE)
-CV_TW <- cv(TW, na.rm = FALSE)
-CV_SW <- cv(SW, na.rm = FALSE)
-
-
-sd(DF$ML)/mean(DF$ML)*100
-sd(BL)/mean(BL)*100
-sd(TL)/mean(TL)*100
-sd(SL)/mean(SL)*100
-sd(MW)/mean(MW)*100
-sd(TW)/mean(TW)*100
-sd(SW)/mean(SW)*100
-
-
 ```
 CV for all attributes are distributed from 23-31%
 
@@ -310,6 +292,8 @@ df_sitename %>%
 cv_by_site_df_unnest <-   
 cv_by_site_df %>% 
   unnest(cv_by_site)
+
+
 ```
 
 Make a table of CVs for all variable grouped by phase
@@ -327,6 +311,18 @@ df_sitename %>%
 cv_by_stage_df_unnest <-   
 cv_by_stage_df %>% 
   unnest(cv_by_stage)
+```
+
+
+making box plot by phase
+```{r]}
+cv_boxplot <- cv_by_stage_df_unnest %>% 
+  select(-data)
+
+
+
+
+
 ```
 
 Computing Pearson's correlation 
