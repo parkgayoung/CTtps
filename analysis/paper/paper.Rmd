@@ -371,12 +371,9 @@ We applied PCA to our dataset to identify correlations between variables that wo
 
 ```{r}
 library(ggbiplot)
-
+library(ggfortify) 
 
 PCA <- prcomp(DF, center = TRUE, scale = TRUE)
-
-#group them by three phase
-library(ggfortify) 
 
 # remove stage 1 artefact
 xx_pca <- 
@@ -398,16 +395,37 @@ ggplot(xx_pca1 ,
   geom_point() +
   stat_ellipse()
 
+# phase 2
+
+xx_pca2 <- 
+df_sitename %>% 
+  filter(SPstage.Stage == 2) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  prcomp(., center = TRUE, scale = TRUE)
+
+xx_pca1_2 <- 
+  data.frame(xx_pca2$x,
+             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage ==2]))
+
+ggplot(xx_pca1_2 ,
+       aes(PC1,
+           PC2,
+       colour = stage)) +
+  geom_point() +
+  stat_ellipse()
+
+
 # phase 3
+
 xx_pca3 <- 
 df_sitename %>% 
-  filter(SPstage.Stage != 2) %>% 
+  filter(SPstage.Stage == 3) %>% 
   select(-sitename, -SPstage.Stage) %>% 
   prcomp(., center = TRUE, scale = TRUE)
 
 xx_pca1_3 <- 
   data.frame(xx_pca3$x,
-             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage !=2]))
+             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage ==3]))
 
 ggplot(xx_pca1_3 ,
        aes(PC1,
@@ -417,24 +435,7 @@ ggplot(xx_pca1_3 ,
   stat_ellipse()
 
 
-# phase 2
 
-xx_pca2 <- 
-df_sitename %>% 
-  filter(SPstage.Stage != 3) %>% 
-  select(-sitename, -SPstage.Stage) %>% 
-  prcomp(., center = TRUE, scale = TRUE)
-
-xx_pca1_2 <- 
-  data.frame(xx_pca2$x,
-             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage !=3]))
-
-ggplot(xx_pca1_2 ,
-       aes(PC1,
-           PC2,
-       colour = stage)) +
-  geom_point() +
-  stat_ellipse()
 ```
 
 Contribution of variables for each of four PCA demensions
@@ -487,63 +488,57 @@ plot_ly(pca_col, x = ~PC1, y = ~PC2, z = ~PC3, colors = "Dark2", size = I(120)) 
 
 
 
-
-
 SYG6 site data and analysis
 
 ```{r}
 
 # artifacts from SYG6 site
-SYG6_files <- dir(datadir, pattern = "SYG6_*")
+library(stringr)
+SYG6_df <- 
+  df %>% 
+  filter(str_detect(files, "SYG6"))
 
 
-ML = c()
-BL = c()
-TL = c()
-SL = c()
-MW = c()
-TW = c()
-SW = c()
-for (i in 1:length(SYG6_files)) {
-  filename <- paste(datadir, SYG6_files[i], sep = "")
-  print(filename)
-  landmarks <- read.tps(filename)
-  ML <- c(ML, landmark_dist(landmarks, 1, 7))
-  BL <- c(BL, bl_dist(landmarks))
-  TL <- c(TL, tl_dist(landmarks))
-  SL <- c(SL, sl_dist(landmarks))
-  MW <- c(MW, landmark_dist(landmarks, 2, 11))
-  TW <- c(TW, landmark_dist(landmarks, 3, 10))
-  SW <- c(SW, landmark_dist(landmarks, 5, 8))
-}
+SYG6_df_sitename <- SYG6_df %>% 
+  mutate (files = str_remove_all(files, "A_|1|2|.tps")) %>% 
+  separate (files, into = c("sitename", "files"), sep = "_") %>% 
+  select (-files)
 
-#list of all attributes
-df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files)
 #list of all attributes without ID
-DF <- df[,1:7]
+SYG6_DF <- SYG6_df[,1:7]
+
 
 #simpler way to calculate Correlataion, you can use
-cor(DF)
+cor(SYG6_DF)
 
 #a scatterplot matrix of Correlation
-pairs(DF)
+pairs(SYG6_DF)
 
-#simpler way to calculate Correlataion, you can use
-cor(DF)
+# CV
+map_df(SYG6_DF, cv)
 
-#a scatterplot matrix of Correlation
-pairs(DF)
+SYG6_PCA <- prcomp(SYG6_DF, center = TRUE, scale = TRUE)
 
-# CV%
-sd(ML)/mean(ML)*100
-sd(BL)/mean(BL)*100
-sd(TL)/mean(TL)*100
-sd(SL)/mean(SL)*100
-sd(MW)/mean(MW)*100
-sd(TW)/mean(TW)*100
-sd(SW)/mean(SW)*100
+# remove stage 1 artefact
+SYG6_xx_pca <- 
+SYG6_df_sitename %>% 
+  filter(SPstage.Stage != 1) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  prcomp(., center = TRUE, scale = TRUE)
 
-#CV ranges are 20-33% more broad...
+SYG6_xx_pca1 <- 
+  data.frame(SYG6_xx_pca$x,
+             stage = as.factor( SYG6_df_sitename$SPstage.Stage[SYG6_df_sitename$SPstage.Stage !=1]))
+
+#plot for both stage
+SYG6_gg_stage <- 
+ggplot(SYG6_xx_pca1 ,
+       aes(PC1,
+           PC2,
+       colour = stage)) +
+  geom_point() +
+  stat_ellipse()
+
 ```
 
 
