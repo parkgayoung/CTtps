@@ -539,7 +539,131 @@ ggplot(SYG6_xx_pca1 ,
   geom_point() +
   stat_ellipse()
 
+fviz_pca_var(SYG6_xx_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+
 ```
+
+
+
+SYG_1 site data and analysis
+
+```{r}
+
+# artifacts from SYG_1 site
+library(stringr)
+SYG_1df <- 
+  df %>% 
+  filter(str_detect(files, "SYG_1"))
+
+
+SYG_1df_sitename <- SYG_1df %>% 
+  mutate (files = str_remove_all(files, "A_|1|2|.tps")) %>% 
+  separate (files, into = c("sitename", "files"), sep = "_") %>% 
+  select (-files)
+
+#list of all attributes without ID
+SYG_1DF <- SYG_1df[,1:7]
+
+
+#simpler way to calculate Correlataion, you can use
+cor(SYG_1DF)
+
+#a scatterplot matrix of Correlation
+pairs(SYG_1DF)
+
+# CV
+map_df(SYG_1DF, cv)
+
+SYG_1PCA <- prcomp(SYG_1DF, center = TRUE, scale = TRUE)
+
+# remove stage 1 artefact
+SYG_1xx_pca <- 
+SYG_1df_sitename %>% 
+  filter(SPstage.Stage != 1) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  prcomp(., center = TRUE, scale = TRUE)
+
+SYG_1xx_pca1 <- 
+  data.frame(SYG_1xx_pca$x,
+             stage = as.factor( SYG_1df_sitename$SPstage.Stage[SYG_1df_sitename$SPstage.Stage !=1]))
+
+#plot for both stage
+SYG_1gg_stage <- 
+ggplot(SYG_1xx_pca1 ,
+       aes(PC1,
+           PC2,
+       colour = stage)) +
+  geom_point() +
+  stat_ellipse()
+
+fviz_pca_var(SYG_1xx_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+```
+
+
+SYG_4 site data and analysis
+
+```{r}
+
+# artifacts from SYG_4 site
+library(stringr)
+SYG_4df <- 
+  df %>% 
+  filter(str_detect(files, "SYG_4"))
+
+
+SYG_4df_sitename <- SYG_4df %>% 
+  mutate (files = str_remove_all(files, "A_|1|2|.tps")) %>% 
+  separate (files, into = c("sitename", "files"), sep = "_") %>% 
+  select (-files)
+
+#list of all attributes without ID
+SYG_4DF <- SYG_4df[,1:7]
+
+
+#simpler way to calculate Correlataion, you can use
+cor(SYG_4DF)
+
+#a scatterplot matrix of Correlation
+pairs(SYG_4DF)
+
+# CV
+map_df(SYG_4DF, cv)
+
+SYG_4PCA <- prcomp(SYG_4DF, center = TRUE, scale = TRUE)
+
+# remove stage 1 artefact
+SYG_4xx_pca <- 
+SYG_4df_sitename %>% 
+  filter(SPstage.Stage != 1) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  prcomp(., center = TRUE, scale = TRUE)
+
+SYG_4xx_pca1 <- 
+  data.frame(SYG_4xx_pca$x,
+             stage = as.factor( SYG_4df_sitename$SPstage.Stage[SYG_4df_sitename$SPstage.Stage !=1]))
+
+#plot for both stage
+SYG_4gg_stage <- 
+ggplot(SYG_4xx_pca1 ,
+       aes(PC1,
+           PC2,
+       colour = stage)) +
+  geom_point() +
+  stat_ellipse()
+
+fviz_pca_var(SYG_4xx_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+```
+
+
+
+
+
+
+
+
 
 
 
