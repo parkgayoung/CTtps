@@ -554,6 +554,15 @@ ggplot(SYG6_xx_pca1 ,
 fviz_pca_var(SYG6_xx_pca, col.var = "contrib",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
 
+
+SYG6_PC1_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 1, top = 7)
+SYG6_PC2_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 2, top = 7)
+
+grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1)
+
+
+
+
 ```
 
 
@@ -611,6 +620,16 @@ ggplot(SYG_1xx_pca1 ,
 
 fviz_pca_var(SYG_1xx_pca, col.var = "contrib",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+
+
+SYG_1PC1_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 1, top = 7)
+SYG_1PC2_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 2, top = 7)
+
+grid.arrange(SYG_1PC1_v, SYG_1PC2_v, nrow =1)
+
+
+
+
 ```
 
 
@@ -667,6 +686,11 @@ ggplot(SYG_4xx_pca1 ,
 
 fviz_pca_var(SYG_4xx_pca, col.var = "contrib",
              gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+
+SYG_4PC1_v <- fviz_contrib(SYG_4xx_pca, choice = "var", axes = 1, top = 7)
+SYG_4PC2_v <- fviz_contrib(SYG_4xx_pca, choice = "var", axes = 2, top = 7)
+
+grid.arrange(SYG_4PC1_v, SYG_4PC2_v, nrow =1)
 ```
 
 
