@@ -296,6 +296,19 @@ cv_by_site_df %>%
 
 ```
 
+Make a plot by site
+```{r}
+cv_plot_site <- cv_by_site_df_unnest %>% 
+  select(-data)
+
+library(tidyr)
+cv_plot_site %>% 
+pivot_longer(cols = -sitename, names_to = "group") %>% 
+ggplot(aes(x = group, y = value, fill = as.factor(sitename))) + 
+geom_bar(stat="identity", position=position_dodge())
+
+```
+
 Make a table of CVs for all variable grouped by phase
 ```{r}
 cv_by_stage_df  <- 
@@ -313,14 +326,13 @@ cv_by_stage_df %>%
   unnest(cv_by_stage)
 ```
 
-
-making box plot by phase
+Make a plot by phase
 ```{r}
-cv_plot <- cv_by_stage_df_unnest %>% 
+cv_plot_stage <- cv_by_stage_df_unnest %>% 
   select(-data)
 
 library(tidyr)
-cv_plot %>% 
+cv_plot_stage %>% 
 pivot_longer(cols = -SPstage.Stage, names_to = "group") %>% 
 ggplot(aes(x = group, y = value, fill = as.factor(SPstage.Stage))) + 
 geom_bar(stat="identity", position=position_dodge())
