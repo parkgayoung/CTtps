@@ -390,6 +390,7 @@ library(corrplot)
 corrplot(COR$r, type="upper", order="hclust", 
          p.mat = COR$P, sig.level = 0.01, insig = "blank")
 
+par(mfrow=c(1,3))
 # correlation for all
 cplotall <- corrplot(SCOR, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
@@ -406,7 +407,10 @@ library(patchwork)
 library(gridExtra)
 
 
+par(mfrow=c(2,1)) #doesn't work
 
+ACOR2 <- pairs(cor2)
+ACOR3 <- pairs(cor3)
 
 ```
 
@@ -560,15 +564,19 @@ SYG6_DF <- SYG6_df[,1:7]
 
 
 #simpler way to calculate Correlataion, you can use
-cor(SYG6_DF)
+SYG6_cor <- cor(SYG6_DF)
 
 #a scatterplot matrix of Correlation
 pairs(SYG6_DF)
 
+cplot_SYG6 <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+
 # CV
 map_df(SYG6_DF, cv)
 
-SYG6_PCA <- prcomp(SYG6_DF, center = TRUE, scale = TRUE)
+SYG6_PCA <- prcomp(SYG6_cor, center = TRUE, scale = TRUE)
 
 # remove stage 1 artefact
 SYG6_xx_pca <- 
@@ -627,10 +635,21 @@ SYG_1DF <- SYG_1df[,1:7]
 
 
 #simpler way to calculate Correlataion, you can use
-cor(SYG_1DF)
+SYG_1cor <- cor(SYG_1DF)
 
 #a scatterplot matrix of Correlation
 pairs(SYG_1DF)
+
+
+cplot_SYG_1 <- corrplot(SYG_1cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+
+# CV
+map_df(SYG6_DF, cv)
+
+SYG6_PCA <- prcomp(SYG6_cor, center = TRUE, scale = TRUE)
+
 
 # CV
 map_df(SYG_1DF, cv)
@@ -693,10 +712,15 @@ SYG_4DF <- SYG_4df[,1:7]
 
 
 #simpler way to calculate Correlataion, you can use
-cor(SYG_4DF)
+SYG_4cor <- cor(SYG_4DF)
 
 #a scatterplot matrix of Correlation
 pairs(SYG_4DF)
+
+
+cplot_SYG_4 <- corrplot(SYG_4cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
 
 # CV
 map_df(SYG_4DF, cv)
@@ -734,11 +758,16 @@ grid.arrange(SYG_4PC1_v, SYG_4PC2_v, nrow =1)
 
 
 
-
-
-
-
-
+Correlations for each site
+```{r}
+par(mfrow=c(1,3))
+cplot_SYG6 <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+cplot_SYG_1 <- corrplot(SYG_1cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+cplot_SYG_4 <- corrplot(SYG_4cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+```
 
 
 
