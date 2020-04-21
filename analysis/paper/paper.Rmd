@@ -362,15 +362,52 @@ SCOR <- cor(DF)
 
 
 #a scatterplot matrix of Correlation
-pairs(DF)
+ALL<-pairs(DF)
+
+# correlation per phase
+cor2 <- 
+df_sitename %>% 
+  filter(SPstage.Stage == 2) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  cor(.)
+
+
+ACOR2 <- pairs(cor2)
+
+
+cor3 <- 
+df_sitename %>% 
+  filter(SPstage.Stage == 3) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  cor(.)
+
+ACOR3 <- pairs(cor3)
+
 
 # Plot for SCOR
 library(corrplot)
-corrplot(SCOR, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45)
 
 corrplot(COR$r, type="upper", order="hclust", 
          p.mat = COR$P, sig.level = 0.01, insig = "blank")
+
+# correlation for all
+cplotall <- corrplot(SCOR, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+# for phase 2
+cplot2 <- corrplot(cor2, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+# for phase 3
+cplot3 <- corrplot(cor3, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+library(patchwork)
+
+
+library(gridExtra)
+
+
+
+
 ```
 
 Principal component analysis
@@ -425,6 +462,8 @@ ggplot(xx_pca1_2 ,
        colour = stage)) +
   geom_point() +
   stat_ellipse()
+
+
 
 
 # phase 3
