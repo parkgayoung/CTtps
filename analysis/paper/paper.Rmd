@@ -341,25 +341,9 @@ geom_bar(stat="identity", position=position_dodge())
 
 Computing Pearson's correlation 
 ```{r}
-library(Hmisc)
-COR <- rcorr(as.matrix(DF))
-
-#a simple function for formatting a correlation matrix into a table with 4 columns containing from (http://www.sthda.com/english/wiki/correlation-matrix-a-quick-start-guide-to-analyze-format-and-visualize-a-correlation-matrix-using-r-software)
-flattenCorrMatrix <- function(cormat, pmat) {
-  ut <- upper.tri(cormat)
-  data.frame(
-    row = rownames(cormat)[row(cormat)[ut]],
-    column = rownames(cormat)[col(cormat)[ut]],
-    cor  =(cormat)[ut],
-    p = pmat[ut]
-    )
-}
-
-flattenCorrMatrix(COR$r, COR$P)
 
 #simpler way to calculate Correlataion, you can use
 SCOR <- cor(DF)
-
 
 #a scatterplot matrix of Correlation
 ALL<-pairs(DF)
@@ -411,7 +395,57 @@ par(mfrow=c(2,1)) #doesn't work
 
 ACOR2 <- pairs(cor2)
 ACOR3 <- pairs(cor3)
+```
 
+```{r}
+#using corrr package
+library(tidyverse)
+library(corrr)
+
+corrr_all <- correlate(DF) %>% 
+  shave()
+
+call<-rplot(corrr_all) +
+  ggtitle("Correlation for all phase") 
+
+correlate(DF) %>% 
+  network_plot()
+
+#phase 2
+
+DF2<-df_sitename %>% 
+  filter(SPstage.Stage == 2) %>% 
+  select(-sitename, -SPstage.Stage)
+
+corrr_2 <-correlate(DF2) %>% 
+  shave()
+
+ctwo <- rplot(corrr_2) +
+  ggtitle("Correlation for 2nd phase") 
+
+correlate(DF2) %>% 
+  network_plot()
+
+#phase 3
+
+DF3<-df_sitename %>% 
+  filter(SPstage.Stage == 3) %>% 
+  select(-sitename, -SPstage.Stage)
+
+corrr_3 <-correlate(DF3) %>% 
+  shave()
+
+cthree <- rplot(corrr_3) +
+  ggtitle("Correlation for 3rd phase") 
+
+correlate(DF3) %>% 
+  network_plot()
+  
+
+
+### three phases at once
+library(patchwork)
+call + ctwo + cthree + plot_layout(ncol=1)
 ```
 
 Principal component analysis
@@ -513,15 +547,20 @@ We see some differences in artefact shape and size. Now we need to examins the P
 library(factoextra) #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
 
 # Color variables by the continuous variable
-fviz_pca_var(xx_pca, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+cv_all <- fviz_pca_var(xx_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="All")
 
 # phase 2
-fviz_pca_var(xx_pca2, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+cv_two <- fviz_pca_var(xx_pca2, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="Phase 2")
 # phase 3
-fviz_pca_var(xx_pca3, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+cv_three <- fviz_pca_var(xx_pca3, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="Phase 3")
+
+library(patchwork)
+
+cv_all + cv_two + cv_three + plot_layout(ncol=1)
+
 ```
 
 
@@ -537,8 +576,6 @@ library(plotly)
 plot_ly(pca_col, x = ~PC1, y = ~PC2, z = ~PC3, colors = "Dark2", size = I(120)) %>%  add_markers(color = ~phase)
 
 ```
-
-
 
 
 
@@ -571,6 +608,21 @@ pairs(SYG6_DF)
 cplot_SYG6 <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
 
+# using corrr
+
+corrr_SYG6_DF <-correlate(SYG6_DF) %>% 
+  shave()
+
+cSYG6_DF <- rplot(corrr_SYG6_DF) +
+  ggtitle("Correlation for corrr_SYG6_DF, 2nd phase") 
+
+correlate(SYG6_DF) %>% 
+  network_plot()
+  
+
+
+
+
 
 # CV
 map_df(SYG6_DF, cv)
@@ -596,14 +648,14 @@ ggplot(SYG6_xx_pca1 ,
   geom_point() +
   stat_ellipse()
 
-fviz_pca_var(SYG6_xx_pca, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+cv_SYG6 <-fviz_pca_var(SYG6_xx_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="SYG6:2nd")
 
 
 SYG6_PC1_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 1, top = 7)
 SYG6_PC2_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 2, top = 7)
 
-grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1)
+grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1) 
 
 
 
@@ -618,8 +670,7 @@ SYG1_1: 2nd phase
 
 
 ```{r}
-
-
+#SYG1_2
 library(stringr)
 SYG1_2df <- 
   df %>% 
@@ -646,6 +697,19 @@ cplot_SYG1_2 <- corrplot(SYG1_2cor, type = "upper", order = "hclust",
          tl.col = "black", tl.srt = 45)
 
 
+# using corrr
+
+corrr_SYG1_2DF <-correlate(SYG1_2DF) %>% 
+  shave()
+
+cSYG1_2DF <- rplot(corrr_SYG1_2DF) +
+  ggtitle("Correlation for corrr_SYG1_2DF, 3rd phase") 
+
+correlate(SYG1_2DF) %>% 
+  network_plot()
+  
+
+
 # CV
 map_df(SYG1_2DF, cv)
 
@@ -670,8 +734,8 @@ ggplot(SYG1_2xx_pca1 ,
   geom_point() +
   stat_ellipse()
 
-fviz_pca_var(SYG1_2xx_pca, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
+cv_SYG1_2 <- fviz_pca_var(SYG1_2xx_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="SYG1_2:3rd")
 
 
 SYG1_2PC1_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 1, top = 7)
@@ -683,22 +747,108 @@ grid.arrange(SYG1_2PC1_v, SYG1_2PC2_v, nrow =1)
 
 ```
 
-
-
-
-
-Correlations for each site
 ```{r}
-par(mfrow=c(1,2))
-cplot_SYG6 <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
+#SYG1_1
+library(stringr)
+SYG1_1df <- 
+  df %>% 
+  filter(str_detect(files, "SYG1_1"))
+
+library(dplyr)
+SYG1_1df_sitename <- SYG1_1df %>% 
+  mutate (files = str_remove_all(files, "_\\d+.tps")) %>% 
+  rename(sitename = files)
+  
+
+#list of all attributes without ID
+SYG1_1DF <- SYG1_1df[,1:7]
+
+
+#simpler way to calculate Correlataion, you can use
+SYG1_1cor <- cor(SYG1_1DF)
+
+#a scatterplot matrix of Correlation
+pairs(SYG1_1DF)
+
+
+cplot_SYG1_1 <- corrplot(SYG1_1cor, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
-cplot_SYG_1 <- corrplot(SYG_1cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45)
+
+
+# using corrr
+
+corrr_SYG1_1DF <-correlate(SYG1_1DF) %>% 
+  shave()
+
+cSYG1_1DF <- rplot(corrr_SYG1_1DF) +
+  ggtitle("Correlation for corrr_SYG1_1DF, 2nd phase") 
+
+correlate(SYG1_1DF) %>% 
+  network_plot()
+
+
+# CV
+map_df(SYG1_1DF, cv)
+
+SYG1_1PCA <- prcomp(SYG1_1DF, center = TRUE, scale = TRUE)
+
+# remove stage 1 artefact
+SYG1_1xx_pca <- 
+  SYG1_1df_sitename %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  prcomp(., center = TRUE, scale = TRUE)
+
+
+SYG1_1xx_pca1 <- 
+  data.frame(SYG1_1xx_pca$x,
+             stage = as.factor(SYG1_1df_sitename$SPstage.Stage))
+
+#plot for both stage
+SYG1_1gg_stage <- 
+ggplot(SYG1_1xx_pca1 ,
+       aes(PC1,
+           PC2,
+       colour = stage)) +
+  geom_point() +
+  stat_ellipse()
+
+cv_SYG1_1 <-fviz_pca_var(SYG1_1xx_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="SYG1_1:2nd")
+
+
+SYG1_1PC1_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 1, top = 7)
+SYG1_1PC2_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 2, top = 7)
+
+grid.arrange(SYG1_1PC1_v, SYG1_1PC2_v, nrow =1)
+
+
 
 ```
 
 
 
+Correlations for each site
+```{r}
+par(mfrow=c(1,3))
+cplot_SYG6_ <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, title = "SYG6")
+cplot_SYG1_1 <- corrplot(SYG1_1cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, title = "SYG1_1")
+cplot_SYG1_2 <- corrplot(SYG1_2cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, title = "SYG1_2")
+
+
+### three sites at once, using corrr
+library(patchwork)
+cSYG6_DF + cSYG1_2DF + cSYG1_1DF+ plot_layout(ncol=1)
+
+```
+
+
+CV for each site
+```{r}
+cv_SYG6 + cv_SYG1_1 + cv_SYG1_2 +  plot_layout(ncol=1)
+```
 
 
 I'm working on how to read oulines and how to use them for anlaysis
