@@ -129,7 +129,7 @@ read.tps = function(data) {
 }
 
 #need to figure out how to read the file inside the project
-landmarks <- read.tps(here("analysis/data/raw_data/A_BG_2.tps"))
+landmarks <- read.tps(here("analysis/data/raw_data/BG_0_2.tps"))
 
 #getting info for phase of each site
 SPstage <- read.csv(here("analysis/data/SPstage.csv"))
@@ -240,7 +240,7 @@ df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files, SPstage$Stage)
 
 #trim the name of each artifact.
 df_sitename <- df %>% 
-  mutate (files = str_remove_all(files, "A_|1|2|.tps")) %>% 
+  mutate (files = str_remove_all(files, "_.tps")) %>% 
   separate (files, into = c("sitename", "files"), sep = "_") %>% 
   select (-files)
 
@@ -547,7 +547,7 @@ SYG6 site data and analysis
 
 ```{r}
 
-# artifacts from SYG6 site
+# artifacts from SYG6 site: now it has two layers, two phases
 library(stringr)
 SYG6_df <- 
   df %>% 
@@ -555,7 +555,7 @@ SYG6_df <-
 
 
 SYG6_df_sitename <- SYG6_df %>% 
-  mutate (files = str_remove_all(files, "A_|1|2|.tps")) %>% 
+  mutate (files = str_remove_all(files, "_.tps")) %>% 
   separate (files, into = c("sitename", "files"), sep = "_") %>% 
   select (-files)
 
@@ -618,15 +618,15 @@ SYG_1 site data and analysis
 
 ```{r}
 
-# artifacts from SYG_1 site
+# artifacts from SYG1 site
 library(stringr)
 SYG_1df <- 
   df %>% 
-  filter(str_detect(files, "SYG_1"))
+  filter(str_detect(files, "SYG1"))
 
 
 SYG_1df_sitename <- SYG_1df %>% 
-  mutate (files = str_remove_all(files, "A_|1|2|.tps")) %>% 
+  mutate (files = str_remove_all(files, "_.tps")) %>% 
   separate (files, into = c("sitename", "files"), sep = "_") %>% 
   select (-files)
 
@@ -643,12 +643,6 @@ pairs(SYG_1DF)
 
 cplot_SYG_1 <- corrplot(SYG_1cor, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
-
-
-# CV
-map_df(SYG6_DF, cv)
-
-SYG6_PCA <- prcomp(SYG6_cor, center = TRUE, scale = TRUE)
 
 
 # CV
@@ -691,82 +685,17 @@ grid.arrange(SYG_1PC1_v, SYG_1PC2_v, nrow =1)
 ```
 
 
-SYG_4 site data and analysis
-
-```{r}
-
-# artifacts from SYG_4 site
-library(stringr)
-SYG_4df <- 
-  df %>% 
-  filter(str_detect(files, "SYG_4"))
-
-
-SYG_4df_sitename <- SYG_4df %>% 
-  mutate (files = str_remove_all(files, "A_|1|2|.tps")) %>% 
-  separate (files, into = c("sitename", "files"), sep = "_") %>% 
-  select (-files)
-
-#list of all attributes without ID
-SYG_4DF <- SYG_4df[,1:7]
-
-
-#simpler way to calculate Correlataion, you can use
-SYG_4cor <- cor(SYG_4DF)
-
-#a scatterplot matrix of Correlation
-pairs(SYG_4DF)
-
-
-cplot_SYG_4 <- corrplot(SYG_4cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45)
-
-
-# CV
-map_df(SYG_4DF, cv)
-
-SYG_4PCA <- prcomp(SYG_4DF, center = TRUE, scale = TRUE)
-
-# remove stage 1 artefact
-SYG_4xx_pca <- 
-SYG_4df_sitename %>% 
-  filter(SPstage.Stage != 1) %>% 
-  select(-sitename, -SPstage.Stage) %>% 
-  prcomp(., center = TRUE, scale = TRUE)
-
-SYG_4xx_pca1 <- 
-  data.frame(SYG_4xx_pca$x,
-             stage = as.factor( SYG_4df_sitename$SPstage.Stage[SYG_4df_sitename$SPstage.Stage !=1]))
-
-#plot for both stage
-SYG_4gg_stage <- 
-ggplot(SYG_4xx_pca1 ,
-       aes(PC1,
-           PC2,
-       colour = stage)) +
-  geom_point() +
-  stat_ellipse()
-
-fviz_pca_var(SYG_4xx_pca, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"))
-
-SYG_4PC1_v <- fviz_contrib(SYG_4xx_pca, choice = "var", axes = 1, top = 7)
-SYG_4PC2_v <- fviz_contrib(SYG_4xx_pca, choice = "var", axes = 2, top = 7)
-
-grid.arrange(SYG_4PC1_v, SYG_4PC2_v, nrow =1)
-```
 
 
 
 Correlations for each site
 ```{r}
-par(mfrow=c(1,3))
+par(mfrow=c(1,2))
 cplot_SYG6 <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
 cplot_SYG_1 <- corrplot(SYG_1cor, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
-cplot_SYG_4 <- corrplot(SYG_4cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45)
+
 ```
 
 
