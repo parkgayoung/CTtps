@@ -349,7 +349,7 @@ facet_wrap(~am, scales = 'free_x') +
 
 
 
-## try with CV
+## CV with site (n=X)
  cv_by_site_df_label <- 
 df_sitename %>% 
   select(-SPstage.Stage) %>% 
@@ -363,18 +363,19 @@ df_sitename %>%
 
 cv_by_site_df_unnest_label <-   
 cv_by_site_df_label %>% 
-  unnest(cv_by_site, label)
+  unnest(cv_by_site)
 
 
 cv_plot_site_label <- cv_by_site_df_unnest_label %>% 
-  select(-data) 
-
+  select(-data) %>% 
+ 
 library(tidyr)
-cv_plot_site %>% 
-pivot_longer(cols = -sitename, names_to = "group") %>% 
-ggplot(aes(x = sitename, y = value, fill = as.factor(group))) + 
+p<- cv_plot_site_label %>% 
+pivot_longer(cols = -c(sitename,label), names_to = "group") %>% 
+ggplot(aes(label, value, fill = as.factor(group))) + 
 geom_bar(stat="identity", position=position_dodge())
 
+p + labs(x= "Site", fill = "Attributes")
 ```
 
 Make a table of CVs for all variable grouped by phase
