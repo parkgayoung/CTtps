@@ -144,6 +144,7 @@ read.tps = function(data) {
 #need to figure out how to read the file inside the project
 landmarks <- read.tps(here("analysis/data/raw_data/BG_0_2.tps"))
 
+
 #getting info for phase of each site
 SPstage <- read.csv(here("analysis/data/SPstage.csv"))
 
