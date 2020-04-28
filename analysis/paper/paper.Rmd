@@ -654,7 +654,7 @@ cv_all + cv_two + cv_three + plot_layout(ncol=1)
 ```
 
 
-PCA for 3 factors
+PCA for 3 factors. We don't think we need this for now. 
 ```{r}
 library(plot3D)
 
@@ -688,6 +688,9 @@ SYG6_df_sitename <- SYG6_df %>%
 #list of all attributes without ID
 SYG6_DF <- SYG6_df[,1:7]
 
+# make n=element number 
+count_SYG6 <- length(which(SYG6_df$SPstage.Stage == 2))
+
 
 #simpler way to calculate Correlataion, you can use
 SYG6_cor <- cor(SYG6_DF)
@@ -704,14 +707,11 @@ corrr_SYG6_DF <-correlate(SYG6_DF) %>%
   shave()
 
 cSYG6_DF <- rplot(corrr_SYG6_DF) +
-  ggtitle("Correlation for corrr_SYG6_DF, 2nd phase") 
+  ggtitle(paste("Correlation SYG6: 2nd Phase", "(n =", count_SYG6,")")) 
 
 correlate(SYG6_DF) %>% 
   network_plot()
   
-
-
-
 
 
 # CV
@@ -739,7 +739,8 @@ ggplot(SYG6_xx_pca1 ,
   stat_ellipse()
 
 cv_SYG6 <-fviz_pca_var(SYG6_xx_pca, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="SYG6:2nd")
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
+             ggtitle(paste("SYG6: 2nd Phase", "(n =", count_SYG6,")"))
 
 
 SYG6_PC1_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 1, top = 7)
@@ -775,6 +776,10 @@ SYG1_2df_sitename <- SYG1_2df %>%
 #list of all attributes without ID
 SYG1_2DF <- SYG1_2df[,1:7]
 
+# make n=element number 
+count_SYG1_2 <- length(which(SYG1_2df$SPstage.Stage == 3))
+
+
 
 #simpler way to calculate Correlataion, you can use
 SYG1_2cor <- cor(SYG1_2DF)
@@ -793,7 +798,8 @@ corrr_SYG1_2DF <-correlate(SYG1_2DF) %>%
   shave()
 
 cSYG1_2DF <- rplot(corrr_SYG1_2DF) +
-  ggtitle("Correlation for corrr_SYG1_2DF, 3rd phase") 
+  ggtitle(paste("Correlation SYG1_2: 3rd Phase", "(n =", count_SYG1_2,")"))
+
 
 correlate(SYG1_2DF) %>% 
   network_plot()
@@ -825,11 +831,12 @@ ggplot(SYG1_2xx_pca1 ,
   stat_ellipse()
 
 cv_SYG1_2 <- fviz_pca_var(SYG1_2xx_pca, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="SYG1_2:3rd")
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
+  ggtitle(paste("SYG1_2: 3rd Phase", "(n =", count_SYG1_2,")"))
+  
 
-
-SYG1_2PC1_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 1, top = 7)
-SYG1_2PC2_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 2, top = 7)
+SYG1_2PC1_v <- fviz_contrib(SYG1_2xx_pca, choice = "var", axes = 1, top = 7)
+SYG1_2PC2_v <- fviz_contrib(SYG1_2xx_pca, choice = "var", axes = 2, top = 7)
 
 grid.arrange(SYG1_2PC1_v, SYG1_2PC2_v, nrow =1)
 
@@ -853,6 +860,9 @@ SYG1_1df_sitename <- SYG1_1df %>%
 #list of all attributes without ID
 SYG1_1DF <- SYG1_1df[,1:7]
 
+# make n=element number 
+count_SYG1_1 <- length(which(SYG1_1df$SPstage.Stage == 2))
+
 
 #simpler way to calculate Correlataion, you can use
 SYG1_1cor <- cor(SYG1_1DF)
@@ -871,7 +881,9 @@ corrr_SYG1_1DF <-correlate(SYG1_1DF) %>%
   shave()
 
 cSYG1_1DF <- rplot(corrr_SYG1_1DF) +
-  ggtitle("Correlation for corrr_SYG1_1DF, 2nd phase") 
+  ggtitle(paste("Correlation SYG1_1: 2nd Phase", "(n =", count_SYG1_1,")"))
+
+
 
 correlate(SYG1_1DF) %>% 
   network_plot()
@@ -902,18 +914,23 @@ ggplot(SYG1_1xx_pca1 ,
   geom_point() +
   stat_ellipse()
 
-cv_SYG1_1 <-fviz_pca_var(SYG1_1xx_pca, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="SYG1_1:2nd")
+cv_SYG1_1 <- fviz_pca_var(SYG1_1xx_pca, col.var = "contrib",
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
+            ggtitle(paste("SYG1_1: 2nd Phase", "(n =", count_SYG1_1,")"))
+             
 
-
-SYG1_1PC1_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 1, top = 7)
-SYG1_1PC2_v <- fviz_contrib(SYG_1xx_pca, choice = "var", axes = 2, top = 7)
+SYG1_1PC1_v <- fviz_contrib(SYG1_1xx_pca, choice = "var", axes = 1, top = 7)
+SYG1_1PC2_v <- fviz_contrib(SYG1_1xx_pca, choice = "var", axes = 2, top = 7)
 
 grid.arrange(SYG1_1PC1_v, SYG1_1PC2_v, nrow =1)
 
 
 
 ```
+
+
+
+
 
 
 
@@ -930,7 +947,7 @@ cplot_SYG1_2 <- corrplot(SYG1_2cor, type = "upper", order = "hclust",
 
 ### three sites at once, using corrr
 library(patchwork)
-cSYG6_DF + cSYG1_2DF + cSYG1_1DF+ plot_layout(ncol=1)
+cSYG6_DF + cSYG1_2DF + cSYG1_1DF + plot_layout(ncol=1)
 
 ```
 
@@ -941,7 +958,7 @@ cv_SYG6 + cv_SYG1_1 + cv_SYG1_2 +  plot_layout(ncol=1)
 ```
 
 
-I'm working on how to read oulines and how to use them for anlaysis
+I'm working on how to read oulines and how to use them for anlaysis. We may not use this for the research.
 
 ```{r}
 # reading landmarks and outline in tps, code from Morpho package, adjust readallTPS function. 
