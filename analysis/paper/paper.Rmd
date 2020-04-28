@@ -348,7 +348,6 @@ facet_wrap(~am, scales = 'free_x') +
   theme(legend.position = "none")
 
 
-
 ## CV with site (n=X)
  cv_by_site_df_label <- 
 df_sitename %>% 
@@ -400,7 +399,7 @@ library(tidyr)
 cv_plot_stage %>% 
 pivot_longer(cols = -SPstage.Stage, names_to = "group") %>%
 ggplot(aes(x = group, y = value, fill = as.factor(SPstage.Stage))) + 
-geom_bar(stat="identity", position=position_dodge())
+geom_bar(stat="identity", position=position_dodge()) + labs(x="Attributes", fill= "Phase")
 
 ```
 This plot shows the difference of CV in between 2nd and 3rd phase. For TL, both two phases have almost same values. For MW and TW, 3rd phase has lower values than the 2nd. The other 4 attributes show higher valeues in 3rd phase, which means less standardized in their shape during the latter period.
@@ -455,7 +454,7 @@ cplot3 <- corrplot(cor3, type = "upper", order = "hclust",
          tl.col = "black", tl.srt = 45, main = "Correlatoin for Phase 3")
 
 ```
-=> We may need to delete this chunk since we made 
+=> We may need to delete this chunk since we made new plots below using corrr package and same dataset.
 
 
 
@@ -509,6 +508,15 @@ correlate(DF3) %>%
 library(patchwork)
 call + ctwo + cthree + plot_layout(ncol=1)
 ```
+When it comes to the correlations between seven attributes, BL-ML, TW-MW, TL-TW, and TL-SL are relatively close to each other. There is no negative correlation among the attributes. Compared to the 2nd phase, in 3rd phase, correlations of SL with TW and MW, and TL with TWm SL, and MW get stronger. On the other hand, the correlation of TW-SW becomes weeker. Overall, the correlation between attributes became stronger from 2nd to 3rd phase. 
+
+Combined the two results of CV and correlation from 2nd to 3rd,  
+
+CV: lower in MW and TW, but higher in other 5 attribtues.
+
+COR: stronger 
+
+
 
 Principal component analysis
 
