@@ -146,12 +146,12 @@ landmarks <- read.tps(here("analysis/data/raw_data/BG_0_2.tps"))
 
 
 #getting info for phase of each site
-SPstage <- read.csv(here("analysis/data/SPstage.csv"))
+SPstage <- read_csv(here("analysis/data/SPstage.csv"))
 
 #Compare multiple artifacts 
 #Open multiple tps files. This will need to be changed to read files inside the project
 datadir <- here("/analysis/data/raw_data/")
-files <- dir(datadir, pattern = "*.tps")
+files <- dir(datadir, pattern = "*.tps$|*.TPS$")
 ```
 
 
