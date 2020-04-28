@@ -628,6 +628,7 @@ grid.arrange(PC1_v, PC2_v, PC3_v, PC4_v, nrow =2)
 
 ```
 
+
 We see some differences in artefact shape and size. Now we need to examins the PCA output numbers to describe in more details. 
 
 ```{r}
@@ -652,6 +653,8 @@ library(patchwork)
 cv_all + cv_two + cv_three + plot_layout(ncol=1)
 
 ```
+Overall, BL and ML have stronger influence than the other attributes and are related to each other but not with the other attributes throughout time. From the phase 2 to the phase 3, the proportion of TL and SL gets bigger and they are more related to SW. 
+
 
 
 PCA for 3 factors. We don't think we need this for now. 
@@ -930,10 +933,6 @@ grid.arrange(SYG1_1PC1_v, SYG1_1PC2_v, nrow =1)
 
 
 
-
-
-
-
 Correlations for each site
 ```{r}
 par(mfrow=c(1,3))
@@ -950,17 +949,20 @@ library(patchwork)
 cSYG6_DF + cSYG1_2DF + cSYG1_1DF + plot_layout(ncol=1)
 
 ```
+In this plot, we can see that the pattern of correlation for SYG6 and SYG1_1 are similar in terms of correlation based on ML/SL/TL with other attributes. Both are part of the phase 2. However, SYG1_2 is younger than the other two and the correlation based on SW become weaker. 
+When it comes to the difference between SYG6 and SYG1_1, the correlation between artifacts of SYG1_1 is stronger than SYG6. 
 
 
-CV for each site
+PCA for each site
 ```{r}
 cv_SYG6 + cv_SYG1_1 + cv_SYG1_2 +  plot_layout(ncol=1)
 ```
+Unlike the correlation of the three units, PCA of the three are more various. Especially, SW is related to SL/TL in SYG6, related to ML/BL in SYG1_1, and unrelated to the other attributes in SYG1_2. 
 
 
-I'm working on how to read oulines and how to use them for anlaysis. We may not use this for the research.
 
 ```{r}
+#I'm working on how to read oulines and how to use them for anlaysis. We may not use this for the research.
 # reading landmarks and outline in tps, code from Morpho package, adjust readallTPS function. 
 readalltps = function(file) 
 {
