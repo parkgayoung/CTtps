@@ -335,19 +335,6 @@ Unlike the previous plot, in this one, the bars represent different attributes. 
 
 
 ```{r}
-#how to put n into the label
-mtcars2 <- mtcars %>% 
-  group_by(cyl, am) %>% mutate(n = n()) %>% 
-  mutate(label = paste0(cyl,'\nN = ',n))
-
-ggplot(mtcars2,
-   aes(x = factor(label), y = mpg, color = factor(label))) + 
-  geom_point() + 
-   xlab('cyl') + 
-facet_wrap(~am, scales = 'free_x') +
-  theme(legend.position = "none")
-
-
 ## CV with site (n=X)
  cv_by_site_df_label <- 
 df_sitename %>% 
