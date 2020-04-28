@@ -353,8 +353,8 @@ cv_by_site_df_label %>%
   unnest(cv_by_site)
 
 
-cv_plot_site_label <- cv_by_site_df_unnest_label %>% 
-  select(-data) %>% 
+cv_plot_site_label <- cv_by_site_df_unnest_label %>%
+                select(-data)
  
 library(tidyr)
 p<- cv_plot_site_label %>% 
@@ -413,7 +413,6 @@ df_sitename %>%
 
 
 ACOR2 <- pairs(cor2)
-
 
 cor3 <- 
 df_sitename %>% 
