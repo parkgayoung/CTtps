@@ -510,11 +510,13 @@ call + ctwo + cthree + plot_layout(ncol=1)
 ```
 When it comes to the correlations between seven attributes, BL-ML, TW-MW, TL-TW, and TL-SL are relatively close to each other. There is no negative correlation among the attributes. Compared to the 2nd phase, in 3rd phase, correlations of SL with TW and MW, and TL with TWm SL, and MW get stronger. On the other hand, the correlation of TW-SW becomes weeker. Overall, the correlation between attributes became stronger from 2nd to 3rd phase. 
 
-Combined the two results of CV and correlation from 2nd to 3rd,  
+Combined the two results of CV and correlation from 2nd to 3rd... 
 
 CV: lower in MW and TW, but higher in other 5 attribtues.
 
-COR: stronger 
+COR: overall correlation became stronger. 
+
+=> This combination doesn't fit into the models.
 
 
 
@@ -542,6 +544,22 @@ df_sitename %>%
 xx_pca1 <- 
   data.frame(xx_pca$x,
              stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage !=1]))
+
+
+## CV with site (n=X)
+label_phase <-
+   df_sitename %>% 
+   group_by(SPstage.Stage) %>% 
+   add_tally() %>% 
+   mutate(label = as.factor(paste0(SPstage.Stage,'\nN = ',n))) 
+
+
+count_phase <- length(which(label_phase[9]>0))
+count_phase2 <- length(which(label_phase[9] == 2))
+count_phase3 <- length(which(label_phase[9] == 3))
+
+
+###
 
 #plot for both stage
 gg_stage <- 
@@ -597,10 +615,10 @@ ggplot(xx_pca1_3 ,
 
 ```
 
-Contribution of variables for each of four PCA demensions
+Contribution of variables for each of four PCA demensions of ALL phases except for the first. 
 ```{r}
 library(gridExtra)
-
+library(factoextra)
 PC1_v <- fviz_contrib(xx_pca, choice = "var", axes = 1, top = 7)
 PC2_v <- fviz_contrib(xx_pca, choice = "var", axes = 2, top = 7)
 PC3_v <- fviz_contrib(xx_pca, choice = "var", axes = 3, top = 7)
@@ -618,14 +636,16 @@ library(factoextra) #http://www.sthda.com/english/articles/31-principal-componen
 
 # Color variables by the continuous variable
 cv_all <- fviz_pca_var(xx_pca, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="All")
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) + ggtitle(paste("All", "(n =", count_phase,")"))
 
 # phase 2
 cv_two <- fviz_pca_var(xx_pca2, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="Phase 2")
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) + ggtitle(paste("Phase 2", "(n =", count_phase2,")"))
 # phase 3
 cv_three <- fviz_pca_var(xx_pca3, col.var = "contrib",
-             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07"), title ="Phase 3")
+             gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) + ggtitle(paste("Phase 3", "(n =", count_phase3,")"))
+
+
 
 library(patchwork)
 
