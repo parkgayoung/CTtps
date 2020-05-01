@@ -111,6 +111,7 @@ Reading tps data and phase information of each artifact
 ```{r}
 #reading landmarks in tps, code from https://gist.github.com/mrdwab/2062329
 
+
 read.tps = function(data) {
   # Reads the .tps file format produced by TPSDIG 
   # (http://life.bio.sunysb.edu/morph/ into a single data frame
@@ -146,12 +147,12 @@ landmarks <- read.tps(here("analysis/data/raw_data/BG_0_2.tps"))
 
 
 #getting info for phase of each site
-SPstage <- read.csv(here("analysis/data/SPstage.csv"))
+SPstage <- read_csv(here("analysis/data/SPstage.csv"))
 
 #Compare multiple artifacts 
 #Open multiple tps files. This will need to be changed to read files inside the project
 datadir <- here("/analysis/data/raw_data/")
-files <- dir(datadir, pattern = "*.tps")
+files <- dir(datadir, pattern = "*.tps$|*.TPS$")
 ```
 
 
@@ -740,7 +741,7 @@ SYG1_2df <-
 library(dplyr)
 SYG1_2df_sitename <- SYG1_2df %>% 
   mutate (files = str_remove_all(files, "_\\d+.tps")) %>% 
-  rename(sitename = files)
+  dplyr::rename(sitename = files)
   
 
 #list of all attributes without ID
@@ -824,7 +825,7 @@ SYG1_1df <-
 library(dplyr)
 SYG1_1df_sitename <- SYG1_1df %>% 
   mutate (files = str_remove_all(files, "_\\d+.tps")) %>% 
-  rename(sitename = files)
+  dplyr::rename(sitename = files)
   
 
 #list of all attributes without ID
