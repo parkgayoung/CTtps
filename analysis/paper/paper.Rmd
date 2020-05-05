@@ -424,7 +424,7 @@ df_sitename %>%
         sep = "_") %>% 
   group_by(site_phase) %>% 
   add_tally() %>% 
-  filter( n > 10) %>% 
+  filter( n > 5) %>% 
    mutate(label = as.factor(paste0(site_phase,' (N = ', n, ")"))) %>%   select(-n) %>% 
  nest(-site_phase, -label) %>% 
   mutate(cv_by_site = map(data, ~map_df(.x, cv))) %>% 
@@ -441,15 +441,22 @@ cv_by_site_df_label_more_than_10 %>%
   facet_wrap(~  label) +
   ggtitle("CVs of point attributes by site (with sites >10 artefacts")
 
+cv_by_site_df_label_more_than_10_ml_mw_tw <- 
 cv_by_site_df_label_more_than_10 %>%
   pivot_longer(cols = -c(site_phase, label), 
                names_to = "lithic_attribute",
                values_to = "CV") %>%
-  filter(lithic_attribute %in% c("ML", "MW", "TW")) %>% 
+  filter(lithic_attribute %in% c("ML", "MW", "TW"))  %>% 
+  mutate(phase = parse_number(str_extract(site_phase, "_."))) %>% 
+  group_by(site_phase) %>% 
+  mutate(mean_cv = mean(CV))
   
-  ggplot(aes(x = lithic_attribute, 
+  ggplot(cv_by_site_df_label_more_than_10_ml_mw_tw,
+         aes(x = lithic_attribute, 
              y = CV)) +
   geom_col() +
+  geom_hline(aes(yintercept = mean_cv), 
+             colour = "red") +
   facet_wrap(~  label) +
   ggtitle("CVs of point attributes by site (with sites >10 artefacts)") +
   theme_minimal()
