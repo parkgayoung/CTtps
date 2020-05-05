@@ -105,11 +105,8 @@ library(tidyverse)
 # Methods
 
 Reading tps data and phase information of each artifact 
-<<<<<<< HEAD
+
 ```{r results='hide', include=FALSE}
-=======
-```{r, echo = FALSE}
->>>>>>> 2daf1d3e81f3875998b5551e9126ccbc2f10410d
 #reading landmarks in tps, code from https://gist.github.com/mrdwab/2062329
 
 
@@ -286,9 +283,10 @@ map_df(DF, cv)
 box2 <- boxplot(cvmap) ##Is there any better way to show this data??
 
 ```
-The coefficient of variation (CV) is the ratio of the standard deviation devided by mean. It shows the extent of variability from the mean. 
-CV for all attributes are distributed from 23-31%. Interestingly, SL and SW have high CV values (36.3 and 32.0, respectively). These attributes show lower variation on boxplot. <= need to think about
 
+The coefficient of variation (CV) is the ratio of the standard deviation devided by mean. It shows the extent of variability from the mean. 
+
+CV for all attributes are distributed from 23-31%. Interestingly, SL and SW have high CV values (36.3 and 32.0, respectively). These attributes show lower variation on boxplot. <= need to think about
 
 Make a table of CVs for all variable grouped by site
 
@@ -319,11 +317,11 @@ ggplot(aes(x = group, y = value, fill = as.factor(sitename))) +
 geom_bar(stat="identity", position=position_dodge())
 
 ```
+
 The plot shows CV values for different attributes The color of the bars represent different sites. Among tehs sites, we can see SC (Sachang) site has significantly high CV values. SC has two artifacts, one is from 1st phase and the other one is 2nd phase. We assume that this time difference and few number of artifacts may relate to the high CV value.   
 
-
 ```{r}
-<<<<<<< HEAD
+
 cv_plot_site %>%
   pivot_longer(cols = -sitename, 
                names_to = "group") %>%
@@ -334,8 +332,8 @@ cv_plot_site %>%
            position = position_dodge())
 
 ```
-Unlike the previous plot, in this one, the bars represent different attributes. You can see that SC has highest CV values of most attributes. Overall, SW values are very high. 
 
+Unlike the previous plot, in this one, the bars represent different attributes. You can see that SC has highest CV values of most attributes. Overall, SW values are very high. 
 
 Make a table of CVs for all variable grouped by phase
 
@@ -343,10 +341,6 @@ BM: discuss this one first, this is the overview picture for our story:
 
 ```{r}
 cv_by_stage_df  <- 
-=======
-## CV with site (n=X)
- cv_by_site_df_label <- 
->>>>>>> 2daf1d3e81f3875998b5551e9126ccbc2f10410d
 df_sitename %>% 
   select(-sitename) %>% 
   group_by(SPstage.Stage) %>% 
@@ -408,7 +402,6 @@ cv_by_site_df_unnest_label_1 <-
 cv_by_site_df_label_1 %>% 
   unnest(cv_by_site)
 
-
 library(tidyr)
 p<- cv_plot_site_label %>% 
 pivot_longer(cols = -c(sitename,label), names_to = "group") %>% 
@@ -416,16 +409,11 @@ ggplot(aes(label, value, fill = as.factor(group))) +
 geom_bar(stat="identity", position=position_dodge())
 
 p + labs(x= "Site", fill = "Attributes")
-<<<<<<< HEAD
-=======
 ```
+
 Unlike the previous plot, in this one, the bars represent different attributes. You can see that SC has highest CV values of most attributes. Overall, SW values are very high. 
 
-
-
->>>>>>> 2daf1d3e81f3875998b5551e9126ccbc2f10410d
-
-
+```{r}
 # plot CVs by site with number of artefacts showing >10
 # phase 2 and phase 3 sites only
 cv_by_site_df_label_more_than_10 <- 
@@ -520,6 +508,7 @@ call + ctwo + cthree + plot_layout(ncol=1)
 
 direction_all+ direction_2 + direction_3 + plot_layout(ncol=1)
 ```
+
 When it comes to the correlations between seven attributes, BL-ML, TW-MW, TL-TW, and TL-SL are relatively close to each other. There is no negative correlation among the attributes. Compared to the 2nd phase, in 3rd phase, correlations of SL with TW and MW, and TL with TWm SL, and MW get stronger. On the other hand, the correlation of TW-SW becomes weeker. Overall, the correlation between attributes became stronger from 2nd to 3rd phase. 
 
 Combined the two results of CV and correlation from 2nd to 3rd... 
@@ -626,6 +615,7 @@ ggplot(xx_pca1_3 ,
 ```
 
 Contribution of variables for each of four PCA dimensions of ALL phases except for the first. 
+
 ```{r}
 library(gridExtra)
 library(factoextra)
@@ -663,6 +653,7 @@ library(patchwork)
 cv_all + cv_two + cv_three + plot_layout(ncol=1)
 
 ```
+
 Overall, BL and ML have stronger influence than the other attributes and are related to each other but not with the other attributes throughout time. From the phase 2 to the phase 3, the proportion of TL and SL gets bigger and they are more related to SW. 
 
 
@@ -739,8 +730,6 @@ grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1)
 
 
 ```
-
-
 
 SYG1 site data and analysis: artifacts from SYG1 site, which include two differnt locations(excavation pits) and the artifacts are from different phase.
 SYG1_2 : 3rd phase
@@ -899,6 +888,7 @@ grid.arrange(SYG1_1PC1_v, SYG1_1PC2_v, nrow =1)
 
 
 Correlations for each site
+
 ```{r}
 
 ### three sites at once, using corrr
@@ -906,19 +896,19 @@ library(patchwork)
 cSYG6_DF + cSYG1_2DF + cSYG1_1DF + plot_layout(ncol=1)
 
 ```
+
 In this plot, we can see that the pattern of correlation for SYG6 and SYG1_1 are similar in terms of correlation based on ML/SL/TL with other attributes. Both are part of the phase 2. However, SYG1_2 is younger than the other two and the correlation based on SW become weaker. 
+
 When it comes to the difference between SYG6 and SYG1_1, the correlation between artifacts of SYG1_1 is stronger than SYG6. 
 
 
 PCA for each site
+
 ```{r}
 cv_SYG6 + cv_SYG1_1 + cv_SYG1_2 +  plot_layout(ncol=1)
 ```
+
 Unlike the correlation of the three units, PCA of the three are more various. Especially, SW is related to SL/TL in SYG6, related to ML/BL in SYG1_1, and unrelated to the other attributes in SYG1_2. 
-
-
-
-
 
 # Results
 
