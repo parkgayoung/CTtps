@@ -1,0 +1,205 @@
+---
+title: "notes"
+author: "Gayoung Park"
+date: "5/5/2020"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+I moved the leftover codes from paper, just in case I need them later. 
+
+
+```{r} 
+
+cv_plot_site %>% 
+pivot_longer(cols = -sitename, names_to = "group") %>% 
+ggplot(aes(x = sitename, y = value, fill = as.factor(group))) + 
+geom_bar(stat="identity", position=position_dodge())
+
+## I coded new one with N=artifact. 
+```
+
+
+Computing Pearson's correlation 
+```{r}
+
+#simpler way to calculate Correlataion, you can use
+SCOR <- cor(DF)
+
+#a scatterplot matrix of Correlation
+ALL<-pairs(DF)
+
+# correlation per phase
+cor2 <- 
+df_sitename %>% 
+  filter(SPstage.Stage == 2) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  cor(.)
+
+
+ACOR2 <- pairs(cor2)
+
+cor3 <- 
+df_sitename %>% 
+  filter(SPstage.Stage == 3) %>% 
+  select(-sitename, -SPstage.Stage) %>% 
+  cor(.)
+
+ACOR3 <- pairs(cor3)
+
+
+# Plot for SCOR
+library(corrplot)
+
+par(mfrow=c(1,3))
+# correlation for all
+cplotall <- corrplot(SCOR, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, main = "Correlatoin for ALL")
+# for phase 2
+cplot2 <- corrplot(cor2, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, main = "Correlatoin for Phase 2")
+# for phase 3
+cplot3 <- corrplot(cor3, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, main = "Correlatoin for Phase 3")
+
+```
+
+
+```{R}
+
+#simpler way to calculate Correlataion, you can use
+SYG6_cor <- cor(SYG6_DF)
+
+#a scatterplot matrix of Correlation
+pairs(SYG6_DF)
+
+cplot_SYG6 <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+
+#simpler way to calculate Correlataion, you can use
+SYG1_2cor <- cor(SYG1_2DF)
+
+#a scatterplot matrix of Correlation
+pairs(SYG1_2DF)
+
+
+cplot_SYG1_2 <- corrplot(SYG1_2cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+#simpler way to calculate Correlataion, you can use
+SYG1_1cor <- cor(SYG1_1DF)
+
+#a scatterplot matrix of Correlation
+pairs(SYG1_1DF)
+
+
+cplot_SYG1_1 <- corrplot(SYG1_1cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45)
+
+
+par(mfrow=c(1,3))
+cplot_SYG6_ <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, title = "SYG6")
+cplot_SYG1_1 <- corrplot(SYG1_1cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, title = "SYG1_1")
+cplot_SYG1_2 <- corrplot(SYG1_2cor, type = "upper", order = "hclust", 
+         tl.col = "black", tl.srt = 45, title = "SYG1_2")
+
+```
+
+
+```{r}
+#I'm working on how to read oulines and how to use them for anlaysis. We may not use this for the research.
+# reading landmarks and outline in tps, code from Morpho package, adjust readallTPS function. 
+
+readalltps = function(file) 
+{
+   out = list()
+   exOut <- FALSE
+  noutline <- 0
+  input <- readLines(file)
+   LM <- grep("LM=", input)
+  LMstring <- input[LM]
+   nLM <- sapply(LMstring, strsplit, split = "=")
+  nLM <- unlist(nLM)
+   nLM <- as.integer(nLM[-which(nLM == "LM")])
+   nobs <- length(nLM)
+   ID <- grep("ID=", input)
+   IDstring <- input[ID]
+    nID <- sapply(IDstring, function(x) {
+       x <- gsub("=", "_", x)
+   })
+   nID <- gsub(" ", "", unlist(nID))
+   out$ID <- nID
+   outline <- grep("CURVES=", input)
+   if (length(outline) > 0) {
+       exOut <- TRUE
+       outlinestring <- input[outline]
+      noutline <- sapply(outlinestring, strsplit, split = "=")
+      noutline <- unlist(noutline)
+       noutline <- as.integer(noutline[-which(noutline == "CURVES")])
+       LMoutline <- (sapply(outline, function(x) {
+           x <- max(which(LM < x))  })) }
+  LMdata <- list()
+   for (i in 1:nobs) {
+       if (nLM[i] > 0) {
+           LMdata[[i]] <- as.numeric(unlist(strsplit(unlist(input[c((LM[i] + 
+               1):(LM[i] + nLM[i]))]), split = " ")))
+           LMdata[[i]] <- matrix(LMdata[[i]], nLM[i], 2, byrow = TRUE)
+        }
+      else LMdata[[i]] <- NA }
+    names(LMdata) <- nID
+    out$LM <- LMdata
+    if (exOut) {
+        outlineData <- list()
+       for (i in 1:nobs) {
+            if (i %in% LMoutline) {
+                i1 <- grep(i, LMoutline)
+               outlinetmp <- list()
+               ptr <- outline[i1] + 1
+               j <- 1
+                while (j <= noutline[i1]) {
+                 tmpnr <- as.integer(unlist(strsplit(input[ptr], 
+                   split = "="))[2])
+                  outlinetmp[[j]] <- matrix(as.numeric(unlist(strsplit(input[(ptr + 
+                  1):(ptr + tmpnr)], split = " "))), tmpnr, 
+                   2, byrow = TRUE)
+                 ptr <- ptr + tmpnr + 1
+                 j <- j + 1  }
+              outlineData[[i]] <- outlinetmp  }
+          else outlineData[[i]] <- NA }
+       names(outlineData) <- nID
+       out$outlines <- outlineData }
+   cat(paste("Read", nobs, "datasets with", sum(noutline), "outlines\n"))
+    return(out)}
+
+#try to read all data(landmarks and outlines) from one file
+ lm_trial <- readalltps(here("analysis/data/raw_data/A_BG_2.tps"))
+
+#read all files from raw_data
+ tps_files <- list.files(here("analysis/data/raw_data"), full.names = TRUE)
+lm_landmarks <- map(tps_files, readalltps)
+ names(lm_landmarks) <- list.files(here("analysis/data/raw_data"))
+
+
+lm_landmarks = c()
+for (i in 1:length(files)) {
+  filename <- paste(datadir, files[i], sep = "")
+  print(filename)
+  landmarks <- readalltps(filename)
+ lm_landmarks <- c(lm_landmarks, landmarks)}
+
+```
+
+
+
+
+
+
+

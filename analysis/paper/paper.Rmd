@@ -108,7 +108,7 @@ library(tidyverse)
 # Methods
 
 Reading tps data and phase information of each artifact 
-```{r}
+```{r, echo = FALSE}
 #reading landmarks in tps, code from https://gist.github.com/mrdwab/2062329
 
 
@@ -309,10 +309,7 @@ cv_by_site_df_unnest <-
 cv_by_site_df %>% 
   unnest(cv_by_site)
 
-```
 
-Make a plot for CV by site
-```{r}
 cv_plot_site <- cv_by_site_df_unnest %>% 
   select(-data) 
 
@@ -324,16 +321,6 @@ geom_bar(stat="identity", position=position_dodge())
 
 ```
 The plot shows CV values for different attributes The color of the bars represent different sites. Among tehs sites, we can see SC (Sachang) site has significantly high CV values. SC has two artifacts, one is from 1st phase and the other one is 2nd phase. We assume that this time difference and few number of artifacts may relate to the high CV value.   
-
-
-```{r}
-cv_plot_site %>% 
-pivot_longer(cols = -sitename, names_to = "group") %>% 
-ggplot(aes(x = sitename, y = value, fill = as.factor(group))) + 
-geom_bar(stat="identity", position=position_dodge())
-
-```
-Unlike the previous plot, in this one, the bars represent different attributes. You can see that SC has highest CV values of most attributes. Overall, SW values are very high. 
 
 
 ```{r}
@@ -365,6 +352,10 @@ geom_bar(stat="identity", position=position_dodge())
 
 p + labs(x= "Site", fill = "Attributes")
 ```
+Unlike the previous plot, in this one, the bars represent different attributes. You can see that SC has highest CV values of most attributes. Overall, SW values are very high. 
+
+
+
 
 Make a table of CVs for all variable grouped by phase
 ```{r}
@@ -396,53 +387,6 @@ This plot shows the difference of CV in between 2nd and 3rd phase. For TL, both 
 By the way, Previous research (Bettinger&Eerkins, Garvey) focused on Width of the projectile points along with weight to understand cultural transmssion. We haven't figured out which attibutes would be more infortant than others yet. 
 
 
-Computing Pearson's correlation 
-```{r}
-
-#simpler way to calculate Correlataion, you can use
-SCOR <- cor(DF)
-
-#a scatterplot matrix of Correlation
-ALL<-pairs(DF)
-
-# correlation per phase
-cor2 <- 
-df_sitename %>% 
-  filter(SPstage.Stage == 2) %>% 
-  select(-sitename, -SPstage.Stage) %>% 
-  cor(.)
-
-
-ACOR2 <- pairs(cor2)
-
-cor3 <- 
-df_sitename %>% 
-  filter(SPstage.Stage == 3) %>% 
-  select(-sitename, -SPstage.Stage) %>% 
-  cor(.)
-
-ACOR3 <- pairs(cor3)
-
-
-# Plot for SCOR
-library(corrplot)
-
-par(mfrow=c(1,3))
-# correlation for all
-cplotall <- corrplot(SCOR, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45, main = "Correlatoin for ALL")
-# for phase 2
-cplot2 <- corrplot(cor2, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45, main = "Correlatoin for Phase 2")
-# for phase 3
-cplot3 <- corrplot(cor3, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45, main = "Correlatoin for Phase 3")
-
-```
-=> We may need to delete this chunk since we made new plots below using corrr package and same dataset.
-
-
-
 ```{r}
 #using corrr package
 library(tidyverse)
@@ -454,7 +398,7 @@ corrr_all <- correlate(DF) %>%
 call<-rplot(corrr_all) +
   ggtitle("Correlation for all phase") 
 
-correlate(DF) %>% 
+direction_all <- correlate(DF) %>% 
   network_plot()
 
 #phase 2
@@ -469,7 +413,7 @@ corrr_2 <-correlate(DF2) %>%
 ctwo <- rplot(corrr_2) +
   ggtitle("Correlation for 2nd phase") 
 
-correlate(DF2) %>% 
+direction_2 <- correlate(DF2) %>% 
   network_plot()
 
 #phase 3
@@ -484,7 +428,7 @@ corrr_3 <-correlate(DF3) %>%
 cthree <- rplot(corrr_3) +
   ggtitle("Correlation for 3rd phase") 
 
-correlate(DF3) %>% 
+direction_3 <-correlate(DF3) %>% 
   network_plot()
   
 
@@ -492,6 +436,8 @@ correlate(DF3) %>%
 ### three phases at once
 library(patchwork)
 call + ctwo + cthree + plot_layout(ncol=1)
+
+direction_all+ direction_2 + direction_3 + plot_layout(ncol=1)
 ```
 When it comes to the correlations between seven attributes, BL-ML, TW-MW, TL-TW, and TL-SL are relatively close to each other. There is no negative correlation among the attributes. Compared to the 2nd phase, in 3rd phase, correlations of SL with TW and MW, and TL with TWm SL, and MW get stronger. On the other hand, the correlation of TW-SW becomes weeker. Overall, the correlation between attributes became stronger from 2nd to 3rd phase. 
 
@@ -502,8 +448,6 @@ CV: lower in MW and TW, but higher in other 5 attribtues.
 COR: overall correlation became stronger. 
 
 => This combination doesn't fit into the models.
-
-
 
 Principal component analysis
 
@@ -663,15 +607,6 @@ SYG6_DF <- SYG6_df[,1:7]
 count_SYG6 <- length(which(SYG6_df$SPstage.Stage == 2))
 
 
-#simpler way to calculate Correlataion, you can use
-SYG6_cor <- cor(SYG6_DF)
-
-#a scatterplot matrix of Correlation
-pairs(SYG6_DF)
-
-cplot_SYG6 <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45)
-
 # using corrr
 
 corrr_SYG6_DF <-correlate(SYG6_DF) %>% 
@@ -683,7 +618,7 @@ cSYG6_DF <- rplot(corrr_SYG6_DF) +
 correlate(SYG6_DF) %>% 
   network_plot()
   
-
+SYG6_cor <- cor(SYG6_DF)
 
 # CV
 map_df(SYG6_DF, cv)
@@ -752,17 +687,6 @@ count_SYG1_2 <- length(which(SYG1_2df$SPstage.Stage == 3))
 
 
 
-#simpler way to calculate Correlataion, you can use
-SYG1_2cor <- cor(SYG1_2DF)
-
-#a scatterplot matrix of Correlation
-pairs(SYG1_2DF)
-
-
-cplot_SYG1_2 <- corrplot(SYG1_2cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45)
-
-
 # using corrr
 
 corrr_SYG1_2DF <-correlate(SYG1_2DF) %>% 
@@ -776,6 +700,7 @@ correlate(SYG1_2DF) %>%
   network_plot()
   
 
+SYG1_2cor <- cor(SYG1_2DF)
 
 # CV
 map_df(SYG1_2DF, cv)
@@ -835,16 +760,6 @@ SYG1_1DF <- SYG1_1df[,1:7]
 count_SYG1_1 <- length(which(SYG1_1df$SPstage.Stage == 2))
 
 
-#simpler way to calculate Correlataion, you can use
-SYG1_1cor <- cor(SYG1_1DF)
-
-#a scatterplot matrix of Correlation
-pairs(SYG1_1DF)
-
-
-cplot_SYG1_1 <- corrplot(SYG1_1cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45)
-
 
 # using corrr
 
@@ -859,6 +774,7 @@ cSYG1_1DF <- rplot(corrr_SYG1_1DF) +
 correlate(SYG1_1DF) %>% 
   network_plot()
 
+SYG1_1cor <- cor(SYG1_1DF)
 
 # CV
 map_df(SYG1_1DF, cv)
@@ -903,14 +819,6 @@ grid.arrange(SYG1_1PC1_v, SYG1_1PC2_v, nrow =1)
 
 Correlations for each site
 ```{r}
-par(mfrow=c(1,3))
-cplot_SYG6_ <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45, title = "SYG6")
-cplot_SYG1_1 <- corrplot(SYG1_1cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45, title = "SYG1_1")
-cplot_SYG1_2 <- corrplot(SYG1_2cor, type = "upper", order = "hclust", 
-         tl.col = "black", tl.srt = 45, title = "SYG1_2")
-
 
 ### three sites at once, using corrr
 library(patchwork)
@@ -927,90 +835,6 @@ cv_SYG6 + cv_SYG1_1 + cv_SYG1_2 +  plot_layout(ncol=1)
 ```
 Unlike the correlation of the three units, PCA of the three are more various. Especially, SW is related to SL/TL in SYG6, related to ML/BL in SYG1_1, and unrelated to the other attributes in SYG1_2. 
 
-
-
-```{r}
-#I'm working on how to read oulines and how to use them for anlaysis. We may not use this for the research.
-# reading landmarks and outline in tps, code from Morpho package, adjust readallTPS function. 
-
-#readalltps = function(file) 
-{
-   # out = list()
-   # exOut <- FALSE
-  # noutline <- 0
-  # input <- readLines(file)
-   # LM <- grep("LM=", input)
-  # LMstring <- input[LM]
-   # nLM <- sapply(LMstring, strsplit, split = "=")
-  #  nLM <- unlist(nLM)
-   # nLM <- as.integer(nLM[-which(nLM == "LM")])
-  #  nobs <- length(nLM)
-   # ID <- grep("ID=", input)
-  #  IDstring <- input[ID]
-   # nID <- sapply(IDstring, function(x) {
-   #     x <- gsub("=", "_", x)
-  #  })
-   # nID <- gsub(" ", "", unlist(nID))
-  #  out$ID <- nID
-   # outline <- grep("CURVES=", input)
-  #  if (length(outline) > 0) {
-   #     exOut <- TRUE
-    #    outlinestring <- input[outline]
-     #   noutline <- sapply(outlinestring, strsplit, split = "=")
-      #  noutline <- unlist(noutline)
-      #  noutline <- as.integer(noutline[-which(noutline == "CURVES")])
-    #    LMoutline <- (sapply(outline, function(x) {
-   #         x <- max(which(LM < x))  })) }
- #   LMdata <- list()
-  #  for (i in 1:nobs) {
-  #      if (nLM[i] > 0) {
-   #         LMdata[[i]] <- as.numeric(unlist(strsplit(unlist(input[c((LM[i] + 
-      #          1):(LM[i] + nLM[i]))]), split = " ")))
-       #     LMdata[[i]] <- matrix(LMdata[[i]], nLM[i], 2, byrow = TRUE)
-        }
-   #     else LMdata[[i]] <- NA }
-   # names(LMdata) <- nID
-  #  out$LM <- LMdata
-   # if (exOut) {
-    #    outlineData <- list()
-     #   for (i in 1:nobs) {
-      #      if (i %in% LMoutline) {
-       #         i1 <- grep(i, LMoutline)
-        #        outlinetmp <- list()
-         #       ptr <- outline[i1] + 1
-          #      j <- 1
-           #     while (j <= noutline[i1]) {
-            #      tmpnr <- as.integer(unlist(strsplit(input[ptr], 
-        #            split = "="))[2])
-         #         outlinetmp[[j]] <- matrix(as.numeric(unlist(strsplit(input[(ptr + 
-         #           1):(ptr + tmpnr)], split = " "))), tmpnr, 
-          #          2, byrow = TRUE)
-           #       ptr <- ptr + tmpnr + 1
-            #      j <- j + 1  }
-             #   outlineData[[i]] <- outlinetmp  }
-          #  else outlineData[[i]] <- NA }
-       # names(outlineData) <- nID
-      #  out$outlines <- outlineData }
- #   cat(paste("Read", nobs, "datasets with", sum(noutline), "outlines\n"))
-#    return(out)}
-
-#try to read all data(landmarks and outlines) from one file
-# lm_trial <- readalltps(here("analysis/data/raw_data/A_BG_2.tps"))
-
-#read all files from raw_data
-# tps_files <- list.files(here("analysis/data/raw_data"), full.names = TRUE)
-# lm_landmarks <- map(tps_files, readalltps)
-# names(lm_landmarks) <- list.files(here("analysis/data/raw_data"))
-
-
-#lm_landmarks = c()
-#for (i in 1:length(files)) {
-#  filename <- paste(datadir, files[i], sep = "")
- # print(filename)
-#  landmarks <- readalltps(filename)
-# lm_landmarks <- c(lm_landmarks, landmarks)}
-
-```
 
 
 
