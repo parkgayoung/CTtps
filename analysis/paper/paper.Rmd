@@ -101,14 +101,11 @@ library(tidyverse)
 
 # Background
 
-```{r demo, eval = FALSE}
-1 + 1
-```
 
 # Methods
 
 Reading tps data and phase information of each artifact 
-```{r}
+```{r results='hide', include=FALSE}
 #reading landmarks in tps, code from https://gist.github.com/mrdwab/2062329
 
 read.tps = function(data) {
@@ -224,8 +221,6 @@ SW <- landmark_dist(landmarks, 5, 8)
 
 ```
 
-
-
 Gather attributes from  all artifacts
 ```{r}
 
@@ -238,7 +233,7 @@ TW = c()
 SW = c()
 for (i in 1:length(files)) {
   filename <- paste(datadir, files[i], sep = "")
-  print(filename)
+ # print(filename)
   landmarks <- read.tps(filename)
   ML <- c(ML, landmark_dist(landmarks, 1, 7))
   BL <- c(BL, bl_dist(landmarks))
@@ -326,46 +321,23 @@ The plot shows CV values for different attributes The color of the bars represen
 
 
 ```{r}
-cv_plot_site %>% 
-pivot_longer(cols = -sitename, names_to = "group") %>% 
-ggplot(aes(x = sitename, y = value, fill = as.factor(group))) + 
-geom_bar(stat="identity", position=position_dodge())
+cv_plot_site %>%
+  pivot_longer(cols = -sitename, 
+               names_to = "group") %>%
+  ggplot(aes(x = sitename, 
+             y = value, 
+             fill = as.factor(group))) +
+  geom_bar(stat = "identity", 
+           position = position_dodge())
 
 ```
 Unlike the previous plot, in this one, the bars represent different attributes. You can see that SC has highest CV values of most attributes. Overall, SW values are very high. 
 
 
-```{r}
-## CV with site (n=X)
- cv_by_site_df_label <- 
-df_sitename %>% 
-  select(-SPstage.Stage) %>% 
-  group_by(sitename) %>% 
-  add_tally() %>% 
-  filter( n > 1) %>% 
-   mutate(label = as.factor(paste0(sitename,'\nN = ',n))) %>%   select(-n) %>% 
- nest(-sitename, -label) %>% 
-  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
-
-
-cv_by_site_df_unnest_label <-   
-cv_by_site_df_label %>% 
-  unnest(cv_by_site)
-
-
-cv_plot_site_label <- cv_by_site_df_unnest_label %>%
-                select(-data)
- 
-library(tidyr)
-p<- cv_plot_site_label %>% 
-pivot_longer(cols = -c(sitename,label), names_to = "group") %>% 
-ggplot(aes(label, value, fill = as.factor(group))) + 
-geom_bar(stat="identity", position=position_dodge())
-
-p + labs(x= "Site", fill = "Attributes")
-```
-
 Make a table of CVs for all variable grouped by phase
+
+BM: discuss this one first, this is the overview picture for our story:  
+
 ```{r}
 cv_by_stage_df  <- 
 df_sitename %>% 
@@ -388,11 +360,84 @@ cv_plot_stage %>%
 pivot_longer(cols = -SPstage.Stage, names_to = "group") %>%
 ggplot(aes(x = group, y = value, fill = as.factor(SPstage.Stage))) + 
 geom_bar(stat="identity", position=position_dodge()) + labs(x="Attributes", fill= "Phase")
-
 ```
+
 This plot shows the difference of CV in between 2nd and 3rd phase. For TL, both two phases have almost same values. For MW and TW, 3rd phase has lower values than the 2nd. The other 4 attributes show higher valeues in 3rd phase, which means less standardized in their shape during the latter period.
 
 By the way, Previous research (Bettinger&Eerkins, Garvey) focused on Width of the projectile points along with weight to understand cultural transmssion. We haven't figured out which attibutes would be more infortant than others yet. 
+
+BM: this discuss this one second, this is where we get into the details 
+
+```{r}
+## CV with site (n=X)
+
+cv_by_site_df_unnest_label %>% 
+  select(-SPstage.Stage) %>% 
+  group_by(sitename) %>% 
+  add_tally() %>% 
+  filter( n > 1) %>% 
+   mutate(label = as.factor(paste0(sitename,' (N = ', n, ")"))) %>%   select(-n) %>% 
+ nest(-sitename, -label) %>% 
+  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
+
+
+cv_by_site_df_unnest_label <-   
+cv_by_site_df_label %>% 
+  unnest(cv_by_site)
+
+
+cv_plot_site_label <- cv_by_site_df_unnest_label %>%
+                select(-data)
+ 
+library(tidyr)
+p<- cv_plot_site_label %>% 
+pivot_longer(cols = -c(sitename,label), names_to = "group") %>% 
+ggplot(aes(label, value, fill = as.factor(group))) + 
+geom_bar(stat="identity", position=position_dodge())
+
+p + labs(x= "Site", fill = "Attributes")
+
+
+# plot CVs by site with number of artefacts showing >10
+# phase 2 and phase 3 sites only
+cv_by_site_df_label_more_than_10 <- 
+df_sitename %>% 
+  unite(col = "site_phase", 
+        c(sitename, 
+          SPstage.Stage), 
+        sep = "_") %>% 
+  group_by(site_phase) %>% 
+  add_tally() %>% 
+  filter( n > 10) %>% 
+   mutate(label = as.factor(paste0(site_phase,' (N = ', n, ")"))) %>%   select(-n) %>% 
+ nest(-site_phase, -label) %>% 
+  mutate(cv_by_site = map(data, ~map_df(.x, cv))) %>% 
+  unnest(cv_by_site) %>% 
+  select(-data)
+
+cv_by_site_df_label_more_than_10 %>%
+  pivot_longer(cols = -c(site_phase, label), 
+               names_to = "lithic_attribute",
+               values_to = "CV") %>%
+  ggplot(aes(x = lithic_attribute, 
+             y = CV)) +
+  geom_col() +
+  facet_wrap(~  label) +
+  ggtitle("CVs of point attributes by site (with sites >10 artefacts")
+
+cv_by_site_df_label_more_than_10 %>%
+  pivot_longer(cols = -c(site_phase, label), 
+               names_to = "lithic_attribute",
+               values_to = "CV") %>%
+  filter(lithic_attribute %in% c("ML", "MW", "TW")) %>% 
+  
+  ggplot(aes(x = lithic_attribute, 
+             y = CV)) +
+  geom_col() +
+  facet_wrap(~  label) +
+  ggtitle("CVs of point attributes by site (with sites >10 artefacts)") +
+  theme_minimal()
+```
 
 
 Computing Pearson's correlation 
@@ -599,7 +644,7 @@ ggplot(xx_pca1_3 ,
 
 ```
 
-Contribution of variables for each of four PCA demensions of ALL phases except for the first. 
+Contribution of variables for each of four PCA dimensions of ALL phases except for the first. 
 ```{r}
 library(gridExtra)
 library(factoextra)
