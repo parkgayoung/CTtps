@@ -335,15 +335,28 @@ df_sitename %>%
  nest(-sitename, -label) %>% 
   mutate(cv_by_site = map(data, ~map_df(.x, cv)))
 
-
 cv_by_site_df_unnest_label <-   
 cv_by_site_df_label %>% 
   unnest(cv_by_site)
 
-
 cv_plot_site_label <- cv_by_site_df_unnest_label %>%
                 select(-data)
  
+## Reference: site and number of artifacts
+ cv_by_site_df_label_1 <- 
+df_sitename %>% 
+  select(-SPstage.Stage) %>% 
+  group_by(sitename) %>% 
+  add_tally() %>% 
+   mutate(label = as.factor(paste0(sitename,'\nN = ',n))) %>%   select(-n) %>% 
+ nest(-sitename, -label) %>% 
+  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
+
+cv_by_site_df_unnest_label_1 <-   
+cv_by_site_df_label_1 %>% 
+  unnest(cv_by_site)
+
+
 library(tidyr)
 p<- cv_plot_site_label %>% 
 pivot_longer(cols = -c(sitename,label), names_to = "group") %>% 
