@@ -300,7 +300,6 @@ df_sitename %>%
   select(-n) %>% 
  nest(-sitename) %>% 
   mutate(cv_by_site = map(data, ~map_df(.x, cv)))
-
   
 cv_by_site_df_unnest <-   
 cv_by_site_df %>% 
@@ -372,7 +371,9 @@ BM: this discuss this one second, this is where we get into the details
 ```{r}
 ## CV with site (n=X)
 
-cv_by_site_df_unnest_label %>% 
+
+ cv_by_site_df_label <- 
+df_sitename %>% 
   select(-SPstage.Stage) %>% 
   group_by(sitename) %>% 
   add_tally() %>% 
@@ -387,7 +388,11 @@ cv_by_site_df_label %>%
 
 cv_plot_site_label <- cv_by_site_df_unnest_label %>%
                 select(-data)
- 
+
+
+
+
+
 ## Reference: site and number of artifacts
  cv_by_site_df_label_1 <- 
 df_sitename %>% 
