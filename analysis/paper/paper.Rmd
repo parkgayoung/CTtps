@@ -224,6 +224,7 @@ SW <- landmark_dist(landmarks, 5, 8)
 ```
 
 Gather attributes from  all artifacts
+
 ```{r}
 
 ML = c()
