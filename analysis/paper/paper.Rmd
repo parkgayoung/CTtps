@@ -455,6 +455,28 @@ cv_by_site_df_label_more_than_10 %>%
   theme_minimal()
 ```
 
+```{r}
+
+cv_by_site_df_label_more_than_10_ml_mw_bl <- 
+cv_by_site_df_label_more_than_10 %>%
+  pivot_longer(cols = -c(site_phase, label), 
+               names_to = "lithic_attribute",
+               values_to = "CV") %>%
+  filter(lithic_attribute %in% c("ML", "BL","MW"))  %>% 
+  mutate(phase = parse_number(str_extract(site_phase, "_."))) %>% 
+  group_by(site_phase) %>% 
+  mutate(mean_cv = mean(CV))
+  
+  ggplot(cv_by_site_df_label_more_than_10_ml_mw_bl,
+         aes(x = lithic_attribute, 
+             y = CV)) +
+  geom_col() +
+  geom_hline(aes(yintercept = mean_cv), 
+             colour = "red") +
+  facet_wrap(~  label) +
+  ggtitle("CVs of point attributes by site (with sites >=7 artefacts)") +
+  theme_minimal()
+```
 
 ```{r}
 #using corrr package
