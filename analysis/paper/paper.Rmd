@@ -1,5 +1,5 @@
 ---
-title: "Title Goes Here"
+title: "Understanding the technological transition based on cultural transmission biases during the Late Pleistocene in Korea"
 author:
   -gayoung Park
   - Author Two
