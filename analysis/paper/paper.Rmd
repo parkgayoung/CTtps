@@ -132,17 +132,19 @@ read.tps = function(data) {
   for (i in 1:l) {
     landmarks[i] = list(data.frame(
       read.table(file = data, header = F, skip = LM[i],
-                 nrows = nrows[i], col.names = c("X", "Y")),
+                 nrows = nrows[i], 
+                 col.names = c("X", "Y"),
+                 stringsAsFactors = TRUE),
       IMAGE = as.character(images[i]),
       ID = ID[i],
-      SCALE = SCALE[i]))
+      SCALE = SCALE[i],
+      stringsAsFactors = TRUE))
   }
   do.call(rbind, landmarks) # rbind the list items into a data.frame
 }
 
 #need to figure out how to read the file inside the project
 landmarks <- read.tps(here("analysis/data/raw_data/BG_0_2.tps"))
-
 
 #getting info for phase of each site
 SPstage <- read_csv(here("analysis/data/SPstage.csv"))
@@ -154,7 +156,7 @@ files <- dir(datadir, pattern = "*.tps$|*.TPS$")
 ```
 
 
-Computing size attributes of the points by calculating distance between landmakrs
+Computing size attributes of the points by calculating distance between landmarks
 ```{r}
 
 #Understanding each landmark
