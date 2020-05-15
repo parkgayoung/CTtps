@@ -12,7 +12,23 @@ knitr::opts_chunk$set(echo = TRUE)
 ## R Markdown
 
 I moved the leftover codes from paper, just in case I need them later. 
+```{r}
+#box plot for CV for each attributes
+box2 <- boxplot(cvmap) ##Is there any better way to show this data??
+```
 
+```{r}
+
+cv_plot_site %>%
+  pivot_longer(cols = -sitename, 
+               names_to = "group") %>%
+  ggplot(aes(x = sitename, 
+             y = value, 
+             fill = as.factor(group))) +
+  geom_bar(stat = "identity", 
+           position = position_dodge())
+
+```
 
 ```{r} 
 
@@ -69,8 +85,58 @@ cplot3 <- corrplot(cor3, type = "upper", order = "hclust",
 
 ```
 
+```{r}
+### three phases at once
+library(patchwork)
+call + ctwo + cthree + plot_layout(ncol=1)
 
-```{R}
+direction_all+ direction_2 + direction_3 + plot_layout(ncol=1)
+
+```
+
+```{r}
+xx_pca1_2 <- 
+  data.frame(xx_pca2$x,
+             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage ==2]))
+
+
+ggplot(xx_pca1_2 ,
+       aes(PC1,
+           PC2,
+       colour = stage)) +
+  geom_point() +
+  stat_ellipse()
+
+xx_pca1_3 <- 
+  data.frame(xx_pca3$x,
+             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage ==3]))
+
+ggplot(xx_pca1_3 ,
+       aes(PC1,
+           PC2,
+       colour = stage)) +
+  geom_point() +
+  stat_ellipse()
+
+
+
+```
+
+Contribution of variables for each of four PCA dimensions of ALL phases except for the first. 
+
+```{r}
+library(gridExtra)
+library(factoextra)
+PC1_v <- fviz_contrib(xx_pca, choice = "var", axes = 1, top = 7)
+PC2_v <- fviz_contrib(xx_pca, choice = "var", axes = 2, top = 7)
+PC3_v <- fviz_contrib(xx_pca, choice = "var", axes = 3, top = 7)
+PC4_v <- fviz_contrib(xx_pca, choice = "var", axes = 4, top = 7)
+
+grid.arrange(PC1_v, PC2_v, PC3_v, PC4_v, nrow =2)
+
+```
+
+```{r}
 
 #simpler way to calculate Correlataion, you can use
 SYG6_cor <- cor(SYG6_DF)
@@ -81,6 +147,8 @@ pairs(SYG6_DF)
 cplot_SYG6 <- corrplot(SYG6_cor, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
 
+correlate(SYG6_DF) %>% 
+  network_plot()
 
 #simpler way to calculate Correlataion, you can use
 SYG1_2cor <- cor(SYG1_2DF)
@@ -91,6 +159,13 @@ pairs(SYG1_2DF)
 
 cplot_SYG1_2 <- corrplot(SYG1_2cor, type = "upper", order = "hclust", 
          tl.col = "black", tl.srt = 45)
+
+correlate(SYG1_2DF) %>% 
+  network_plot()
+
+correlate(SYG1_1DF) %>% 
+  network_plot()
+
 
 #simpler way to calculate Correlataion, you can use
 SYG1_1cor <- cor(SYG1_1DF)

@@ -281,7 +281,7 @@ cvmap <- map(DF, cv)
 
 #Same as map but better view for summary
 map_df(DF, cv)
-box2 <- boxplot(cvmap) ##Is there any better way to show this data??
+
 
 ```
 
@@ -319,19 +319,6 @@ geom_bar(stat="identity", position=position_dodge())
 ```
 
 The plot shows CV values for different attributes The color of the bars represent different sites. Among tehs sites, we can see SC (Sachang) site has significantly high CV values. SC has two artifacts, one is from 1st phase and the other one is 2nd phase. We assume that this time difference and few number of artifacts may relate to the high CV value.   
-
-```{r}
-
-cv_plot_site %>%
-  pivot_longer(cols = -sitename, 
-               names_to = "group") %>%
-  ggplot(aes(x = sitename, 
-             y = value, 
-             fill = as.factor(group))) +
-  geom_bar(stat = "identity", 
-           position = position_dodge())
-
-```
 
 Unlike the previous plot, in this one, the bars represent different attributes. You can see that SC has highest CV values of most attributes. Overall, SW values are very high. 
 
@@ -519,7 +506,6 @@ direction_3 <-correlate(DF3) %>%
 library(patchwork)
 call + ctwo + cthree + plot_layout(ncol=1)
 
-direction_all+ direction_2 + direction_3 + plot_layout(ncol=1)
 ```
 
 When it comes to the correlations between seven attributes, BL-ML, TW-MW, TL-TW, and TL-SL are relatively close to each other. There is no negative correlation among the attributes. Compared to the 2nd phase, in 3rd phase, correlations of SL with TW and MW, and TL with TWm SL, and MW get stronger. On the other hand, the correlation of TW-SW becomes weeker. Overall, the correlation between attributes became stronger from 2nd to 3rd phase. 
@@ -590,18 +576,6 @@ df_sitename %>%
   select(-sitename, -SPstage.Stage) %>% 
   prcomp(., center = TRUE, scale = TRUE)
 
-xx_pca1_2 <- 
-  data.frame(xx_pca2$x,
-             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage ==2]))
-
-ggplot(xx_pca1_2 ,
-       aes(PC1,
-           PC2,
-       colour = stage)) +
-  geom_point() +
-  stat_ellipse()
-
-
 
 
 # phase 3
@@ -612,34 +586,11 @@ df_sitename %>%
   select(-sitename, -SPstage.Stage) %>% 
   prcomp(., center = TRUE, scale = TRUE)
 
-xx_pca1_3 <- 
-  data.frame(xx_pca3$x,
-             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage ==3]))
-
-ggplot(xx_pca1_3 ,
-       aes(PC1,
-           PC2,
-       colour = stage)) +
-  geom_point() +
-  stat_ellipse()
-
 
 
 ```
 
-Contribution of variables for each of four PCA dimensions of ALL phases except for the first. 
 
-```{r}
-library(gridExtra)
-library(factoextra)
-PC1_v <- fviz_contrib(xx_pca, choice = "var", axes = 1, top = 7)
-PC2_v <- fviz_contrib(xx_pca, choice = "var", axes = 2, top = 7)
-PC3_v <- fviz_contrib(xx_pca, choice = "var", axes = 3, top = 7)
-PC4_v <- fviz_contrib(xx_pca, choice = "var", axes = 4, top = 7)
-
-grid.arrange(PC1_v, PC2_v, PC3_v, PC4_v, nrow =2)
-
-```
 
 
 We see some differences in artefact shape and size. Now we need to examins the PCA output numbers to describe in more details. 
@@ -666,6 +617,8 @@ library(patchwork)
 cv_all + cv_two + cv_three + plot_layout(ncol=1)
 
 ```
+
+
 
 Overall, BL and ML have stronger influence than the other attributes and are related to each other but not with the other attributes throughout time. From the phase 2 to the phase 3, the proportion of TL and SL gets bigger and they are more related to SW. 
 
@@ -700,8 +653,6 @@ corrr_SYG6_DF <-correlate(SYG6_DF) %>%
 cSYG6_DF <- rplot(corrr_SYG6_DF) +
   ggtitle(paste("Correlation SYG6: 2nd Phase", "(n =", count_SYG6,")")) 
 
-correlate(SYG6_DF) %>% 
-  network_plot()
   
 SYG6_cor <- cor(SYG6_DF)
 
@@ -737,7 +688,7 @@ cv_SYG6 <-fviz_pca_var(SYG6_xx_pca, col.var = "contrib",
 SYG6_PC1_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 1, top = 7)
 SYG6_PC2_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 2, top = 7)
 
-grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1) 
+#grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1) 
 
 
 
@@ -779,9 +730,7 @@ cSYG1_2DF <- rplot(corrr_SYG1_2DF) +
   ggtitle(paste("Correlation SYG1_2: 3rd Phase", "(n =", count_SYG1_2,")"))
 
 
-correlate(SYG1_2DF) %>% 
-  network_plot()
-  
+
 
 SYG1_2cor <- cor(SYG1_2DF)
 
@@ -817,7 +766,7 @@ cv_SYG1_2 <- fviz_pca_var(SYG1_2xx_pca, col.var = "contrib",
 SYG1_2PC1_v <- fviz_contrib(SYG1_2xx_pca, choice = "var", axes = 1, top = 7)
 SYG1_2PC2_v <- fviz_contrib(SYG1_2xx_pca, choice = "var", axes = 2, top = 7)
 
-grid.arrange(SYG1_2PC1_v, SYG1_2PC2_v, nrow =1)
+#grid.arrange(SYG1_2PC1_v, SYG1_2PC2_v, nrow =1)
 
 
 
@@ -854,9 +803,6 @@ cSYG1_1DF <- rplot(corrr_SYG1_1DF) +
 
 
 
-correlate(SYG1_1DF) %>% 
-  network_plot()
-
 SYG1_1cor <- cor(SYG1_1DF)
 
 # CV
@@ -892,7 +838,7 @@ cv_SYG1_1 <- fviz_pca_var(SYG1_1xx_pca, col.var = "contrib",
 SYG1_1PC1_v <- fviz_contrib(SYG1_1xx_pca, choice = "var", axes = 1, top = 7)
 SYG1_1PC2_v <- fviz_contrib(SYG1_1xx_pca, choice = "var", axes = 2, top = 7)
 
-grid.arrange(SYG1_1PC1_v, SYG1_1PC2_v, nrow =1)
+#grid.arrange(SYG1_1PC1_v, SYG1_1PC2_v, nrow =1)
 
 
 
