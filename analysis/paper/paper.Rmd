@@ -1,8 +1,8 @@
 ---
 title: "Understanding the technological transition based on cultural transmission biases during the Late Pleistocene in Korea"
 author:
-  -Gayoung Park
-  - Author Two
+  - Gayoung Park
+  - Ben Marwick
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
     bookdown::html_document2:
