@@ -64,7 +64,7 @@ library(tidyverse)
 -------------
 Application the theoretical and methodological tenets of Darwinian evolutionary concpet to archaeological studies has helped understand technological transition related to human behavior (Dunnell 1980; Lipo et al. 1997; Bettinger and Eerkens 1997, 1999, 2008, Mesoudi abd O'Brien 2008). 
 
-biological concept to archaeological usage: (Richerson and Boyd 1992)
+need to add 'biological concept to archaeological usage': (Richerson and Boyd 1992)
 
 Cultrual evolution that archaeologists adapted has three sub-categories: human behavioral ecology, phylogenetics and cultural transmission theory (Garvey 2018). Among them, we apply models and methods of cultural tranmssion to understand the technological change and socio cultural contexts. 
 
