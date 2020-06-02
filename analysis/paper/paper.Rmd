@@ -64,7 +64,11 @@ library(tidyverse)
 -------------
 Application the theoretical and methodological tenets of Darwinian evolutionary concpet to archaeological studies has helped understand technological transition related to human behavior (Dunnell 1980; Lipo et al. 1997; Bettinger and Eerkens 1997, 1999, 2008, Mesoudi abd O'Brien 2008). 
 
+these approaches build on earlier attempts to model cultural change according to evolutionary principles (O'Brien and Lyman 2000, Schillinger et al. 2014)
+
 need to add 'biological concept to archaeological usage': (Richerson and Boyd 1992)
+
+
 <<<<<<< HEAD
 
 Cultural evolution that archaeologists adapted has three sub-categories: human behavioral ecology, phylogenetics and cultural transmission theory (Garvey 2018). Among them, we apply models and methods of cultural transmission to understand the technological change and socio cultural contexts. 
@@ -72,7 +76,11 @@ Cultural evolution that archaeologists adapted has three sub-categories: human b
 Cultrual evolution that archaeologists adapted has three sub-categories: human behavioral ecology, phylogenetics and cultural transmission theory (Garvey 2018). Among them, we apply models and methods of cultural tranmssion to understand the technological change and socio cultural contexts. 
 >>>>>>> b0e928d049d619a5fc6902ad1ff878778d5bd355
 
+
+
 Cultural transmission is the idea that a transition can occur during the process of social learning and the transmission biases are important loci of changes in material cultural (Lycett 2015; Creanza et al. 2017). In other words, this concept holds that instructions for making artifacts are transmitted between members of a group during social learning by observation of, or interaction with another member (Heyes 1994; Eerkens and Lipo 2007; Brantingham et al. 2010; Lycett 2015). 
+
+ Copying errors that occur during the manufacture of artifactual traditions are potentiall (Schillinger et al. 2014)
 
 The transmission is subject to biases that result from different social contexts. Boyd and Richerson (1985) and Henrich and McElreath (2003) have defined many of these biases, including ‘guided variation’ (where individuals learn new behaviors and then modify them through trial and error), ‘content-based bias’ (where some aspect of the transmitted instructions, such as cultural preferences, makes them more likely to be adopted), ‘frequency-based bias’ (where an individual is biased to choose particular instructions based on their perceived frequency in the population, such as extremely popular or rare instructions), and ‘model-based bias’ (where a variant is transmitted because of its association with other attributes, such as the prestige or skill of other individuals). <!-- add some description of experimental and ethnographic evidence that these biases are real, some of this not archaeological, e.g. https://www.pnas.org/content/116/14/6726  --> 
 
@@ -81,16 +89,25 @@ Eerkens and Bettinger (2001) claims a robust statistical technique to compare va
 
 To test the underlying assumptions that Bettinger and Eerkens used, Mesoudi and O’Brien (2008) have conducted experiments that simulated prestige bias and guided variation, and observed results that supported Bettinger and Eerkens’ hypothesis.
 
+experimental studies related to cultural transmission
+- large populations generate greater artifact variations but do not enhance artifact performance (Fay et al. 2019)
+- material items are produced via "additive" processes such as pottery and produced via "reductive" processes like stone artifact. Statistically 
+(Schillinger et al. 2014)
+
+
 Garvey (2018)
-
-
-
 -------------
-
 
 
 4. What are our methods?
 - Framework: Bettinger&Eerkens
+
+To investigate the specific relationship between technological innovations in Korea and the influence of social contexts, I will apply Bettinger and Eerkens’ (1999) approach because their focus on the introduction of new tool in a region is closely related to my research question about new technologies in Late Pleistocene Korea. I will focus on stemmed points in the Korean Paleolithic, a distinctive kind of projectile point similar to the points studied by Bettinger and Eerkens, to study transmission biases. I propose two models to investigate the social context of new technologies in Korea: a single-point origin model and multi-points origins model. 
+
+The single-point origin model proposes that the new technology appeared at a single point in Korea, and spread out from this single origin location via relatively long-distance trips, or a chain of direct transmission through multiple individuals. This model is similar to Bae’s migration model for the introduction of new tools in the Korean Paleolithic, but is not identical because the single point in my model could be a single point of indigenous innovation, rather than an external introduction (distinguishing between these two possibilities is beyond the scope of my project). This model predicts that if the new technologies appeared from a single origin, then model-based bias will have been important in the spread of the technology, and the metric attributes of artifacts from my sites will be strongly correlated, and there will be low variation between sites. 
+
+The multiple-points origin model proposes that new technology appeared independently at multiple locations on the Korean peninsula. This is analogous to Seong’s ‘in situ’ model of local innovation. This model proposes that the social context for the appearance of new tools is one of isolated groups with limited contact, where guided variation dominates transmission biases and innovations in material culture that are strongly determined by trial and error. This model predicts that attributes of artifacts will be poorly correlated and show high variation between sites.
+
 - Two models: Guided variation and Model-based bias =>  Multi-point Origin (in situ or in between one) and Single-point Origin (migration model)
 - Test by Correlation and Variation (Pearson's r, PCA, Coefficient of Variation) 
 - data collection, sites, artifact #
