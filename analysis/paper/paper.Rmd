@@ -320,9 +320,11 @@ box1 <- boxplot(DF, main = "Variation for each attributes", col = "gold")
 
 This boxplot indicates the overview of each attribute. We can see that ML and BL have wider variation compared to other attribtues. Since TL has relativelly less variable, ML variation is more depending on BL. Throughout time and region, dimension of SW is consistant.   
 
-Attributes that we are using here
+Attributes that we are using here:
 
- It must be noted that all of this previously undertaken work has focused exclusively on the size (i.e., scale) of artifactual attributes and the patterns of variation that may be produced via copying error rates due to limits in size perception. However, variation in the overall shape of artifacts is also evidently important, given that aspects of shape may have specific functional or aesthetic properties (Schillinger et al. 2014). 
+It must be noted that all of this previously undertaken work has focused exclusively on the size (i.e., scale) of artifactual attributes and the patterns of variation that may be produced via copying error rates due to limits in size perception. However, variation in the overall shape of artifacts is also evidently important, given that aspects of shape may have specific functional or aesthetic properties (Schillinger et al. 2014). 
+
+what other people use:
 
 
 
@@ -371,7 +373,7 @@ cv_plot_site <- cv_by_site_df_unnest %>%
 library(tidyr)
 cv_plot_site %>% 
 pivot_longer(cols = -sitename, names_to = "group") %>% 
-ggplot(aes(x = group, y = value, fill = as.factor(sitename))) + 
+ggplot(aes(x = group, y = value, fill = sitename)) + 
 geom_bar(stat="identity", position=position_dodge())
 
 ```
@@ -406,6 +408,9 @@ cv_plot_stage %>%
 pivot_longer(cols = -SPstage.Stage, names_to = "group") %>%
 ggplot(aes(x = group, y = value, fill = as.factor(SPstage.Stage))) + 
 geom_bar(stat="identity", position=position_dodge()) + labs(x="Attributes", fill= "Phase")
+
+
+
 ```
 
 This plot shows the difference of CV in between 2nd and 3rd phase. For TL, both two phases have almost same values. For MW and TW, 3rd phase has lower values than the 2nd. The other 4 attributes show higher valeues in 3rd phase, which means less standardized in their shape during the latter period.
@@ -490,14 +495,14 @@ cv_by_site_df_label_more_than_10 %>%
              y = CV)) +
   geom_col() +
   facet_wrap(~  label) +
-  ggtitle("CVs of point attributes by site (with sites >10 artefacts")
+  ggtitle("CVs of point attributes by site (with sites >10 artefacts)")
 
 cv_by_site_df_label_more_than_10_ml_mw_tw <- 
 cv_by_site_df_label_more_than_10 %>%
   pivot_longer(cols = -c(site_phase, label), 
                names_to = "lithic_attribute",
                values_to = "CV") %>%
-  filter(lithic_attribute %in% c("ML", "MW", "TW"))  %>% 
+  filter(lithic_attribute %in% c("BL", "ML", "MW", "TW"))  %>% 
   mutate(phase = parse_number(str_extract(site_phase, "_."))) %>% 
   group_by(site_phase) %>% 
   mutate(mean_cv = mean(CV))
