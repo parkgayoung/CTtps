@@ -39,6 +39,7 @@ library(tidyverse)
 
 # Introduction
 
+
 1. What are our research questions?
 - Understanding technological transition during the Late Pleistocene in Korea base on Cultural transmission. 
 - What are the social contexts led to the technological transition
