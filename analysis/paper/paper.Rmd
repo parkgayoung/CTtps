@@ -38,7 +38,6 @@ library(tidyverse)
 ```
 
 
-
 ```{r results='hide', include=FALSE}
 #reading landmarks in tps, code from https://gist.github.com/mrdwab/2062329
 
@@ -88,8 +87,9 @@ files <- dir(datadir, pattern = "*.tps$|*.TPS$")
 ```
 
 
-Computing size attributes  of the points by calculating distance between landmarks
+
 ```{r}
+#Computing size attributes  of the points by calculating distance between landmarks
 
 #Understanding each landmark
 #ML: maximum length, tip to bottom, perpendicular to the length axis 1- 7
@@ -226,7 +226,7 @@ map_df(DF, cv)
 
 ```
 
-The coefficient of variation (CV) is the ratio of the standard deviation devided by mean. It shows the extent of variability from the mean. 
+The coefficient of variation (CV) is the ratio of the standard deviation divided by mean. It shows the extent of variability from the mean. 
 
 CV for all attributes are distributed from 23-31%. Interestingly, SL and SW have high CV values (36.3 and 32.0, respectively). These attributes show lower variation on boxplot. <= need to think about
 
@@ -284,7 +284,6 @@ cv_by_stage_df %>%
 cv_plot_stage <- cv_by_stage_df_unnest %>% 
   select(-data, -n)
 
-library(tidyr)
 cv_plot_stage %>% 
 pivot_longer(cols = -SPstage.Stage, names_to = "group") %>%
 ggplot(aes(x = group, y = value, fill = as.factor(SPstage.Stage))) + 
@@ -302,7 +301,6 @@ BM: this discuss this one second, this is where we get into the details
 
 ```{r}
 ## CV with site (n=X)
-
 
  cv_by_site_df_label <- 
 df_sitename %>% 
@@ -339,7 +337,7 @@ cv_by_site_df_unnest_label_1 <-
 cv_by_site_df_label_1 %>% 
   unnest(cv_by_site)
 
-library(tidyr)
+
 p<- cv_plot_site_label %>% 
 pivot_longer(cols = -c(sitename,label), names_to = "group") %>% 
 ggplot(aes(label, value, fill = as.factor(group))) + 
@@ -563,7 +561,7 @@ df_sitename %>%
 
 
 
-We see some differences in artefact shape and size. Now we need to examins the PCA output numbers to describe in more details. 
+We see some differences in artefact shape and size. Now we need to examines the PCA output numbers to describe in more details. 
 
 ```{r}
 
