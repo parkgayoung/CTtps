@@ -656,7 +656,8 @@ cv_SYG6 <-fviz_pca_var(SYG6_xx_pca, col.var = "contrib",
 SYG6_PC1_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 1, top = 7)
 SYG6_PC2_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 2, top = 7)
 
-#grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1) 
+library(gridExtra)
+grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1) 
 
 
 
