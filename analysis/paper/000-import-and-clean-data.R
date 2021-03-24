@@ -151,3 +151,7 @@ df_sitename <- df %>%
 #list of all attributes without ID
 DF <- df[,1:7]
 
+
+save(df, df_sitename, DF, file = "data_main.RData")
+# To load the data again
+load("data_main.RData")
