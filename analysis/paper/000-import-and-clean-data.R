@@ -45,9 +45,8 @@ SPstage <- read_csv(here("analysis/data/SPstage.csv"))
 
 #Compare multiple artifacts
 #Open multiple tps files. This will need to be changed to read files inside the project
-datadir <- here("/analysis/data/raw_data/")
+datadir <- here("analysis/data/raw_data/")
 files <- dir(datadir, pattern = "*.tps$|*.TPS$")
-
 
 #Computing size attributes  of the points by calculating distance between landmarks
 
@@ -129,7 +128,7 @@ SW = c()
 for (i in 1:length(files)) {
   filename <- paste(datadir, files[i], sep = "")
   # print(filename)
-  landmarks <- read.tps(filename)
+  landmarks <- read.tps(here(filename))
   ML <- c(ML, landmark_dist(landmarks, 1, 7))
   BL <- c(BL, bl_dist(landmarks))
   TL <- c(TL, tl_dist(landmarks))
