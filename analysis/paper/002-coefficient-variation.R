@@ -1,4 +1,5 @@
 library(tidyr)
+library(purrr)
 load("data_main.RData")
 
 
