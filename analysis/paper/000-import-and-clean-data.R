@@ -48,6 +48,9 @@ SPstage <- read_csv(here("analysis/data/SPstage.csv"))
 datadir <- here("analysis/data/raw_data/")
 files <- dir(datadir, pattern = "*.tps$|*.TPS$")
 
+#Getting site info
+korean_archaeological_site_locations <- read_csv(here("analysis/data/sitelocation.csv"))
+
 #Computing size attributes  of the points by calculating distance between landmarks
 
 #Understanding each landmark
@@ -145,12 +148,19 @@ df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files, SPstage$Stage)
 df_sitename <- df %>%
   mutate (files = str_remove_all(files, "_.tps")) %>%
   separate (files, into = c("sitename", "files"), sep = "_") %>%
-  select (-files)
+  select (-files) %>%
+
+
+library(dplyr)
+df_full_sitename <-
+  left_join(df_sitename, korean_archaeological_site_locations, by = c("sitename"="sitename"))
+
+
 
 #list of all attributes without ID
 DF <- df[,1:7]
 
 
-save(df, df_sitename, DF, file = "data_main.RData")
+save(df, df_sitename, df_full_sitename, DF, file = "data_main.RData")
 # To load the data again
 load("data_main.RData")

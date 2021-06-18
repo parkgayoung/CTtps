@@ -28,13 +28,13 @@ summary_table(cv_all)
 
 #Make a table of CVs for all variable grouped by site
 cv_by_site_df  <-
-  df_sitename %>%
-  select(-SPstage.Stage) %>%
-  group_by(sitename) %>%
+  df_full_sitename %>%
+  select(-SPstage.Stage, -lat_dd, -long_dd, -sitename) %>%
+  group_by(full_sitename) %>%
   add_tally() %>%
   filter( n > 1) %>%
   select(-n) %>%
-  nest(-sitename) %>%
+  nest(-full_sitename) %>%
   mutate(cv_by_site = map(data, ~map_df(.x, cv)))
 
 cv_by_site_df_unnest <-
@@ -46,9 +46,15 @@ cv_plot_site <- cv_by_site_df_unnest %>%
   select(-data)
 
 cv_plot_site %>%
-  pivot_longer(cols = -sitename, names_to = "group") %>%
-  ggplot(aes(x = group, y = value, fill = sitename)) +
-  geom_bar(stat="identity", position=position_dodge())
+  pivot_longer(cols = -full_sitename, names_to = "group") %>%
+  ggplot(aes(x = group, y = value, fill = full_sitename)) +
+  geom_bar(stat="identity", position=position_dodge()) +
+  labs(fill = "Site")
+
+ggsave(here::here("analysis/figures/004-cv-sites.png"),
+       width = 7,
+       height = 4.5,
+       units = "in")
 
 #Make a table of CVs for all variable grouped by stage, according to stemmed point chronology
 
