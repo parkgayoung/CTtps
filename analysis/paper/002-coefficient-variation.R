@@ -3,6 +3,7 @@ library(purrr)
 library(dplyr)
 library(readr)
 library(stringr)
+library(ggplot2)
 load("data_main.RData")
 
 
@@ -13,10 +14,17 @@ cv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100
 # we've got DF a data frame with cols as variables
 # rows and specimens, and values as dimensions
 # need to add a column of site ID
-cvmap <- map(DF, cv)
+
+map(DF, cv)
 
 #Same as map but better view for summary
-map_df(DF, cv)
+cv_all <- map_df(DF, cv)
+
+#arrage the data properly
+cv_data_all <- gather(cv_all)
+
+library(dplyr)
+summary_table(cv_all)
 
 #Make a table of CVs for all variable grouped by site
 cv_by_site_df  <-
