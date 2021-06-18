@@ -38,14 +38,14 @@ read.tps = function(data) {
 }
 
 #need to figure out how to read the file inside the project
-landmarks <- read.tps(here("analysis/data/raw_data/BG_0_2.tps"))
+landmarks <- read.tps(here::here("analysis/data/raw_data/BG_0_2.tps"))
 
 #getting info for phase of each site
 SPstage <- read_csv(here("analysis/data/SPstage.csv"))
 
 #Compare multiple artifacts
 #Open multiple tps files. This will need to be changed to read files inside the project
-datadir <- here("analysis/data/raw_data/")
+datadir <- here("analysis/data/raw_data/original-landmark-data/")
 files <- dir(datadir, pattern = "*.tps$|*.TPS$")
 
 #Getting site info
@@ -117,6 +117,54 @@ TW <- landmark_dist(landmarks, 3, 10)
 # Stem width: SW, distance between landmark 5-8
 SW <- landmark_dist(landmarks, 5, 8)
 
+# get the landmark coordinates
+landmarks_list <- vector("list", length = length(files))
+
+files_original <- list.files(datadir, full.names = TRUE)
+
+for (i in 1:length(files_original)) {
+  filename <- files_original[i]
+
+  # read in landmark files
+  landmarks_list[[i]] <- readLines(here(filename))
+
+  # drop curves
+  landmarks_list[[i]] <- landmarks_list[[i]][c(1:12, 76:77)]
+  write_lines(landmarks_list[[i]],
+              paste0("analysis/data/raw_data/",
+                     "no-curves-landmark-data/",
+                     paste0("no_curves_", basename(filename))))
+
+}
+
+landmarks_list <- vector("list", length = length(files))
+no_curves_files <- list.files(here::here("analysis/data/raw_data/no-curves-landmark-data"),
+                              full.names = TRUE)
+
+for (i in 1:length(no_curves_files)) {
+  filename <- no_curves_files[i]
+  print(filename)
+
+  # read in landmark files
+  landmarks_list[[i]] <- geomorph::readland.tps(filename)
+}
+
+filename <- "analysis/data/raw_data/no-curves-landmark-data/no_curves_BG_0_2.tps"
+x1 <- borealis::read.tps(here(filename), links = "chull")
+x2 <- geomorph::readmulti.tps( no_curves_files)
+
+
+# attach artefact ID's to landmarks
+names(landmarks_list) <- files
+
+# convert list to dataframe
+landmarks_list_df <- bind_rows(landmarks_list, .id = "artefact")
+
+Out(x2, fac = no_curves_files) %>%
+  coo_align() %>%
+  coo_center() %>%
+  coo_scale() %>%
+  pile(transp = 0.9)
 
 
 #Gather attributes from  all artifacts

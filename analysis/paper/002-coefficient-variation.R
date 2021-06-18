@@ -6,7 +6,6 @@ library(stringr)
 library(ggplot2)
 load("data_main.RData")
 
-
 # Coefficient of variation (CV): the ratio of the standard deviation divided by mean
 
 cv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100
@@ -24,7 +23,7 @@ cv_all <- map_df(DF, cv)
 cv_data_all <- gather(cv_all)
 
 library(dplyr)
-summary_table(cv_all)
+# ummary_table(cv_all)
 
 #Make a table of CVs for all variable grouped by site
 cv_by_site_df  <-
@@ -41,12 +40,13 @@ cv_by_site_df_unnest <-
   cv_by_site_df %>%
   unnest(cv_by_site)
 
-
 cv_plot_site <- cv_by_site_df_unnest %>%
   select(-data)
 
+# grouped bar plot
 cv_plot_site %>%
-  pivot_longer(cols = -full_sitename, names_to = "group") %>%
+  pivot_longer(cols = -full_sitename,
+               names_to = "group") %>%
   ggplot(aes(x = group, y = value, fill = full_sitename)) +
   geom_bar(stat="identity", position=position_dodge()) +
   labs(fill = "Site")
@@ -55,6 +55,15 @@ ggsave(here::here("analysis/figures/004-cv-sites.png"),
        width = 7,
        height = 4.5,
        units = "in")
+
+# facetted bar plot
+cv_plot_site %>%
+  pivot_longer(cols = -full_sitename,
+               names_to = "group") %>%
+  ggplot(aes(x = group, y = value, fill = full_sitename)) +
+  geom_col() +
+  facet_wrap( ~ full_sitename)
+  labs(fill = "Site")
 
 #Make a table of CVs for all variable grouped by stage, according to stemmed point chronology
 

@@ -300,6 +300,13 @@ mtext (text = "C. CV = 3%", side = 3,
 dev.off()
 ```
 
+Lance Fortnow, John Riedl, Tuomas Sandholm (eds)
+
+Association for Computing Machinery, New York, NY
+
+IEEE Computer Society1730 Massachusetts Ave., NW Washington, DC
+
+https://doi.org/10.1177/2053951716653418
 
 Ben's explorations of simulating artefacts over multiple generations. THis looks at one attribute only, so far
 

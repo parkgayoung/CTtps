@@ -16,7 +16,6 @@ SYG6_DF <- SYG6_df[,1:7]
 # make n=element number
 count_SYG6 <- length(which(SYG6_df$SPstage.Stage == 2))
 
-
 # using corrr
 
 corrr_SYG6_DF <-correlate(SYG6_DF) %>%
@@ -65,7 +64,6 @@ SYG6_PC2_v <- fviz_contrib(SYG6_xx_pca, choice = "var", axes = 2, top = 7)
 library(gridExtra)
 grid.arrange(SYG6_PC1_v, SYG6_PC2_v, nrow =1)
 
-
 ########SYG1_2
 
 SYG1_2df <-
@@ -84,8 +82,6 @@ SYG1_2DF <- SYG1_2df[,1:7]
 # make n=element number
 count_SYG1_2 <- length(which(SYG1_2df$SPstage.Stage == 3))
 
-
-
 # using corrr
 
 corrr_SYG1_2DF <-correlate(SYG1_2DF) %>%
@@ -93,9 +89,6 @@ corrr_SYG1_2DF <-correlate(SYG1_2DF) %>%
 
 cSYG1_2DF <- rplot(corrr_SYG1_2DF) +
   ggtitle(paste("Correlation SYG1_2: 3rd Phase", "(n =", count_SYG1_2,")"))
-
-
-
 
 SYG1_2cor <- cor(SYG1_2DF)
 
@@ -138,19 +131,15 @@ SYG1_1df <-
   df %>%
   filter(str_detect(files, "SYG1_1"))
 
-
 SYG1_1df_sitename <- SYG1_1df %>%
   mutate (files = str_remove_all(files, "_\\d+.tps")) %>%
   dplyr::rename(sitename = files)
-
 
 #list of all attributes without ID
 SYG1_1DF <- SYG1_1df[,1:7]
 
 # make n=element number
 count_SYG1_1 <- length(which(SYG1_1df$SPstage.Stage == 2))
-
-
 
 # using corrr
 
@@ -159,8 +148,6 @@ corrr_SYG1_1DF <-correlate(SYG1_1DF) %>%
 
 cSYG1_1DF <- rplot(corrr_SYG1_1DF) +
   ggtitle(paste("Correlation SYG1_1: 2nd Phase", "(n =", count_SYG1_1,")"))
-
-
 
 SYG1_1cor <- cor(SYG1_1DF)
 
@@ -174,7 +161,6 @@ SYG1_1xx_pca <-
   SYG1_1df_sitename %>%
   select(-sitename, -SPstage.Stage) %>%
   prcomp(., center = TRUE, scale = TRUE)
-
 
 SYG1_1xx_pca1 <-
   data.frame(SYG1_1xx_pca$x,
