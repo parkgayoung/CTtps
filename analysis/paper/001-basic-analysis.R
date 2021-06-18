@@ -1,10 +1,29 @@
 load("data_main.RData")
-
+library(tidyverse)
 #Box plot for each attributes
 
-box1 <- boxplot(DF, main = "Variation for each attributes", col = "gold")
+box1 <- boxplot(DF,
+                main = "Variation for each attributes",
+                col = "gold",
+                xlab = "Attributes",
+                ylab = "Length (cm)")
 
-library(tidyverse)
+# mutate data to make plot with ggplot
+data_box <- gather(DF)
+
+# make box plot for each attributes with better visulazation options with ggplot
+ggplot(data_box, aes(key, value)) +
+  geom_boxplot(fill = "yellow") +
+  geom_quasirandom(size = 0.5, col = "blue", alpha = 0.5) +
+  ylab("Length (cm)") +
+  xlab("Variables") +
+  theme_bw()
+
+ggsave(here::here("analysis/figures/003-attributes-variation.png"),
+       width = 4.45,
+       height = 4.5,
+       units = "in")
+
 # take a look at the distribution of each variable
 DF %>%
   pivot_longer(everything()) %>%

@@ -1,5 +1,8 @@
 library(tidyr)
 library(purrr)
+library(dplyr)
+library(readr)
+library(stringr)
 load("data_main.RData")
 
 
