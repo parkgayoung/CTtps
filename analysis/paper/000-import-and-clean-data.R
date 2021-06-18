@@ -137,9 +137,15 @@ for (i in 1:length(files_original)) {
 
 }
 
+# write code to exclude those tps files that lack filename and scale data
+# because they wont work for the next lines that import
+
+# this is just for testing and can be deleted.
 landmarks_list <- vector("list", length = length(files))
 no_curves_files <- list.files(here::here("analysis/data/raw_data/no-curves-landmark-data"),
                               full.names = TRUE)
+
+no_curves_files_no_bad_ones <- # remove bad files or fix them
 
 for (i in 1:length(no_curves_files)) {
   filename <- no_curves_files[i]
@@ -149,9 +155,8 @@ for (i in 1:length(no_curves_files)) {
   landmarks_list[[i]] <- geomorph::readland.tps(filename)
 }
 
-filename <- "analysis/data/raw_data/no-curves-landmark-data/no_curves_BG_0_2.tps"
-x1 <- borealis::read.tps(here(filename), links = "chull")
-x2 <- geomorph::readmulti.tps( no_curves_files)
+# this is the one we want, it produces the output in a format we can easily work with
+x2 <- geomorph::readmulti.tps( no_curves_files_no_bad_ones )
 
 
 # attach artefact ID's to landmarks
