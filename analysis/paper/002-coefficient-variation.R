@@ -140,6 +140,7 @@ cv_by_site_df_label_more_than_10 <-
   unnest(cv_by_site) %>%
   select(-data)
 
+cv_ten_att <-
 cv_by_site_df_label_more_than_10 %>%
   pivot_longer(cols = -c(site_phase, label),
                names_to = "lithic_attribute",
@@ -160,7 +161,8 @@ cv_by_site_df_label_more_than_10_ml_mw_tw <-
   group_by(site_phase) %>%
   mutate(mean_cv = mean(CV))
 
-ggplot(cv_by_site_df_label_more_than_10_ml_mw_tw,
+cv_ten_four_att <-
+  ggplot(cv_by_site_df_label_more_than_10_ml_mw_tw,
        aes(x = lithic_attribute,
            y = CV)) +
   geom_col() +
@@ -191,4 +193,5 @@ ggplot(cv_by_site_df_label_more_than_10_ml_mw_bl,
   ggtitle("CVs of point attributes by site (with sites >=7 artefacts)") +
   theme_minimal()
 
-
+library(cowplot)
+plot_grid(cv_ten_att, cv_ten_four_att)
