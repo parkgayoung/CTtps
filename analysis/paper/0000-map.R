@@ -46,9 +46,9 @@ map_of_sites <-
                       lat_dd,
                       label = full_sitename),
                   size = 2,
-                  bg.color = "white",
+                  bg.color = "grey30",
                   bg.r = 0.15) +
-  theme_minimal(base_size = 6) +
+  theme_minimal(base_size = 0.15) +
   labs(x = "Longitute",
        y = "Latitude") +
   legendMap::scale_bar(
