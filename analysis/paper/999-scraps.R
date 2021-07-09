@@ -1,3 +1,46 @@
+
+## CV per each site (n=X)
+
+cv_by_site_df_label <-
+  df_sitename %>%
+  select(-SPstage.Stage) %>%
+  group_by(sitename) %>%
+  add_tally() %>%
+  filter( n > 1) %>%
+  mutate(label = as.factor(paste0(sitename,' (N = ', n, ")"))) %>%   select(-n) %>%
+  nest(-sitename, -label) %>%
+  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
+
+cv_by_site_df_unnest_label <-
+  cv_by_site_df_label %>%
+  unnest(cv_by_site)
+
+cv_plot_site_label <- cv_by_site_df_unnest_label %>%
+  select(-data)
+
+## Reference: site and number of artifacts
+cv_by_site_df_label_1 <-
+  df_sitename %>%
+  select(-SPstage.Stage) %>%
+  group_by(sitename) %>%
+  add_tally() %>%
+  mutate(label = as.factor(paste0(sitename,'\nN = ',n))) %>%   select(-n) %>%
+  nest(-sitename, -label) %>%
+  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
+
+cv_by_site_df_unnest_label_1 <-
+  cv_by_site_df_label_1 %>%
+  unnest(cv_by_site)
+
+
+p<- cv_plot_site_label %>%
+  pivot_longer(cols = -c(sitename,label), names_to = "group") %>%
+  ggplot(aes(label, value, fill = as.factor(group))) +
+  geom_bar(stat="identity", position=position_dodge())
+
+p + labs(x= "Site", fill = "Attributes")
+
+
 ######### explore SYG6 site which contains more than 1 stage
 library(stringr)
 SYG6_df <-
