@@ -48,7 +48,7 @@ map_of_sites <-
                   size = 2,
                   bg.color = "white",
                   bg.r = 0.15) +
-  theme_minimal(base_size = 6) +
+  theme_minimal(base_size = 0.15) +
   labs(x = "Longitute",
        y = "Latitude") +
   legendMap::scale_bar(
@@ -83,6 +83,7 @@ library(maps)
 library(magrittr)
 library(maptools)
 library(raster)
+
 library(ggplot2)
 
 #Defining a general CRS

@@ -1,3 +1,4 @@
+library(tidyverse)
 library(tidyr)
 library(corrr)
 library(ggbiplot)
@@ -53,6 +54,7 @@ xx_pca2 <-
   filter(SPstage.Stage == 2) %>%
   select(-sitename, -SPstage.Stage) %>%
   prcomp(., center = TRUE, scale = TRUE)
+
 
 # phase 3
 

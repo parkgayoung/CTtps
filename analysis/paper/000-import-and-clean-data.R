@@ -1,3 +1,4 @@
+library(rgl)
 library(here)
 library(tidyverse)
 
@@ -38,7 +39,7 @@ read.tps = function(data) {
 }
 
 #need to figure out how to read the file inside the project
-landmarks <- read.tps(here::here("analysis/data/raw_data/BG_0_2.tps"))
+landmarks <- read.tps(here::here("analysis/data/raw_data/original-landmark-data/BG_0_2.tps"))
 
 #getting info for phase of each site
 SPstage <- read_csv(here("analysis/data/SPstage.csv"))
@@ -128,7 +129,7 @@ for (i in 1:length(files_original)) {
   # read in landmark files
   landmarks_list[[i]] <- readLines(here(filename))
 
-  # drop curves
+  # drop curves it is unnecessary now cuz GP fixed raw data
   landmarks_list[[i]] <- landmarks_list[[i]][c(1:12, 76:77)]
   write_lines(landmarks_list[[i]],
               paste0("analysis/data/raw_data/",
@@ -145,18 +146,18 @@ landmarks_list <- vector("list", length = length(files))
 no_curves_files <- list.files(here::here("analysis/data/raw_data/no-curves-landmark-data"),
                               full.names = TRUE)
 
-no_curves_files_no_bad_ones <- # remove bad files or fix them
-
-for (i in 1:length(no_curves_files)) {
-  filename <- no_curves_files[i]
-  print(filename)
-
-  # read in landmark files
-  landmarks_list[[i]] <- geomorph::readland.tps(filename)
-}
+# no_curves_files_no_bad_ones <- # remove bad files or fix them
+#
+# for (i in 1:length(no_curves_files)) {
+#   filename <- no_curves_files[i]
+#   print(filename)
+#
+#   # read in landmark files
+#   landmarks_list[[i]] <- geomorph::readland.tps(filename)
+# }
 
 # this is the one we want, it produces the output in a format we can easily work with
-x2 <- geomorph::readmulti.tps( no_curves_files_no_bad_ones )
+x2 <- geomorph::readmulti.tps(no_curves_files)
 
 
 # attach artefact ID's to landmarks
@@ -164,6 +165,8 @@ names(landmarks_list) <- files
 
 # convert list to dataframe
 landmarks_list_df <- bind_rows(landmarks_list, .id = "artefact")
+
+library(Momocs)
 
 Out(x2, fac = no_curves_files) %>%
   coo_align() %>%
@@ -201,7 +204,7 @@ df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files, SPstage$Stage)
 df_sitename <- df %>%
   mutate (files = str_remove_all(files, "_.tps")) %>%
   separate (files, into = c("sitename", "files"), sep = "_") %>%
-  select (-files) %>%
+  select (-files)
 
 
 library(dplyr)
