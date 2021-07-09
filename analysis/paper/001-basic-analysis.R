@@ -1,5 +1,7 @@
 load("data_main.RData")
 library(tidyverse)
+library(ggplot2)
+library(ggbeeswarm)
 #Box plot for each attributes
 
 box1 <- boxplot(DF,
@@ -13,8 +15,10 @@ data_box <- gather(DF)
 
 # make box plot for each attributes with better visulazation options with ggplot
 ggplot(data_box, aes(key, value)) +
-  geom_boxplot(fill = "yellow") +
-  geom_quasirandom(size = 0.5, col = "blue", alpha = 0.5) +
+  geom_boxplot() +
+  geom_beeswarm(alpha = 0.3,
+                size = 0.8,
+                cex = 0.7) +
   ylab("Length (cm)") +
   xlab("Variables") +
   theme_bw()
