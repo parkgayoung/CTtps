@@ -145,18 +145,18 @@ landmarks_list <- vector("list", length = length(files))
 no_curves_files <- list.files(here::here("analysis/data/raw_data/no-curves-landmark-data"),
                               full.names = TRUE)
 
-no_curves_files_no_bad_ones <- # remove bad files or fix them
-
-for (i in 1:length(no_curves_files)) {
-  filename <- no_curves_files[i]
-  print(filename)
-
-  # read in landmark files
-  landmarks_list[[i]] <- geomorph::readland.tps(filename)
-}
+# no_curves_files_no_bad_ones <- # remove bad files or fix them
+#
+# for (i in 1:length(no_curves_files)) {
+#   filename <- no_curves_files[i]
+#   print(filename)
+#
+#   # read in landmark files
+#   landmarks_list[[i]] <- geomorph::readland.tps(filename)
+# }
 
 # this is the one we want, it produces the output in a format we can easily work with
-x2 <- geomorph::readmulti.tps(no_curves_files_no_bad_ones)
+x2 <- geomorph::readmulti.tps(no_curves_files)
 
 
 # attach artefact ID's to landmarks
