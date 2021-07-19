@@ -58,21 +58,22 @@ cv_by_full_site_df_label <-
 ## add label to main dataframe
 cv_plot_site_label <- cv_plot_site %>%
  left_join (cv_by_full_site_df_label) %>%
-  select (- data, -cv_by_site)
-
+  select (- data, -cv_by_site) %>%
+  ungroup (full_sitename) %>%
+  select (-full_sitename)
 
 # facetted bar plot per each site, drop legend
-site_bar_plot <- cv_plot_site %>%
-  pivot_longer(cols = -full_sitename,
+site_bar_plot <- cv_plot_site_label %>%
+  pivot_longer(cols = -label,
                names_to = "group") %>%
-  ggplot(aes(x = group, y = value, fill = full_sitename)) +
+  ggplot(aes(x = group, y = value, fill = label)) +
   geom_col() +
-  facet_wrap( ~ full_sitename) +
+  facet_wrap( ~ label) +
   theme(legend.position = "none")
 
-# facetted bar plot with (n=X)
 
-site_bar_plot + scale_fill_discrete(name = "Site name", labels = cv_by_full_site_df_label$label)
+# facetted bar plot with (n=X)
+#site_bar_plot + scale_fill_discrete(name = "Site name", labels = cv_by_full_site_df_label$label)
 
 ggsave(here::here("analysis/figures/004-cv-sites.png"),
        width = 7,
