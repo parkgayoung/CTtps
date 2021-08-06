@@ -68,6 +68,8 @@ site_bar_plot <- cv_plot_site_label %>%
                names_to = "group") %>%
   ggplot(aes(x = group, y = value, fill = label)) +
   geom_col() +
+  xlab("Site") +
+  ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label) +
   theme(legend.position = "none")
 
