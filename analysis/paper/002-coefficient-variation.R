@@ -10,14 +10,39 @@ load("data_main.RData")
 
 cv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100
 
+#try corrected cv with different methods
+library(cvcqv)
+ccv <- function(x, ... ) cv_versatile(x, method = "kelley", ...)
+mccv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100 * (1 + 1/(4*152))
+
 # we've got DF a data frame with cols as variables
 # rows and specimens, and values as dimensions
 # need to add a column of site ID
 
 map(DF, cv)
+map(DF, ccv)
+map(DF, mccv)
 
 #Same as map but better view for summary
 cv_all <- map_df(DF, cv)
+
+
+
+cv(DF$ML)
+cv_versatile(DF$ML)
+cv_versatile(DF$ML, correction = TRUE)
+cv_versatile(DF$ML, method = "kelley", correction = TRUE)
+cv_versatile(DF$ML, method = "mckay", correction = TRUE)
+cv_versatile(DF$ML, method = "miller", correction = TRUE)
+cv_versatile(DF$ML, method = "vangel", correction = TRUE)
+cv_versatile(DF$ML, method = "mahmoudvand_hassani", correction = TRUE)
+cv_versatile(DF$ML, method = "normal_approximation", correction = TRUE)
+cv_versatile(DF$ML, method = "shortest_length", correction = TRUE) #not working
+cv_versatile(DF$ML, method = "equal_tailed", correction = TRUE)
+cv_versatile(DF$ML, method = "basic", correction = TRUE)
+# can't use method = "all"
+
+
 
 #arrange the data properly
 cv_data_all <- gather(cv_all)
