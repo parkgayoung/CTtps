@@ -13,13 +13,13 @@ cv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100
 #try corrected cv with different methods
 library(cvcqv)
 ccv <- function(x, ... ) cv_versatile(x, method = "kelley", ...)
-mccv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100 * (1 + 1/(4*152))
+mccv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100 * (1 + 1/(4*length(x)))
 
 # we've got DF a data frame with cols as variables
 # rows and specimens, and values as dimensions
 # need to add a column of site ID
 
-map(DF, cv)
+DFCV<- map_dbl(DF, cv)
 map(DF, ccv)
 map(DF, mccv)
 
@@ -27,22 +27,26 @@ map(DF, mccv)
 cv_all <- map_df(DF, cv)
 
 
+hist(DF$ML)
 
-cv(DF$ML)
+hist(DFCV)
+
 cv_versatile(DF$ML)
 cv_versatile(DF$ML, correction = TRUE)
-cv_versatile(DF$ML, method = "kelley", correction = TRUE)
-cv_versatile(DF$ML, method = "mckay", correction = TRUE)
-cv_versatile(DF$ML, method = "miller", correction = TRUE)
-cv_versatile(DF$ML, method = "vangel", correction = TRUE)
-cv_versatile(DF$ML, method = "mahmoudvand_hassani", correction = TRUE)
+cv_versatile(DF$ML, method = "kelley", correction = TRUE) # assumes normal distribution
+cv_versatile(DF$ML, method = "mckay", correction = TRUE) # good for small CV values <0.33, more assumption
+cv_versatile(DF$ML, method = "miller", correction = TRUE) # assumes normal distribution,  more assumption
+cv_versatile(DF$ML, method = "vangel", correction = TRUE)  # modification of mckay, more assumption
+cv_versatile(DF$ML, method = "mahmoudvand_hassani", correction = TRUE)  # less assumption, assumes normal distribution
 cv_versatile(DF$ML, method = "normal_approximation", correction = TRUE)
-cv_versatile(DF$ML, method = "shortest_length", correction = TRUE) #not working
-cv_versatile(DF$ML, method = "equal_tailed", correction = TRUE)
-cv_versatile(DF$ML, method = "basic", correction = TRUE)
+cv_versatile(DF$ML, method = "shortest_length", correction = TRUE) #more assumption, the latest one , but not working
+cv_versatile(DF$ML, method = "equal_tailed", correction = TRUE) # more assumption, the latest one
+cv_versatile(DF$ML, method = "basic", correction = TRUE)  # no assumptions of normal distribution
 # can't use method = "all"
 
-
+# GP tries new pkg "MKmisc"
+library(MKmisc)
+cvCI(DF$ML, conf.level = 0.95, method = "miller", na.rm = FALSE)
 
 #arrange the data properly
 cv_data_all <- gather(cv_all)
