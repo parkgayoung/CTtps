@@ -69,17 +69,21 @@ library(factoextra) #http://www.sthda.com/english/articles/31-principal-componen
 
 # Color variables by the continuous variable
 cv_all <- fviz_pca_var(xx_pca, col.var = "contrib",
-                       gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) + ggtitle(paste("All", "(n =", count_phase,")")) +
+                       gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
+  ggtitle(paste0("All", " (n =", count_phase, ")")) +
            theme(legend.position = "none")
 
 
 # phase 2
 cv_two <- fviz_pca_var(xx_pca2, col.var = "contrib",
-                       gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) + ggtitle(paste("Phase 2", "(n =", count_phase2,")"))+
+                       gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
+  ggtitle(paste0("Phase 2", " (n =", count_phase2,")"))+
   theme(legend.position = "none")
+
 # phase 3
 cv_three <- fviz_pca_var(xx_pca3, col.var = "contrib",
-                         gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) + ggtitle(paste("Phase 3", "(n =", count_phase3,")"))
+                         gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
+  ggtitle(paste0("Phase 3", " (n =", count_phase3,")"))
 
 library(patchwork)
 cv_all + cv_two + cv_three + plot_layout(nrow=1)
