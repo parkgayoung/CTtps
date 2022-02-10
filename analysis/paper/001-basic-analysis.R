@@ -23,7 +23,7 @@ ggplot(data_box, aes(key, value)) +
   xlab("Variables") +
   theme_bw()
 
-ggsave(here::here("analysis/figures/003-attributes-variation.png"),
+ggsave(here::here("analysis/figures/002-attributes-variation.png"),
        width = 4.45,
        height = 4.5,
        units = "in")
