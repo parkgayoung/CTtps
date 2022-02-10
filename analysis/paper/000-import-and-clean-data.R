@@ -2,7 +2,6 @@ library(rgl)
 library(here)
 library(tidyverse)
 
-
 #reading landmarks in tps, code from https://gist.github.com/mrdwab/2062329
 
 read.tps = function(data) {

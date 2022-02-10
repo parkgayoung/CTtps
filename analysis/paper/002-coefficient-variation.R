@@ -52,7 +52,6 @@ site_bar_plot <- cv_plot_site %>%
   facet_wrap( ~ full_sitename)
   labs(fill = "Site")
 
-
 ## CV for per each site (n=X) with the full site name
 cv_by_full_site_df_label <-
   df_full_sitename %>%
@@ -63,7 +62,6 @@ cv_by_full_site_df_label <-
   mutate(label = as.factor(paste0(full_sitename,' (N = ', n, ")"))) %>%   select(-n) %>%
   nest(-full_sitename, -label) %>%
   mutate(cv_by_site = map(data, ~map_df(.x, cv)))
-
 
 # facetted bar plot with (n=X)
 
