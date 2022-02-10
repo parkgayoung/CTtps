@@ -8,7 +8,8 @@ corrr_all <- correlate(DF) %>%
   shave()
 
 call<-rplot(corrr_all) +
-  ggtitle("Correlation for all phase")
+  ggtitle("Correlation for all phase") +
+  theme(legend.position = "none")
 
 direction_all <- correlate(DF) %>%
   network_plot()
@@ -23,7 +24,8 @@ corrr_2 <-correlate(DF2) %>%
   shave()
 
 ctwo <- rplot(corrr_2) +
-  ggtitle("Correlation for 2nd phase")
+  ggtitle("Correlation for 2nd phase") +
+  theme(legend.position = "none")
 
 direction_2 <- correlate(DF2) %>%
   network_plot()
@@ -45,6 +47,10 @@ direction_3 <-correlate(DF3) %>%
 
 ### three phases at once
 library(patchwork)
-call + ctwo + cthree + plot_layout(ncol=1)
+call + ctwo + cthree + plot_layout(nrow=1)
 
+ggsave(here::here("analysis/figures/006-correlation.png"),
+       width = 10,
+       height = 3,
+       units = "in")
 

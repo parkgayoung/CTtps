@@ -131,6 +131,7 @@ site_bar_plot <- cv_plot_site_label %>%
   theme(legend.position = "none")
 
 
+
 # facetted bar plot with (n=X)
 #site_bar_plot + scale_fill_discrete(name = "Site name", labels = cv_by_full_site_df_label$label)
 
@@ -163,8 +164,22 @@ cv_plot_stage <- cv_by_stage_df_unnest %>%
 # bar plot for two phases
 cv_plot_stage %>%
   pivot_longer(cols = -SPstage.Stage, names_to = "group") %>%
-  ggplot(aes(x = group, y = value, fill = as.factor(SPstage.Stage))) +
-  geom_bar(stat="identity", position=position_dodge()) + labs(x="Attributes", fill= "Phase")
+  ggplot(aes(x= SPstage.Stage, y = value, fill = as.factor(SPstage.Stage))) +
+  geom_bar(stat="identity", position=position_dodge()) + labs(x="Attributes", fill= "Phase")+
+  facet_wrap( ~ group) +
+  theme_bw()
+
+ggsave(here::here("analysis/figures/004-cv-phases.png"),
+       width = 5,
+       height = 4.5,
+       units = "in")
+
+# bar plot for each attribute
+cv_plot_stage %>%
+  ggplot(aes(x=SPstage.Stage, y=ML))+
+  geom_line()
+
+
 
 #### plot CVs by site with number of artefacts showing >10
 
