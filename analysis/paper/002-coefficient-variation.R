@@ -100,21 +100,8 @@ cv_by_site_df_unnest <-
 cv_plot_site <- cv_by_site_df_unnest %>%
   select(-data)
 
-<<<<<<< HEAD
-# facetted bar plot per each site
-site_bar_plot <- cv_plot_site %>%
-  pivot_longer(cols = -full_sitename,
-               names_to = "group") %>%
-  ggplot(aes(x = group, y = value, fill = full_sitename)) +
-  geom_col() +
-  facet_wrap( ~ full_sitename)
-  labs(fill = "Site")
-
-## CV for per each site (n=X) with the full site name
-=======
-
 ## CV for per each site (n=X) with the full site name : labe
->>>>>>> 20c1f53fafbe1236f18b28c93d9519a7e00687c4
+
 cv_by_full_site_df_label <-
   df_full_sitename %>%
   select(-SPstage.Stage) %>%
@@ -125,9 +112,6 @@ cv_by_full_site_df_label <-
   nest(-full_sitename, -label) %>%
   mutate(cv_by_site = map(data, ~map_df(.x, cv)))
 
-<<<<<<< HEAD
-# facetted bar plot with (n=X)
-=======
 ## add label to main dataframe
 cv_plot_site_label <- cv_plot_site %>%
  left_join (cv_by_full_site_df_label) %>%
@@ -145,9 +129,6 @@ site_bar_plot <- cv_plot_site_label %>%
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label) +
   theme(legend.position = "none")
-
->>>>>>> 20c1f53fafbe1236f18b28c93d9519a7e00687c4
-
 
 # facetted bar plot with (n=X)
 #site_bar_plot + scale_fill_discrete(name = "Site name", labels = cv_by_full_site_df_label$label)
