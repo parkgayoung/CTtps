@@ -111,6 +111,7 @@ SL <- sl_dist
 # Mid width: MW, distance between landmark 2-11
 MW <- landmark_dist(landmarks, 2, 11)
 
+hist(MW)
 # Maximum width of Tang: TW, distance between landmark 3-10
 TW <- landmark_dist(landmarks, 3, 10)
 

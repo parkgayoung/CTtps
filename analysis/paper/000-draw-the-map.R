@@ -1,19 +1,9 @@
-
 korean_archaeological_site_locations <-
   readr::read_csv(here::here("analysis/data/sitelocation.csv"))
-
-# Put index number, rather than site name
 
 korean_archaeological_site_locations <-
   tibble::rowid_to_column(korean_archaeological_site_locations, "ID")
 
-library(ggplot2)
-
-# # check the basic look
-# ggplot(korean_archaeological_site_locations) +
-#   aes(x = long_dd,
-#       y = lat_dd) +
-#   geom_point()
 
 library(ggmap)
 
@@ -48,7 +38,7 @@ map_of_sites <-
                   size = 2,
                   bg.color = "white",
                   bg.r = 0.15) +
-  theme_minimal(base_size = 0.15) +
+  theme_minimal(base_size = 6) +
   labs(x = "Longitute",
        y = "Latitude") +
   legendMap::scale_bar(
@@ -83,7 +73,6 @@ library(maps)
 library(magrittr)
 library(maptools)
 library(raster)
-
 library(ggplot2)
 
 #Defining a general CRS
@@ -144,9 +133,15 @@ ggdraw() +
             width = .4, # Inset width
             height = .35, # Inset height
             scale = 0.5 # Inset scale
-  )
+  ) +
+  theme(panel.background = element_rect(fill='white', colour="white"),
+        plot.background = element_rect(fill='white', colour="white"))
+
 
 ggsave(here::here("analysis/figures/001-site-map.png"),
        width = 4.45,
        height = 4.5,
        units = "in")
+
+
+
