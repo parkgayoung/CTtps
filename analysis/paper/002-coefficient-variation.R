@@ -70,10 +70,10 @@ cv_data_sharma_named<-rownames_to_column(cv_data_sharma, var = "attribute")
 library(ggplot2)
 ggplot(cv_data_sharma_named, aes(attribute, all_cv_sharma)) +        # ggplot2 plot with confidence intervals
   geom_point() +
-  geom_errorbar(aes(ymin = all_low_sharma, ymax = all_high_sharma)) +
+  geom_errorbar(aes(ymin = all_low_sharma, ymax = all_high_sharma), width = .2) +
   ylab("CV") +
   xlab("Variables") +
-  geom_text(aes(label = round(all_cv_sharma,1)), col="green", hjust = -0.3, size = 3) +
+  geom_text(aes(label = round(all_cv_sharma,1)), col="blue", hjust = -0.3, size = 3) +
   theme_bw()
 
 ggsave(here::here("analysis/figures/003-cv-sharma.png"),
@@ -100,7 +100,7 @@ cv_by_site_df_unnest <-
 cv_plot_site <- cv_by_site_df_unnest %>%
   select(-data)
 
-## CV for per each site (n=X) with the full site name : labe
+## CV for per each site (n=X) with the full site name : label
 
 cv_by_full_site_df_label <-
   df_full_sitename %>%
