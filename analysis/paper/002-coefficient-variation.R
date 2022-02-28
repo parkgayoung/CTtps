@@ -47,6 +47,15 @@ hist(DFCV)
 # # can't use method = "all"
 
 # GP tries new pkg "MKmisc" for applying Sharma and Krishna model
+
+# to install MKmisc
+## Install package BiocManager
+# install.packages("BiocManager")
+## Use BiocManager to install limma
+# BiocManager::install("limma")
+
+test_output <- cvCI(c(2,3,4), conf.level = 0.95, method = "sharma", na.rm = FALSE)
+
 library(MKmisc)
 #CV value
 sharma_cv <- function(x,...) cvCI(x, conf.level = 0.95, method = "sharma", na.rm = FALSE)$estimate*100
@@ -60,11 +69,11 @@ all_low_sharma <- map_dbl(DF, sharma_int_low)
 all_high_sharma <- map_dbl(DF, sharma_int_high)
 
 #create data frame
-cv_data_sharma<- data.frame(all_cv_sharma, all_low_sharma, all_high_sharma)
+cv_data_sharma <- data.frame(all_cv_sharma, all_low_sharma, all_high_sharma)
 
 #add column name
 library(tibble)
-cv_data_sharma_named<-rownames_to_column(cv_data_sharma, var = "attribute")
+cv_data_sharma_named <- rownames_to_column(cv_data_sharma, var = "attribute")
 
 
 library(ggplot2)
@@ -90,15 +99,14 @@ cv_by_site_df  <-
   add_tally() %>%
   filter( n > 1) %>%
   select(-n) %>%
-  nest(-full_sitename) %>%
-  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
+  group_by(full_sitename) %>%
+  summarise(cv_by_site =   sharma_cv(c(ML, BL , TL , SL , MW, TW, SW)),
+            cv_low_sharma =  sharma_int_low(c(ML, BL , TL , SL , MW, TW, SW)),
+            cv_high_sharma = sharma_int_high(c(ML, BL , TL , SL , MW, TW, SW)))
 
-cv_by_site_df_unnest <-
-  cv_by_site_df %>%
-  unnest(cv_by_site)
 
-cv_plot_site <- cv_by_site_df_unnest %>%
-  select(-data)
+
+cv_plot_site <- cv_by_site_df
 
 ## CV for per each site (n=X) with the full site name : label
 
