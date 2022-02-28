@@ -206,7 +206,7 @@ cv_by_site_df_label_more_than_10 %>%
              y = CV)) +
   geom_col() +
   facet_wrap(~  label) +
-  ggtitle("CVs of point attributes by site (with sites >10 artefacts)")
+  ggtitle("CVs of point attributes by site (with sites >=7 artifacts)")
 
 cv_by_site_df_label_more_than_10_ml_mw_tw <-
   cv_by_site_df_label_more_than_10 %>%
@@ -227,7 +227,7 @@ cv_ten_four_att <-
   geom_hline(aes(yintercept = mean_cv),
              colour = "red") +
   facet_wrap(~  label) +
-  ggtitle("CVs of point attributes by site (with sites >10 artefacts)") +
+  ggtitle("CVs of point attributes by site (with sites >=7 artifacts)") +
   theme_minimal()
 
 #### plot CVs by site with number of artefacts showing >=7
@@ -250,7 +250,7 @@ ggplot(cv_by_site_df_label_more_than_10_ml_mw_bl,
   geom_hline(aes(yintercept = mean_cv),
              colour = "red") +
   facet_wrap(~  label) +
-  ggtitle("CVs of point attributes by site (with sites >=7 artefacts)") +
+  ggtitle("CVs of point attributes by site (with sites >=7 artifacts)") +
   theme_minimal()
 
 library(cowplot)
