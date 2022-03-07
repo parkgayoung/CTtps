@@ -100,7 +100,7 @@ cv_by_site_df  <-
   filter( n > 1) %>%
   select(-n) %>%
   group_by(full_sitename) %>%
-  summarise(cv_by_site =   sharma_cv(c(ML, BL , TL , SL , MW, TW, SW)),
+  summarise(cv_by_site =     sharma_cv(c(ML, BL , TL , SL , MW, TW, SW)),
             cv_low_sharma =  sharma_int_low(c(ML, BL , TL , SL , MW, TW, SW)),
             cv_high_sharma = sharma_int_high(c(ML, BL , TL , SL , MW, TW, SW)))
 
