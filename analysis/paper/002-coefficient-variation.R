@@ -20,7 +20,6 @@ mccv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100 * (1 + 1/(4*length(x)))
 # need to add a column of site ID
 
 DFCV<- map_dbl(DF, cv)
-map(DF, ccv)
 map(DF, mccv)
 
 #Same as map but better view for summary
@@ -31,22 +30,6 @@ cv_data_all <- gather(cv_all)
 hist(DF$ML)
 
 hist(DFCV)
-
-#explore CV models, we picked sharma
-# cv_versatile(DF$ML)
-# cv_versatile(DF$ML, correction = TRUE)
-# cv_versatile(DF$ML, method = "kelley", correction = TRUE) # assumes normal distribution
-# cv_versatile(DF$ML, method = "mckay", correction = TRUE) # good for small CV values <0.33, more assumption
-# cv_versatile(DF$ML, method = "miller", correction = TRUE) # assumes normal distribution,  more assumption
-# cv_versatile(DF$ML, method = "vangel", correction = TRUE)  # modification of mckay, more assumption
-# cv_versatile(DF$ML, method = "mahmoudvand_hassani", correction = TRUE)  # less assumption, assumes normal distribution
-# cv_versatile(DF$ML, method = "normal_approximation", correction = TRUE)
-# cv_versatile(DF$ML, method = "shortest_length", correction = TRUE) #more assumption, the latest one , but not working
-# cv_versatile(DF$ML, method = "equal_tailed", correction = TRUE) # more assumption, the latest one
-# cv_versatile(DF$ML, method = "basic", correction = TRUE)  # no assumptions of normal distribution
-# # can't use method = "all"
-
-# GP tries new pkg "MKmisc" for applying Sharma and Krishna model
 
 # to install MKmisc
 ## Install package BiocManager
@@ -106,7 +89,7 @@ cv_by_site_df  <-
 
 
 
-cv_plot_site <- cv_by_site_df
+
 
 ## CV for per each site (n=X) with the full site name : label
 
@@ -118,14 +101,13 @@ cv_by_full_site_df_label <-
   filter( n > 1) %>%
   mutate(label = as.factor(paste0(full_sitename,' (N = ', n, ")"))) %>%   select(-n) %>%
   nest(-full_sitename, -label) %>%
-  mutate(cv_by_site = map(data, ~map_df(.x, cv)))
+  mutate(cv_by_site = map(data, ~map_df(.x, cv))) %>%
+  select (-cv_by_site)
 
 ## add label to main dataframe
-cv_plot_site_label <- cv_plot_site %>%
+cv_plot_site_label <- cv_by_site_df %>%
  left_join (cv_by_full_site_df_label) %>%
-  select (- data, -cv_by_site) %>%
-  ungroup (full_sitename) %>%
-  select (-full_sitename)
+  select (- data,-full_sitename)
 
 # facetted bar plot per each site, drop legend
 site_bar_plot <- cv_plot_site_label %>%
@@ -138,6 +120,24 @@ site_bar_plot <- cv_plot_site_label %>%
   facet_wrap( ~ label) +
   theme(legend.position = "none")
 
+site_bar_plot <- cv_plot_site_label %>%
+  pivot_longer(cols = -label,
+               names_to = "group") %>%
+  ggplot(aes(x = group, y = value, fill = label)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = min(cv_plot_site_label$group), ymax = max(cv_plot_site_label$group)), width = .2) +
+  xlab("Site") +
+  ylab("Coefficient of Variation on Attributes") +
+  facet_wrap( ~ label) +
+  theme(legend.position = "none")
+
+# ggplot(cv_data_sharma_named, aes(attribute, all_cv_sharma)) +        # ggplot2 plot with confidence intervals
+#   geom_point() +
+#   geom_errorbar(aes(ymin = all_low_sharma, ymax = all_high_sharma), width = .2) +
+#   ylab("CV") +
+#   xlab("Variables") +
+#   geom_text(aes(label = round(all_cv_sharma,1)), col="blue", hjust = -0.3, size = 3) +
+#   theme_bw()
 # facetted bar plot with (n=X)
 #site_bar_plot + scale_fill_discrete(name = "Site name", labels = cv_by_full_site_df_label$label)
 
