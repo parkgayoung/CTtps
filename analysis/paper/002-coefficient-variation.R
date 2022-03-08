@@ -81,13 +81,6 @@ cv_by_site_df  <-
   add_tally() %>%
   filter( n > 1) %>%
   select(-n) %>%
-<<<<<<< HEAD
-  group_by(full_sitename) %>%
-  summarise(cv_by_site =     sharma_cv(c(ML, BL , TL , SL , MW, TW, SW)),
-            cv_low_sharma =  sharma_int_low(c(ML, BL , TL , SL , MW, TW, SW)),
-            cv_high_sharma = sharma_int_high(c(ML, BL , TL , SL , MW, TW, SW)))
-
-=======
   pivot_longer(-full_sitename,
                names_to = "variable",
                values_to = "value") %>%
@@ -95,8 +88,6 @@ cv_by_site_df  <-
   summarise(cv_by_site =   sharma_cv(value),
             cv_low_sharma =  sharma_int_low(value),
             cv_high_sharma = sharma_int_high(value))
->>>>>>> c429cb8f5d1b2e55c27edbd05505607d3d480d01
-
 
 cv_by_site_df %>%
   ggplot(aes(x = variable, y = cv_by_site)) +
