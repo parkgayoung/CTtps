@@ -81,13 +81,33 @@ cv_by_site_df  <-
   add_tally() %>%
   filter( n > 1) %>%
   select(-n) %>%
+<<<<<<< HEAD
   group_by(full_sitename) %>%
   summarise(cv_by_site =     sharma_cv(c(ML, BL , TL , SL , MW, TW, SW)),
             cv_low_sharma =  sharma_int_low(c(ML, BL , TL , SL , MW, TW, SW)),
             cv_high_sharma = sharma_int_high(c(ML, BL , TL , SL , MW, TW, SW)))
 
+=======
+  pivot_longer(-full_sitename,
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(full_sitename, variable) %>%
+  summarise(cv_by_site =   sharma_cv(value),
+            cv_low_sharma =  sharma_int_low(value),
+            cv_high_sharma = sharma_int_high(value))
+>>>>>>> c429cb8f5d1b2e55c27edbd05505607d3d480d01
 
 
+cv_by_site_df %>%
+  ggplot(aes(x = variable, y = cv_by_site)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = cv_low_sharma,
+                    ymax = cv_high_sharma), width = .2) +
+  xlab("Site") +
+  ylab("Coefficient of Variation on Attributes") +
+  facet_wrap( ~ full_sitename, scales = "free_y") +
+  theme(legend.position = "none") +
+  coord_cartesian(ylim = c(0,100))
 
 
 ## CV for per each site (n=X) with the full site name : label
