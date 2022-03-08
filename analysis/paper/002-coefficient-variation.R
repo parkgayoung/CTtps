@@ -36,8 +36,7 @@ hist(DFCV)
 # install.packages("BiocManager")
 ## Use BiocManager to install limma
 # BiocManager::install("limma")
-
-test_output <- cvCI(c(2,3,4), conf.level = 0.95, method = "sharma", na.rm = FALSE)
+# install.packages("MKmisc")
 
 library(MKmisc)
 #CV value
