@@ -20,7 +20,6 @@ mccv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100 * (1 + 1/(4*length(x)))
 # need to add a column of site ID
 
 DFCV<- map_dbl(DF, cv)
-map(DF, mccv)
 
 #Same as map but better view for summary
 cv_all <- map_df(DF, cv)
