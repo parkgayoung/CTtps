@@ -36,8 +36,7 @@ hist(DFCV)
 # install.packages("BiocManager")
 ## Use BiocManager to install limma
 # BiocManager::install("limma")
-
-test_output <- cvCI(c(2,3,4), conf.level = 0.95, method = "sharma", na.rm = FALSE)
+# install.packages("MKmisc")
 
 library(MKmisc)
 #CV value
@@ -89,7 +88,6 @@ cv_by_site_df  <-
   summarise(cv_by_site =   sharma_cv(value),
             cv_low_sharma =  sharma_int_low(value),
             cv_high_sharma = sharma_int_high(value))
-
 
 cv_by_site_df %>%
   ggplot(aes(x = variable, y = cv_by_site)) +
