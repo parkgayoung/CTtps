@@ -168,7 +168,7 @@ cv_by_stage_df %>%
   xlab("Attributes") +
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ variable, scales = "free_y") +
-  coord_cartesian(ylim = c(15,35)) +
+  coord_cartesian(ylim = c(15,45)) +
   theme_bw() +
   labs(color = "Phase")
 
