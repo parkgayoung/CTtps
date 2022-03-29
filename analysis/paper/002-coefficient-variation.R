@@ -198,14 +198,15 @@ cv_by_site_df_label_more_than_5 <-
         sep = "_") %>%
   select(-SPstage.Raw_material) %>%
   group_by(site_phase) %>%
-  # mutate(label = as.factor(paste0(site_phase,' (N = ', n, ")")))
   add_tally() %>%
   filter( n > 5) %>%
-  select(-n) %>%
-  pivot_longer(-site_phase,
+  mutate(label = as.factor(paste0(site_phase,' (N = ', n, ")"))) %>%
+  ungroup() %>%
+  select(-n, -site_phase) %>%
+  pivot_longer(-label,
                names_to = "variable",
                values_to = "value") %>%
-  group_by(site_phase, variable) %>%
+  group_by(label, variable) %>%
   summarise(cv_by_site =   sharma_cv(value),
             cv_low_sharma =  sharma_int_low(value),
             cv_high_sharma = sharma_int_high(value)) %>%
@@ -220,7 +221,7 @@ cv_by_site_df_label_more_than_5 %>%
                     ymax = cv_high_sharma), width = .2) +
   xlab("Asseblages") +
   ylab("Coefficient of Variation on Attributes") +
-  facet_wrap( ~ site_phase, scales = "free_y") +
+  facet_wrap( ~ label, scales = "free_y") +
   coord_cartesian(ylim = c(15,60)) +
   theme_bw() +
   labs(color = "Attributes")+
@@ -254,3 +255,4 @@ ggsave(here::here("analysis/figures/006-cv-four-assemblage.png"),
        width = 5,
        height = 4,
        units = "in")
+
