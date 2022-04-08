@@ -97,20 +97,24 @@ cv_by_full_site_df_label <-
   group_by(full_sitename) %>%
   add_tally() %>%
   filter( n > 1) %>%
-  mutate(label = as.factor(paste0(full_sitename,' (N = ', n, ")"))) %>%   select(-n) %>%
+  mutate(label = as.factor(paste0(full_sitename,' (N = ', n, ")"))) %>%
+  select(-n) %>%
   nest(-full_sitename, -label) %>%
   mutate(cv_by_site = map(data, ~map_df(.x, cv))) %>%
   select (-cv_by_site)
 
+
 ## add label to main dataframe
+
 cv_plot_site_label <- cv_by_site_df %>%
   left_join (cv_by_full_site_df_label) %>%
   select (- data,-full_sitename)
 
+
 ## facet plot
 
 cv_plot_site_label %>%
-  ggplot(aes(x = variable, y = cv_by_site)) +
+  ggplot(aes(x = variable, y = cv_by_site, colour = factor(variable))) +
   geom_point() +
   geom_errorbar(aes(ymin = cv_low_sharma,
                     ymax = cv_high_sharma), width = .2) +
@@ -119,7 +123,9 @@ cv_plot_site_label %>%
   facet_wrap( ~ label, scales = "free_y") +
   theme(legend.position = "none") +
   coord_cartesian(ylim = c(0,700)) +
-  theme_bw()
+  theme_bw() +
+  labs(color = "Attributes")
+
 
 # checking SC site values
 # Sac <- df_full_sitename %>%
@@ -212,8 +218,6 @@ cv_by_site_df_label_more_than_5 <-
             cv_high_sharma = sharma_int_high(value)) %>%
   filter(variable %in% c("ML", "BL","MW", "TW"))
 
-
-
 cv_by_site_df_label_more_than_5 %>%
   ggplot(aes(x = factor(variable), y = cv_by_site, colour = factor(variable))) +
   geom_point() +
@@ -226,7 +230,6 @@ cv_by_site_df_label_more_than_5 %>%
   theme_bw() +
   labs(color = "Attributes")+
   ggtitle("CVs of point attributes by site (with sites >=7 artifacts)")
-
 
 # #### plot CVs by site with number of artefacts showing >=7
 #
@@ -256,3 +259,57 @@ ggsave(here::here("analysis/figures/006-cv-four-assemblage.png"),
        height = 4,
        units = "in")
 
+
+# CV by raw materials
+### Make a table of CVs for all variable grouped by raw materials
+cv_by_raw_materials <-
+  df_full_sitename %>%
+  select(-SPstage.Stage, -lat_dd, -long_dd, -sitename, -full_sitename) %>%
+  group_by(SPstage.Raw_material) %>%
+  add_tally() %>%
+  filter( n > 1) %>%
+  select(-n) %>%
+  pivot_longer(-SPstage.Raw_material,
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(SPstage.Raw_material, variable) %>%
+  summarise(cv_by_materials =   sharma_cv(value),
+            cv_low_sharma =  sharma_int_low(value),
+            cv_high_sharma = sharma_int_high(value))
+
+######CV for per raw materials (n=X) with the full site name : label
+cv_by_raw_materials_df_label <-
+  df_sitename %>%
+  group_by(SPstage.Raw_material) %>%
+  add_tally() %>%
+  filter( n > 1) %>%
+  mutate(label = as.factor(paste0(SPstage.Raw_material,' (N = ', n, ")"))) %>%
+  select(-n) %>%
+  nest(-SPstage.Raw_material, -label) %>%
+  mutate(cv_by_site = map(data, ~map_df(.x, cv))) %>%
+  select (-cv_by_site)
+
+######add label to main dataframe
+cv_plot_raw_materials_label <- cv_by_raw_materials %>%
+  left_join (cv_by_raw_materials_df_label) %>%
+  select (- data,-SPstage.Raw_material)
+
+###### facet plot
+cv_plot_raw_materials_label %>%
+  ggplot(aes(x = variable, y = cv_by_materials, colour = factor(variable))) +
+  geom_point() +
+  geom_errorbar(aes(ymin = cv_low_sharma,
+                    ymax = cv_high_sharma), width = .2) +
+  xlab("Law Materials") +
+  ylab("Coefficient of Variation on Attributes") +
+  facet_wrap( ~ label, scales = "free_y") +
+  theme(legend.position = "none") +
+  coord_cartesian(ylim = c(0,200)) +
+  theme_bw() +
+  labs(color = "Attributes")
+
+
+ggsave(here::here("analysis/figures/00000-cv-raw-materials.png"),
+       width = 8.5,
+       height = 4.5,
+       units = "in")
