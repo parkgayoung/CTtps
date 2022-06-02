@@ -122,7 +122,7 @@ cv_plot_site_label %>%
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label, scales = "free_y") +
   theme(legend.position = "none") +
-  coord_cartesian(ylim = c(0,700)) +
+  coord_cartesian(ylim = c(0,130)) +
   theme_bw() +
   labs(color = "Attributes")
 
@@ -304,7 +304,7 @@ cv_plot_raw_materials_label %>%
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label, scales = "free_y") +
   theme(legend.position = "none") +
-  coord_cartesian(ylim = c(0,200)) +
+  coord_cartesian(ylim = c(0,130)) +
   theme_bw() +
   labs(color = "Attributes")
 
