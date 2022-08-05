@@ -1,8 +1,18 @@
 ---
-title: "Understanding the technological transition based on cultural transmission biases during the Late Pleistocene in Korea"
+title: "Cultural Transmission and Technological Transitions during the Late Paleolithic in Korea"
 author:
-  - Gayoung Park
-  - Ben Marwick
+  - Gayoung Park: 
+      email: gayoungp@uw.edu
+      institute: [UofW]
+      correspondence: true
+  - Ben Marwick:
+      email: bmarwick@uw.edu
+      institute: [UofW]
+      correspondence: false
+
+institute:
+  - UofW: Department of Anthropology, University of Washington, Seattle. USA
+
 date: "`r format(Sys.time(), '%d %B, %Y')`"
 output: 
     bookdown::html_document2:
@@ -31,14 +41,15 @@ knitr::opts_chunk$set(
   fig.path = "../figures/"
 )
 
-#library(CTtps) # Or use devtools::load_all('.', quiet = T) if your code is in script files, rather than as functions in the `/R` diretory
-
-library(here)
-library(tidyverse)
 ```
 
 
 ```{r results='hide', include=FALSE}
+#library(CTtps) # Or use devtools::load_all('.', quiet = T) if your code is in script files, rather than as functions in the `/R` diretory
+
+library(here)
+library(tidyverse)
+
 #reading landmarks in tps, code from https://gist.github.com/mrdwab/2062329
 
 read.tps = function(data) {

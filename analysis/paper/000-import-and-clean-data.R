@@ -41,7 +41,8 @@ read.tps = function(data) {
 landmarks <- read.tps(here::here("analysis/data/raw_data/original-landmark-data/BG_0_2.tps"))
 
 #getting info for phase of each site
-SPstage <- read_csv(here("analysis/data/SPstage.csv"))
+# SPstage <- read_csv(here("analysis/data/SPstage.csv"))
+SPstage <- read_excel(here("analysis/data/SPstage_raw_materials.xls"))
 
 #Compare multiple artifacts
 #Open multiple tps files. This will need to be changed to read files inside the project
@@ -198,7 +199,7 @@ for (i in 1:length(files)) {
 }
 
 #list of all attributes
-df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files, SPstage$Stage)
+df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files, SPstage$Stage, SPstage$Raw_material)
 
 #trim the name of each artifact.
 df_sitename <- df %>%
