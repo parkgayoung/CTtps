@@ -165,6 +165,75 @@ cv_by_stage_df  <-
             cv_low_sharma =  sharma_int_low(value),
             cv_high_sharma = sharma_int_high(value))
 
+####### significant test between the two phases ######
+library(cvequality)
+
+raw_data_test_BL <- df_sitename %>%
+  select(-sitename, -SPstage.Raw_material) %>%
+  group_by(SPstage.Stage) %>%
+  add_tally() %>%
+  filter(SPstage.Stage > 1) %>%
+  select(-n) %>%
+  pivot_longer(-SPstage.Stage,
+               names_to = "variable",
+               values_to = "value") %>%
+  filter(variable == "BL")
+
+test_BL <- with(raw_data_test_BL,
+                mslr_test(nr = 1e4,
+                          value,
+                          SPstage.Stage)) #p_value = 0.547566
+
+
+raw_data_test_ML <- df_sitename %>%
+  select(-sitename, -SPstage.Raw_material) %>%
+  group_by(SPstage.Stage) %>%
+  add_tally() %>%
+  filter(SPstage.Stage > 1) %>%
+  select(-n) %>%
+  pivot_longer(-SPstage.Stage,
+               names_to = "variable",
+               values_to = "value") %>%
+  filter(variable == "ML")
+
+test_ML <- with(raw_data_test_ML,
+                mslr_test(nr = 1e4,
+                          value,
+                          SPstage.Stage)) #p_value = 0.5159077
+
+raw_data_test_MW <- df_sitename %>%
+  select(-sitename, -SPstage.Raw_material) %>%
+  group_by(SPstage.Stage) %>%
+  add_tally() %>%
+  filter(SPstage.Stage > 1) %>%
+  select(-n) %>%
+  pivot_longer(-SPstage.Stage,
+               names_to = "variable",
+               values_to = "value") %>%
+  filter(variable == "MW")
+
+test_MW <- with(raw_data_test_MW,
+                mslr_test(nr = 1e4,
+                          value,
+                          SPstage.Stage)) #p_value = 0.3779604
+
+raw_data_test_SL <- df_sitename %>%
+  select(-sitename, -SPstage.Raw_material) %>%
+  group_by(SPstage.Stage) %>%
+  add_tally() %>%
+  filter(SPstage.Stage > 1) %>%
+  select(-n) %>%
+  pivot_longer(-SPstage.Stage,
+               names_to = "variable",
+               values_to = "value") %>%
+  filter(variable == "SL")
+
+test_SL <- with(raw_data_test_SL,
+                mslr_test(nr = 1e4,
+                          value,
+                          SPstage.Stage)) #p_value = 0.4893119
+
+
 # facet plot for two phases
 cv_by_stage_df %>%
   ggplot(aes(x = factor(SPstage.Stage), y = cv_by_site, colour = factor(SPstage.Stage))) +
