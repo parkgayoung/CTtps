@@ -168,22 +168,6 @@ cv_by_stage_df  <-
 ####### significant test between the two phases ######
 library(cvequality)
 
-raw_data_test_BL <- df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  filter(SPstage.Stage > 1) %>%
-  select(-n) %>%
-  pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>%
-  filter(variable == "BL")
-
-test_BL <- with(raw_data_test_BL,
-                mslr_test(nr = 1e4,
-                          value,
-                          SPstage.Stage)) #p_value = 0.547566
-
 # BM testing doing all the CV testing at once
 
 # created nested tibble, nest by variable
@@ -202,61 +186,12 @@ df_sitename %>%
   nest()
 
 # apply mslr test to each variable (row with a tibble)
+#Krishnamoorthy and Lee’s (2014) modified signed-likelihood ratio test
 df_sitename_nested %>%
   mutate(mslr_result = map_df(data, ~mslr_test(nr = 1e4,
                                             .$value,
                                             .$SPstage.Stage))) %>%
   unnest(mslr_result)
-
-
-
-raw_data_test_ML <- df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  filter(SPstage.Stage > 1) %>%
-  select(-n) %>%
-  pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>%
-  filter(variable == "ML")
-
-test_ML <- with(raw_data_test_ML,
-                mslr_test(nr = 1e4,
-                          value,
-                          SPstage.Stage)) #p_value = 0.5159077
-
-raw_data_test_MW <- df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  filter(SPstage.Stage > 1) %>%
-  select(-n) %>%
-  pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>%
-  filter(variable == "MW")
-
-test_MW <- with(raw_data_test_MW,
-                mslr_test(nr = 1e4,
-                          value,
-                          SPstage.Stage)) #p_value = 0.3779604
-
-raw_data_test_SL <- df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  filter(SPstage.Stage > 1) %>%
-  select(-n) %>%
-  pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>%
-  filter(variable == "SL")
-
-test_SL <- with(raw_data_test_SL,
-                mslr_test(nr = 1e4,
-                          value,
-                          SPstage.Stage)) #p_value = 0.4893119
 
 
 # facet plot for two phases
@@ -407,3 +342,4 @@ ggsave(here::here("analysis/figures/00000-cv-raw-materials.png"),
        width = 8.5,
        height = 4.5,
        units = "in")
+
