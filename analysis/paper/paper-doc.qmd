@@ -18,24 +18,24 @@ bibliography: references.bib
 
 ---
 
+# Keywords {-}
+ Stemmed points; Korean Paleolithic; Cultural Transmission; Learning process, Transmission Biases
 
-## Quarto
+# Introduction {-}
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+The application of evolutionary theory to archaeological research has guided the interpretation of technological transitions and related human behaviors [@dunnell1980evolutionary; @lipo1997population; @bettinger1997rediscovering; @bettinger1999point; @mesoudi2008cultural]. For example, archaeologists have used evolutionary theory and methods to study human behavioral ecology, cultural transmission, artifact phylogenetics, and niche construction in the past [@riede2010isn; @o2017dual @garvey2018current]. We use cultural transmission theory to investigate technological transitions during the Korean Late Paleolithic. This technological innovation is not just the appearance of new tools such as stemmed points and blades, but may also represent a key event related to modern human dispersal in East Asia, if the appearance of these new technologies represents the first arrival of modern humans in this region [@seong2009emergence]. Previous studies mainly focussed on the possible origin locations of stemmed points, to connect Korea with global patterns of modern human dispersal. Questions about the processes of technological change remain largely unanswered [@seong2008tanged;@bae2010origin; @bae2017origin]. In this research, we apply a cultural transmission framework to investigate the social contexts of the emergence of new technologies in the Korean Late Paleolithic. Our main question is: what is the dominant mode of cultural transmission for technological innovation in the Korean Late Paleolithic? Additionally we ask: Do the modes of cultural transmission vary over space? Do the modes of cultural transmission vary over time? We consider three possibilities, guided variation (trial and error), or indirect bias (copying others), or a combination of the two. Our results can help to determine if these new technologies were introduced from outside of the Korean Peninsula, or if they were locally, independently developed. 
 
-## Running Code
+# The Late Paleolithic of the Korean Peninsula {-}
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
+The onset of the Late Paleolithic period is marked by the appearance of stemmed points around 40-35 ka. The stemmed point is a projectile point made out of an elongated flake or blade with slight retouch on the proximal end to shape an acute tip, and on the distal end to make a stem, which connects to a shaft. The stemmed point is the first composite tool type and represents new hunting strategies in the Korean Peninsula, as well as other adjacent regions [@seong2008tanged; @lee2019were]. Stemmed points, combined with blade technology and multi-stage production sequences, and evidence of being resharpened and reused, are important aspects of Late Paleolithic technological innovation in Korea because these features are rarely seen in earlier periods [@chang2013human; @bamforth2009projectile; @seong2015diversity]. Currently the earliest stemmed points in Northeast Asia are from Yongho-doing site in Korea dated to 38.5ka and made on elongate flakes  [@seong2009emergence; @seong2015diversity; @bae2017origin]. After their first appearance in Korea, the stemmed points spread to the Japanese archipelago [@chang2013human]. 
 
-```{r}
-1 + 1
-```
+Previous studies of technological transitions during the Late Paleolithic in Korea mainly focussed on possible origin locations of stemmed points, along with the issue of the timing and routes of the dispersal of modern human dispersals in eastern Asia. The debate about the origin of stemmed points can be summarized into two competing models: in situ evolution [@seong2009emergence] and heterogenic migration [@bae2010origin]. The in situ model claims that stemmed points and other Late Paleolithic assemblages including blade industries autonomously emerged in the Korean peninsula, as a form of convergent evolution [@seong2006structure; @seong2008tanged; @seong2009emergence]. To support his claim of an in situ development, @seong2009emergence examined the blade-to-flake ratios of stone artifact assemblages. In his view, the blade industry represents a new technology while flakes indicate a continuously-used existing one. He argues that the increased ratio of blades in stone artifact assemblages during the Late Paleolithic shows an expansion of the new technology after its local invention. In addition, Seong argues that increased numbers of stemmed points over time, and standardization of their shape, supports the idea of gradual, local, evolutionary process. 
 
-You can add options to executable code like this
+The migration model argues that the new blade industry including stemmed points and the earlier simple flake tool tradition, including large cores, polyhedrals, choppers and handaxes, came from different origins [@bae2010origin; @bae2012nature; @bae2013early]. While the in situ model claims that the heterogenic character is the result of indigenous development, the migration model proposes that it is the result of the continuous influx of modern human populations from both north and south. Specifically, the blade technology was introduced from Siberia, Mongolia, or other regions of northeast China following the Liaohe and Sunghe rivers around 35 ka BP while the simple flake tool tradition came from southern China [@bae2013early]. The migration from the southern route is supported by genetic studies of the Y chromosome, indicating that the O3-M122 M122 haplotype originated from southern East Asia and moved to northeastern Asia including Korea in 30-25 ka BP [@shi2005chromosome]. Bae et al. [-@bae2012nature] assume this southern migration was related to paleoenvironmental fluctuations during the MIS 3 to 2 transition, which made the Yellow Sea/West Sea region open.   
 
-```{r}
-#| echo: false
-2 * 2
-```
+Lee [-@lee2013current] argues that the transition to the Korean Late Paleolithic might be more complicated than those models of migration or in situ development. He partly agrees with the in situ model that simple flake tools had continuously been used in Korea as the result of ancestor-descendent relationships, under conditions of low effective population size. With regard to the blade industry, he claims that low degrees of uniformity and small quantities of blade-associated toolkits indicate an origin outside of Korea, perhaps resulting from trade or migration. We explore these three options, in situ, migration, and a mixture of the two, by measuring transmission biases in assemblages of stemmed points. 
 
-The `echo: false` option disables the printing of code (only output is displayed).
+# Cultural transmission and transmission biases {-}
+
+
+
