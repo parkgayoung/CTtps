@@ -5,16 +5,19 @@ editor: visual
 
 author:
   - name: Gayoung Park
-    affiliations:
-      - University of Washington
-   
+    email: gayoungp@uw.edu
+    affiliations: University of Washington
   - name: Ben Marwick
-    affiliations:
-      - University of Washington
+    email: bmarwick@uw.edu
+    affiliations: University of Washington
+
+abstract: |
+  Archaeologists have applied evolutionary concepts linking material evidence and cultural phenomena to understand human behavior. Evolutionary approaches suggest that technological transitions can occur through changes in social learning processes, and transmission biases are important loci of changes. The onset of the Late Paleolithic period in Korea, represented by the appearance of stemmed points and blades, is a key event in understanding modern human dispersal in Northeast Asia. Previous studies mainly focus on possible origin locations of new technologies, but they rarely address the process of the technological transition. In this research we use a cultural transmission framework to investigate the social contexts that can give us insights into the emergence of these new technologies. Our main question is: what was the dominant mode of cultural transmission during the time of technological innovation in the Korean Late Paleolithic? Inspired by Bettinger and Eerkens [-@bettinger1999point], we build two models using guided variation and indirect bias. To test the models and understand the transmission processes, we use coefficients of variation (CV), and Principal Component Analysis (PCA). Here we show that the information about the new technology was transmitted via selective combinations of guided variation and indirect bias. We found that some attributes including length and width were transmitted through indirect bias, while other attributes appear to have been more dependent on raw materials or other factors. 
 
 bibliography: references.bib
 
 ---
+
 
 ## Quarto
 
