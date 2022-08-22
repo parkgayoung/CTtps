@@ -1,10 +1,7 @@
-library(tidyr)
-library(purrr)
-library(dplyr)
-library(readr)
-library(stringr)
-library(ggplot2)
-load("data_main.RData")
+library(tidyverse)
+
+# import the cleaned data ready to work on
+load(here::here("analysis/data/derived_data/data_main.RData"))
 
 # Coefficient of variation (CV): the ratio of the standard deviation divided by mean
 
@@ -19,7 +16,7 @@ mccv <- function(x, ... ) sd(x, ...) / mean(x, ...) *100 * (1 + 1/(4*length(x)))
 # rows and specimens, and values as dimensions
 # need to add a column of site ID
 
-DFCV<- map_dbl(DF, cv)
+DFCV <- map_dbl(DF, cv)
 
 #Same as map but better view for summary
 cv_all <- map_df(DF, cv)
@@ -56,7 +53,6 @@ cv_data_sharma <- data.frame(all_cv_sharma, all_low_sharma, all_high_sharma)
 library(tibble)
 cv_data_sharma_named <- rownames_to_column(cv_data_sharma, var = "attribute")
 
-
 library(ggplot2)
 ggplot(cv_data_sharma_named, aes(attribute, all_cv_sharma)) +        # ggplot2 plot with confidence intervals
   geom_point() +
@@ -75,11 +71,11 @@ ggsave(here::here("analysis/figures/003-cv-sharma.png"),
 #Make a table of CVs for all variable grouped by site
 cv_by_site_df  <-
   df_full_sitename %>%
-  select(-SPstage.Stage, -lat_dd, -long_dd, -sitename, -SPstage.Raw_material) %>%
+  dplyr::select(-SPstage.Stage, -lat_dd, -long_dd, -sitename, -SPstage.Raw_material) %>%
   group_by(full_sitename) %>%
   add_tally() %>%
-  filter( n > 1) %>%
-  select(-n) %>%
+  dplyr::filter( n > 1) %>%
+  dplyr::select(-n) %>%
   pivot_longer(-full_sitename,
                names_to = "variable",
                values_to = "value") %>%
@@ -93,28 +89,28 @@ cv_by_site_df  <-
 
 cv_by_full_site_df_label <-
   df_full_sitename %>%
-  select(-SPstage.Stage) %>%
+  dplyr::select(-SPstage.Stage) %>%
   group_by(full_sitename) %>%
   add_tally() %>%
   filter( n > 1) %>%
   mutate(label = as.factor(paste0(full_sitename,' (N = ', n, ")"))) %>%
-  select(-n) %>%
+  dplyr::select(-n) %>%
   nest(-full_sitename, -label) %>%
   mutate(cv_by_site = map(data, ~map_df(.x, cv))) %>%
-  select (-cv_by_site)
+  dplyr::select (-cv_by_site)
 
 
 ## add label to main dataframe
 
 cv_plot_site_label <- cv_by_site_df %>%
   left_join (cv_by_full_site_df_label) %>%
-  select (- data,-full_sitename)
+  dplyr::select (- data,-full_sitename)
 
 
 ## facet plot
 
 cv_plot_site_label %>%
-  ggplot(aes(x = variable, y = cv_by_site, colour = factor(variable))) +
+  ggplot(aes(x = variable, y = cv_by_site)) +
   geom_point() +
   geom_errorbar(aes(ymin = cv_low_sharma,
                     ymax = cv_high_sharma), width = .2) +
@@ -153,7 +149,8 @@ ggsave(here::here("analysis/figures/004-cv-sites.png"),
 # Exclude the first phase that has only two artefacts
 cv_by_stage_df  <-
   df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
+  select(-sitename,
+         -SPstage.Raw_material) %>%
   group_by(SPstage.Stage) %>%
   add_tally() %>%
   filter(SPstage.Stage > 1) %>%

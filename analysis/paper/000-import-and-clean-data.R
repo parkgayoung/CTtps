@@ -199,7 +199,9 @@ df_sitename <- df %>%
 
 library(dplyr)
 df_full_sitename <-
-  left_join(df_sitename, korean_archaeological_site_locations, by = c("sitename"="sitename"))
+  left_join(df_sitename,
+            korean_archaeological_site_locations,
+            by = c("sitename"="sitename"))
 
 #list of all attributes without ID
 DF <- df[,1:7]
