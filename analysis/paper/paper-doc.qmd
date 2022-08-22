@@ -114,7 +114,7 @@ All data treatment, analyses and visualization were performed in the R environme
 
 @fig-three shows a relatively wide distribution of body length (BL) and maximum length (ML) while the other attributes are more similar and shorter (under 2.5 cm). Among these attributes, stem width (SW) is the smallest and most highly standardized, regardless of overall size of the stemmed points. This result implies a similar thickness of a wooden shaft that is attached to the stem.
 
-![Boxplot for each attribute measured on the stemmed points. The black bold horizontal lines in the middle of boxes represent the median value.](images/002-attributes-variation-01.png){#fig-three width="324"}
+![Boxplot for each attribute measured on the stemmed points. The black bold horizontal lines in the middle of boxes represent the median value. The dots represent individual artefacts.](images/002-attributes-variation-01.png){#fig-three width="324"}
 
 2.  Coefficient of variation
 

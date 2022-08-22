@@ -1,3 +1,4 @@
+# this code makes Fig 3: Boxplot for each attribute measured on the stemmed points.
 
 library(tidyverse)
 library(ggplot2)
@@ -11,7 +12,7 @@ load(here::here("analysis/data/derived_data/data_main.RData"))
 # mutate data to make plot with ggplot
 data_box <- gather(DF)
 
-# make box plot for each attributes with better visulazation options with ggplot
+# make box plot for each attributes
 ggplot(data_box, aes(key, value)) +
   geom_boxplot() +
   geom_beeswarm(alpha = 0.3,
