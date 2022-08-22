@@ -184,31 +184,6 @@ test_BL <- with(raw_data_test_BL,
                           value,
                           SPstage.Stage)) #p_value = 0.547566
 
-# BM testing doing all the CV testing at once
-
-# created nested tibble, nest by variable
-df_sitename_nested <-
-df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  filter(SPstage.Stage > 1) %>%
-  select(-n) %>%
-  pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>%
-  ungroup() %>%
-  group_by(variable) %>%
-  nest()
-
-# apply mslr test to each variable (row with a tibble)
-df_sitename_nested %>%
-  mutate(mslr_result = map_df(data, ~mslr_test(nr = 1e4,
-                                            .$value,
-                                            .$SPstage.Stage))) %>%
-  unnest(mslr_result)
-
-
 
 raw_data_test_ML <- df_sitename %>%
   select(-sitename, -SPstage.Raw_material) %>%
