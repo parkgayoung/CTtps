@@ -75,6 +75,10 @@ On the other end of our spectrum, socially connected groups occupied places clos
 
 # Materials and methods {.unnumbered}
 
+```{r}
+
+```
+
 1.  Materials and stemmed points chronology
 
 After the first discovery in Seokjangri site in the 1960s, around 300 stemmed points have been found in nearly 30 sites across Korea (@fig-map). Most sites contain only a few points but a few sites have many more, such as Suyanggae (n = 55), Jingeuneul (n = 99), and Yongsandong (n = 38) [@Kim_2017]. Among these stemmed points, we selected those that are unbroken from the tip to the stem. We excluded artifacts that were recorded as stemmed points but lack a stem. This resulted in a sample of 152 stemmed points from 28 assemblages unearthed from 20 sites spanning the period 40-17 ka (Figure 1). The images of the stemmed points were obtained from published excavation reports and by direct photography during our research on local museum collections. We defined multiple assemblages in a site where artifact-bearing deposits were separated by culturally sterile deposits, or where distinct artifact-bearing stratigraphic units could be identified by major differences in the texture, color, and composition of the sedimentary deposits.
