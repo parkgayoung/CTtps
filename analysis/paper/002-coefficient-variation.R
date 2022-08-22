@@ -26,9 +26,9 @@ cv_all <- map_df(DF, cv)
 #arrange the data properly
 cv_data_all <- gather(cv_all)
 
-hist(DF$ML)
+# hist(DF$ML)
 
-hist(DFCV)
+# hist(DFCV)
 
 # to install MKmisc
 ## Install package BiocManager
@@ -169,32 +169,9 @@ cv_by_stage_df  <-
 ####### significant test between the two phases ######
 library(cvequality)
 
-<<<<<<< HEAD
-raw_data_test_BL <- df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  filter(SPstage.Stage > 1) %>%
-  select(-n) %>%
-  pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>%
-  filter(variable == "BL")
-
-test_BL <- with(raw_data_test_BL,
-                mslr_test(nr = 1e4,
-                          value,
-                          SPstage.Stage)) #p_value = 0.547566
-
-
-raw_data_test_ML <- df_sitename %>%
-=======
-# BM testing doing all the CV testing at once
-
 # created nested tibble, nest by variable
 df_sitename_nested <-
 df_sitename %>%
->>>>>>> 602ceeb7953d98ce8aefe3d214027b9d8367a727
   select(-sitename, -SPstage.Raw_material) %>%
   group_by(SPstage.Stage) %>%
   add_tally() %>%
@@ -203,46 +180,6 @@ df_sitename %>%
   pivot_longer(-SPstage.Stage,
                names_to = "variable",
                values_to = "value") %>%
-<<<<<<< HEAD
-  filter(variable == "ML")
-
-test_ML <- with(raw_data_test_ML,
-                mslr_test(nr = 1e4,
-                          value,
-                          SPstage.Stage)) #p_value = 0.5159077
-
-raw_data_test_MW <- df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  filter(SPstage.Stage > 1) %>%
-  select(-n) %>%
-  pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>%
-  filter(variable == "MW")
-
-test_MW <- with(raw_data_test_MW,
-                mslr_test(nr = 1e4,
-                          value,
-                          SPstage.Stage)) #p_value = 0.3779604
-
-raw_data_test_SL <- df_sitename %>%
-  select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  filter(SPstage.Stage > 1) %>%
-  select(-n) %>%
-  pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>%
-  filter(variable == "SL")
-
-test_SL <- with(raw_data_test_SL,
-                mslr_test(nr = 1e4,
-                          value,
-                          SPstage.Stage)) #p_value = 0.4893119
-=======
   ungroup() %>%
   group_by(variable) %>%
   nest()
@@ -254,7 +191,7 @@ df_sitename_nested %>%
                                             .$value,
                                             .$SPstage.Stage))) %>%
   unnest(mslr_result)
->>>>>>> 602ceeb7953d98ce8aefe3d214027b9d8367a727
+
 
 
 # facet plot for two phases
@@ -270,21 +207,10 @@ cv_by_stage_df %>%
   theme_bw() +
   labs(color = "Phase")
 
-# bar plot for two phases
-# cv_plot_stage %>%
-#   select(-SPstage.Raw_material) %>%
-#   pivot_longer(cols = -SPstage.Stage, names_to = "group") %>%
-#   ggplot(aes(x= SPstage.Stage, y = value, fill = as.factor(SPstage.Stage))) +
-#   geom_bar(stat="identity", position=position_dodge()) + labs(x="Attributes", fill= "Phase")+
-#   facet_wrap( ~ group) +
-#   theme_bw()
-
 ggsave(here::here("analysis/figures/005-cv-phases.png"),
        width = 4.5,
        height = 4.5,
        units = "in")
-
-
 
 #### plot CVs by site with number of artefacts showing >5
 
@@ -323,28 +249,7 @@ cv_by_site_df_label_more_than_5 %>%
   labs(color = "Attributes")+
   ggtitle("CVs of point attributes by site (with sites >=7 artifacts)")
 
-# #### plot CVs by site with number of artefacts showing >=7
-#
-# cv_by_site_df_label_more_than_5_ml_mw_bl <-
-#   cv_by_site_df_label_more_than_5 %>%
-#   pivot_longer(cols = -c(site_phase, label),
-#                names_to = "lithic_attribute",
-#                values_to = "CV") %>%
-#   filter(lithic_attribute %in% c("ML", "BL","MW", "TW"))  %>%
-#   mutate(phase = parse_number(str_extract(site_phase, "_."))) %>%
-#   group_by(site_phase) %>%
-#   mutate(mean_cv = mean(CV))
 
-# bar plot for four assemblages, four attributes
-# ggplot(cv_by_site_df_label_more_than_5_ml_mw_bl,
-#        aes(x = lithic_attribute,
-#            y = CV)) +
-#   geom_col() +
-#   geom_hline(aes(yintercept = mean_cv),
-#              colour = "red") +
-#   facet_wrap(~  label) +
-#   ggtitle("CVs of point attributes by site (with sites >=7 artifacts)") +
-#   theme_minimal()
 
 ggsave(here::here("analysis/figures/006-cv-four-assemblage.png"),
        width = 5,
