@@ -7,13 +7,20 @@ library(ggbeeswarm)
 # import the cleaned data ready to work on
 load(here::here("analysis/data/derived_data/data_main.RData"))
 
+# how many stemmed artefacts per site?
+stemmed_points_per_site <-
+df_full_sitename %>%
+  count(full_sitename) %>%
+  arrange(desc(n))
+
 # Box plot for each attributes
 
 # mutate data to make plot with ggplot
 data_box <- gather(DF)
 
 # make box plot for each attributes
-ggplot(data_box, aes(key, value)) +
+ggplot(data_box,
+       aes(key, value)) +
   geom_boxplot() +
   geom_beeswarm(alpha = 0.3,
                 size = 0.8,

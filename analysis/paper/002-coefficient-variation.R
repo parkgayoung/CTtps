@@ -47,7 +47,8 @@ cv_data_all <- gather(cv_all)
 # install.packages("MKmisc")
 
 library(MKmisc)
-#CV value
+
+# CV value
 sharma_cv <- function(x,...) cvCI(x, conf.level = 0.95, method = "sharma", na.rm = FALSE)$estimate*100
 
 #CV sharma interval values
@@ -65,8 +66,14 @@ cv_data_sharma <- data.frame(all_cv_sharma, all_low_sharma, all_high_sharma)
 library(tibble)
 cv_data_sharma_named <- rownames_to_column(cv_data_sharma, var = "attribute")
 
+# for in-text numbers
+max_cv <- round(max(cv_data_sharma_named$all_cv_sharma), 1)
+min_cv <- round(min(cv_data_sharma_named$all_cv_sharma), 1)
+
 library(ggplot2)
-ggplot(cv_data_sharma_named, aes(attribute, all_cv_sharma)) +        # ggplot2 plot with confidence intervals
+ggplot(cv_data_sharma_named,
+       aes(attribute,
+           all_cv_sharma)) +        # ggplot2 plot with confidence intervals
   geom_point() +
   geom_errorbar(aes(ymin = all_low_sharma, ymax = all_high_sharma), width = 0.2) +
   ylab("CV") +
