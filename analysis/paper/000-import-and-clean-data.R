@@ -195,7 +195,7 @@ df <- data.frame(ML, BL, TL, SL, MW, TW, SW, files, SPstage$Stage, SPstage$Raw_m
 df_sitename <- df %>%
   mutate (files = str_remove_all(files, "_.tps")) %>%
   separate (files, into = c("sitename", "files"), sep = "_") %>%
-  select (-files)
+  dplyr::select (-files)
 
 library(dplyr)
 df_full_sitename <-

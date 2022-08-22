@@ -1,3 +1,15 @@
+# this script makes figure 4: CV values for each attribute measured on the
+# stemmed points. 95% confidence intervals for the CVs were computed using
+# Sharma & Krishna's method.
+
+# This script also makes figure 9: CV values per site that has more than one stemmed point.
+# The points represent CV values for each attribute. The vertical lines
+# indicate the range of confidence intervals.
+
+# This script also makes figure 10: CV values for raw materials that were
+# used for making more than one stemmed point. The points represent CV
+# values for each attribute. The vertical lines indicate the range of confidence interval
+
 library(tidyverse)
 
 # import the cleaned data ready to work on
@@ -56,7 +68,7 @@ cv_data_sharma_named <- rownames_to_column(cv_data_sharma, var = "attribute")
 library(ggplot2)
 ggplot(cv_data_sharma_named, aes(attribute, all_cv_sharma)) +        # ggplot2 plot with confidence intervals
   geom_point() +
-  geom_errorbar(aes(ymin = all_low_sharma, ymax = all_high_sharma), width = .2) +
+  geom_errorbar(aes(ymin = all_low_sharma, ymax = all_high_sharma), width = 0.2) +
   ylab("CV") +
   xlab("Variables") +
   geom_text(aes(label = round(all_cv_sharma,1)), col="blue", hjust = -0.3, size = 3) +
@@ -67,8 +79,8 @@ ggsave(here::here("analysis/figures/003-cv-sharma.png"),
        height = 4.5,
        units = "in")
 
-#####################
-#Make a table of CVs for all variable grouped by site
+#-Site by site -------------------------------
+
 cv_by_site_df  <-
   df_full_sitename %>%
   dplyr::select(-SPstage.Stage, -lat_dd, -long_dd, -sitename, -SPstage.Raw_material) %>%
@@ -99,30 +111,28 @@ cv_by_full_site_df_label <-
   mutate(cv_by_site = map(data, ~map_df(.x, cv))) %>%
   dplyr::select (-cv_by_site)
 
-
 ## add label to main dataframe
 
 cv_plot_site_label <- cv_by_site_df %>%
   left_join (cv_by_full_site_df_label) %>%
   dplyr::select (- data,-full_sitename)
 
-
 ## facet plot
 
 cv_plot_site_label %>%
-  ggplot(aes(x = variable, y = cv_by_site)) +
+  ggplot(aes(x = variable,
+             y = cv_by_site)) +
   geom_point() +
   geom_errorbar(aes(ymin = cv_low_sharma,
-                    ymax = cv_high_sharma), width = .2) +
-  xlab("Site") +
+                    ymax = cv_high_sharma),
+                width = 0.2) +
+  xlab("Attribute") +
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label, scales = "free_y") +
   theme(legend.position = "none") +
-  coord_cartesian(ylim = c(0,130)) +
+  coord_cartesian(ylim = c(0,250)) +
   theme_bw() +
-  labs(color = "Attributes") +
   theme(strip.text.x = element_text(size = 6.5))
-
 
 # checking SC site values
 # Sac <- df_full_sitename %>%
@@ -136,17 +146,16 @@ cv_plot_site_label %>%
 # sharma_int_low(Sac$SL)
 # sharma_int_high(Sac$SL)
 
-
 ggsave(here::here("analysis/figures/004-cv-sites.png"),
        width = 8.5,
        height = 4.5,
        units = "in")
 
-
-
-############ temporal patterns ###############
-# Make a table of CVs for all variable grouped by stage, according to stemmed point chronology
+#-- temporal patterns ----------------------------------------------------------------
+# Make a table of CVs for all variable grouped by stage, according to
+# stemmed point chronology
 # Exclude the first phase that has only two artefacts
+
 cv_by_stage_df  <-
   df_sitename %>%
   select(-sitename,
@@ -182,27 +191,28 @@ df_sitename %>%
   nest()
 
 # apply mslr test to each variable (row with a tibble)
-#Krishnamoorthy and Lee’s (2014) modified signed-likelihood ratio test
+# Krishnamoorthy and Lee’s (2014) modified signed-likelihood ratio test
+# this is a table we can show in the text
+table_mslr_test_results_for_phase_differences <-
 df_sitename_nested %>%
   mutate(mslr_result = map_df(data, ~mslr_test(nr = 1e4,
                                             .$value,
                                             .$SPstage.Stage))) %>%
-  unnest(mslr_result)
-
-
+  unnest(mslr_result) %>%
+  dplyr::select(-data)
 
 # facet plot for two phases
 cv_by_stage_df %>%
-  ggplot(aes(x = factor(SPstage.Stage), y = cv_by_site, colour = factor(SPstage.Stage))) +
+  ggplot(aes(x = factor(SPstage.Stage),
+             y = cv_by_site)) +
   geom_point() +
   geom_errorbar(aes(ymin = cv_low_sharma,
-                    ymax = cv_high_sharma), width = .05) +
-  xlab("Attributes") +
+                    ymax = cv_high_sharma),
+                width = 0.2) +
+  xlab("Phase") +
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ variable, scales = "free_y") +
-  coord_cartesian(ylim = c(15,45)) +
-  theme_bw() +
-  labs(color = "Phase")
+  theme_bw()
 
 ggsave(here::here("analysis/figures/005-cv-phases.png"),
        width = 4.5,
@@ -234,19 +244,17 @@ cv_by_site_df_label_more_than_5 <-
   filter(variable %in% c("ML", "BL","MW", "TW"))
 
 cv_by_site_df_label_more_than_5 %>%
-  ggplot(aes(x = factor(variable), y = cv_by_site, colour = factor(variable))) +
+  ggplot(aes(x = factor(variable),
+             y = cv_by_site)) +
   geom_point() +
   geom_errorbar(aes(ymin = cv_low_sharma,
-                    ymax = cv_high_sharma), width = .2) +
-  xlab("Asseblages") +
+                    ymax = cv_high_sharma), width = 0.2) +
+  xlab("Attribute") +
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label, scales = "free_y") +
   coord_cartesian(ylim = c(15,60)) +
-  theme_bw() +
-  labs(color = "Attributes")+
-  ggtitle("CVs of point attributes by site (with sites >=7 artifacts)")
-
-
+  theme_bw()
+  # caption should be "CVs of point attributes by site (with sites >=7 artifacts)"
 
 ggsave(here::here("analysis/figures/006-cv-four-assemblage.png"),
        width = 5,
@@ -254,7 +262,8 @@ ggsave(here::here("analysis/figures/006-cv-four-assemblage.png"),
        units = "in")
 
 
-# CV by raw materials
+#- CV by raw materials ---------------------------------------------------------
+
 ### Make a table of CVs for all variable grouped by raw materials
 cv_by_raw_materials <-
   df_full_sitename %>%
@@ -271,7 +280,7 @@ cv_by_raw_materials <-
             cv_low_sharma =  sharma_int_low(value),
             cv_high_sharma = sharma_int_high(value))
 
-######CV for per raw materials (n=X) with the full site name : label
+# CV for per raw materials (n=X) with the full site name : label
 cv_by_raw_materials_df_label <-
   df_sitename %>%
   group_by(SPstage.Raw_material) %>%
@@ -283,27 +292,26 @@ cv_by_raw_materials_df_label <-
   mutate(cv_by_site = map(data, ~map_df(.x, cv))) %>%
   select (-cv_by_site)
 
-######add label to main dataframe
+# add label to main dataframe
 cv_plot_raw_materials_label <- cv_by_raw_materials %>%
   left_join (cv_by_raw_materials_df_label) %>%
   select (- data,-SPstage.Raw_material)
 
-###### facet plot
+# facet plot
 cv_plot_raw_materials_label %>%
-  ggplot(aes(x = variable, y = cv_by_materials, colour = factor(variable))) +
+  ggplot(aes(x = variable,
+             y = cv_by_materials)) +
   geom_point() +
   geom_errorbar(aes(ymin = cv_low_sharma,
-                    ymax = cv_high_sharma), width = .2) +
-  xlab("Law Materials") +
+                    ymax = cv_high_sharma), width = 0.2) +
+  xlab("Raw Materials") +
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label, scales = "free_y") +
   theme(legend.position = "none") +
-  coord_cartesian(ylim = c(0,130)) +
-  theme_bw() +
-  labs(color = "Attributes")
+  coord_cartesian(ylim = c(0,200)) +
+  theme_bw()
 
-
-ggsave(here::here("analysis/figures/00000-cv-raw-materials.png"),
+ggsave(here::here("analysis/figures/999-cv-raw-materials.png"),
        width = 8.5,
        height = 4.5,
        units = "in")
