@@ -15,7 +15,7 @@ PCA <- prcomp(DF, center = TRUE, scale = TRUE)
 xx_pca <-
   df_sitename %>%
   filter(SPstage.Stage != 1) %>%
-  select(-sitename, -SPstage.Stage) %>%
+  select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
   prcomp(., center = TRUE, scale = TRUE)
 
 xx_pca1 <-
@@ -52,7 +52,7 @@ gg_stage <-
 xx_pca2 <-
   df_sitename %>%
   filter(SPstage.Stage == 2) %>%
-  select(-sitename, -SPstage.Stage) %>%
+  select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
   prcomp(., center = TRUE, scale = TRUE)
 
 
@@ -61,18 +61,22 @@ xx_pca2 <-
 xx_pca3 <-
   df_sitename %>%
   filter(SPstage.Stage == 3) %>%
-  select(-sitename, -SPstage.Stage) %>%
+  select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
   prcomp(., center = TRUE, scale = TRUE)
 
 ##### using factoextra pkg
 library(factoextra) #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
 
 # Color variables by the continuous variable
-cv_all <- fviz_pca_var(xx_pca, col.var = "contrib",
+fviz_pca_var(xx_pca, col.var = "contrib",
                        gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
-  ggtitle(paste0("All", " (n =", count_phase, ")")) +
-           theme(legend.position = "none")
+  ggtitle(paste0("All", " (n =", count_phase, ")"))
+           # + theme(legend.position = "none")
 
+ggsave(here::here("analysis/figures/007-PCA-1.png"),
+       width = 3,
+       height = 3,
+       units = "in")
 
 # phase 2
 cv_two <- fviz_pca_var(xx_pca2, col.var = "contrib",
@@ -86,10 +90,10 @@ cv_three <- fviz_pca_var(xx_pca3, col.var = "contrib",
   ggtitle(paste0("Phase 3", " (n =", count_phase3,")"))
 
 library(patchwork)
-cv_all + cv_two + cv_three + plot_layout(nrow=1)
+cv_two + cv_three
 
 ggsave(here::here("analysis/figures/007-PCA.png"),
-       width = 10,
+       width = 7,
        height = 3,
        units = "in")
 

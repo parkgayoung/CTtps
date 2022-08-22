@@ -124,7 +124,8 @@ cv_plot_site_label %>%
   theme(legend.position = "none") +
   coord_cartesian(ylim = c(0,130)) +
   theme_bw() +
-  labs(color = "Attributes")
+  labs(color = "Attributes") +
+  theme(strip.text.x = element_text(size = 6.5))
 
 
 # checking SC site values
@@ -168,6 +169,7 @@ cv_by_stage_df  <-
 ####### significant test between the two phases ######
 library(cvequality)
 
+<<<<<<< HEAD
 raw_data_test_BL <- df_sitename %>%
   select(-sitename, -SPstage.Raw_material) %>%
   group_by(SPstage.Stage) %>%
@@ -186,6 +188,13 @@ test_BL <- with(raw_data_test_BL,
 
 
 raw_data_test_ML <- df_sitename %>%
+=======
+# BM testing doing all the CV testing at once
+
+# created nested tibble, nest by variable
+df_sitename_nested <-
+df_sitename %>%
+>>>>>>> 602ceeb7953d98ce8aefe3d214027b9d8367a727
   select(-sitename, -SPstage.Raw_material) %>%
   group_by(SPstage.Stage) %>%
   add_tally() %>%
@@ -194,6 +203,7 @@ raw_data_test_ML <- df_sitename %>%
   pivot_longer(-SPstage.Stage,
                names_to = "variable",
                values_to = "value") %>%
+<<<<<<< HEAD
   filter(variable == "ML")
 
 test_ML <- with(raw_data_test_ML,
@@ -232,6 +242,19 @@ test_SL <- with(raw_data_test_SL,
                 mslr_test(nr = 1e4,
                           value,
                           SPstage.Stage)) #p_value = 0.4893119
+=======
+  ungroup() %>%
+  group_by(variable) %>%
+  nest()
+
+# apply mslr test to each variable (row with a tibble)
+#Krishnamoorthy and Lee’s (2014) modified signed-likelihood ratio test
+df_sitename_nested %>%
+  mutate(mslr_result = map_df(data, ~mslr_test(nr = 1e4,
+                                            .$value,
+                                            .$SPstage.Stage))) %>%
+  unnest(mslr_result)
+>>>>>>> 602ceeb7953d98ce8aefe3d214027b9d8367a727
 
 
 # facet plot for two phases
@@ -382,3 +405,4 @@ ggsave(here::here("analysis/figures/00000-cv-raw-materials.png"),
        width = 8.5,
        height = 4.5,
        units = "in")
+
