@@ -124,7 +124,8 @@ cv_plot_site_label %>%
   theme(legend.position = "none") +
   coord_cartesian(ylim = c(0,130)) +
   theme_bw() +
-  labs(color = "Attributes")
+  labs(color = "Attributes") +
+  theme(strip.text.x = element_text(size = 6.5))
 
 
 # checking SC site values
