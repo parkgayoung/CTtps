@@ -42,7 +42,7 @@ landmarks <- read.tps(here::here("analysis/data/raw_data/original-landmark-data/
 
 #getting info for phase of each site
 # SPstage <- read_csv(here("analysis/data/SPstage.csv"))
-SPstage <- read_excel(here("analysis/data/SPstage_raw_materials.xls"))
+SPstage <- readxl::read_excel(here("analysis/data/raw_data/SPstage_raw_materials.xls"))
 
 #Compare multiple artifacts
 #Open multiple tps files. This will need to be changed to read files inside the project
@@ -50,7 +50,7 @@ datadir <- here("analysis/data/raw_data/original-landmark-data/")
 files <- dir(datadir, pattern = "*.tps$|*.TPS$")
 
 #Getting site info
-korean_archaeological_site_locations <- read_csv(here("analysis/data/sitelocation.csv"))
+korean_archaeological_site_locations <- read_csv(here("analysis/data/raw_data/sitelocation.csv"))
 
 #Computing size attributes  of the points by calculating distance between landmarks
 
@@ -147,19 +147,8 @@ landmarks_list <- vector("list", length = length(files))
 no_curves_files <- list.files(here::here("analysis/data/raw_data/no-curves-landmark-data"),
                               full.names = TRUE)
 
-# no_curves_files_no_bad_ones <- # remove bad files or fix them
-#
-# for (i in 1:length(no_curves_files)) {
-#   filename <- no_curves_files[i]
-#   print(filename)
-#
-#   # read in landmark files
-#   landmarks_list[[i]] <- geomorph::readland.tps(filename)
-# }
-
 # this is the one we want, it produces the output in a format we can easily work with
 x2 <- geomorph::readmulti.tps(no_curves_files)
-
 
 # attach artefact ID's to landmarks
 names(landmarks_list) <- files
@@ -169,12 +158,12 @@ landmarks_list_df <- bind_rows(landmarks_list, .id = "artefact")
 
 library(Momocs)
 
+look_at_the_outlines <-
 Out(x2, fac = no_curves_files) %>%
   coo_align() %>%
   coo_center() %>%
   coo_scale() %>%
   pile(transp = 0.9)
-
 
 #Gather attributes from  all artifacts
 
@@ -185,6 +174,7 @@ SL = c()
 MW = c()
 TW = c()
 SW = c()
+
 for (i in 1:length(files)) {
   filename <- paste(datadir, files[i], sep = "")
   # print(filename)
@@ -207,17 +197,14 @@ df_sitename <- df %>%
   separate (files, into = c("sitename", "files"), sep = "_") %>%
   select (-files)
 
-
 library(dplyr)
 df_full_sitename <-
   left_join(df_sitename, korean_archaeological_site_locations, by = c("sitename"="sitename"))
 
-
-
 #list of all attributes without ID
 DF <- df[,1:7]
 
+save(df, df_sitename,
+     df_full_sitename, DF,
+     file = here("analysis/data/derived_data/data_main.RData"))
 
-save(df, df_sitename, df_full_sitename, DF, file = "data_main.RData")
-# To load the data again
-load("data_main.RData")
