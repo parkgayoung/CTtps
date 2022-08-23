@@ -1,0 +1,8 @@
+﻿Abbreviation,Description,Line segment on the image
+ML,"Maximum length, tip to bottom, perpendicular to the length axis ",1-7
+BL,"Body length, tip to the closest wing, perpendicular to the length axis ",1-3 or 1-10 depending on the artifact
+TL,"Tang length, the closest wing from the tip to bottom, perpendicular to the length axis ",3-7 or 10-7 depending on the artifact
+SL,"Maximum stem length, perpendicular to the length axis. Closer tang curve's middle point from the tip to the most distant point of the basal end ",9-7 or 4-7 depending on the artifact
+MW,"Mid width, dimension from margin to margin at the mid-point of the length ","2-11 axis, perpendicular to the width axis"
+TW,"tang width, dimension between each wing, perpendicular to the width axis",3-10
+SW,"Stem width, width of the basal end of the point, 5mm above the end ",5-8
