@@ -81,7 +81,7 @@ ggplot(cv_data_sharma_named,
   geom_text(aes(label = round(all_cv_sharma,1)), col="blue", hjust = -0.3, size = 3) +
   theme_bw()
 
-ggsave(here::here("analysis/figures/003-cv-sharma.png"),
+ggsave(here::here("analysis/figures/all-artefacts-cv-sharma.png"),
        width = 4.8,
        height = 4.5,
        units = "in")
@@ -153,7 +153,7 @@ cv_plot_site_label %>%
 # sharma_int_low(Sac$SL)
 # sharma_int_high(Sac$SL)
 
-ggsave(here::here("analysis/figures/004-cv-sites.png"),
+ggsave(here::here("analysis/figures/all-sites-cv-sites.png"),
        width = 8.5,
        height = 4.5,
        units = "in")
@@ -221,7 +221,7 @@ cv_by_stage_df %>%
   facet_wrap( ~ variable, scales = "free_y") +
   theme_bw()
 
-ggsave(here::here("analysis/figures/005-cv-phases.png"),
+ggsave(here::here("analysis/figures/all-phases-cv-phases.png"),
        width = 4.5,
        height = 4.5,
        units = "in")
@@ -263,7 +263,7 @@ cv_by_site_df_label_more_than_5 %>%
   theme_bw()
   # caption should be "CVs of point attributes by site (with sites >=7 artifacts)"
 
-ggsave(here::here("analysis/figures/006-cv-four-assemblage.png"),
+ggsave(here::here("analysis/figures/cv-four-assemblage.png"),
        width = 5,
        height = 4,
        units = "in")

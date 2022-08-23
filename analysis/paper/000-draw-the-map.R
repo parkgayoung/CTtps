@@ -129,7 +129,7 @@ ggdraw() +
   theme(panel.background = element_rect(fill='white', colour="white"),
         plot.background = element_rect(fill='white', colour="white"))
 
-ggsave(here::here("analysis/figures/001-site-map.png"),
+ggsave(here::here("analysis/figures/site-map.png"),
        width = 4.45,
        height = 4.5,
        units = "in")
