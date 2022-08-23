@@ -4,10 +4,10 @@ library(corrr)
 library(ggbiplot)
 library(ggfortify)
 
-load("data_main.RData")
+# import the cleaned data ready to work on
+load(here::here("analysis/data/derived_data/data_main.RData"))
 
 ### PCA analysis using ggbiplot, ggfortify pkgs
-
 
 PCA <- prcomp(DF, center = TRUE, scale = TRUE)
 
@@ -30,15 +30,14 @@ label_phase <-
   add_tally() %>%
   mutate(label = as.factor(paste0(SPstage.Stage,'\nN = ',n)))
 
-
 count_phase <- length(which(label_phase[9]>0))
 count_phase2 <- length(which(label_phase[9] == 2))
 count_phase3 <- length(which(label_phase[9] == 3))
 
-
 ###
 
-#plot for both stage
+# plot for both stage
+
 gg_stage <-
   ggplot(xx_pca1 ,
          aes(PC1,
@@ -55,7 +54,6 @@ xx_pca2 <-
   select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
   prcomp(., center = TRUE, scale = TRUE)
 
-
 # phase 3
 
 xx_pca3 <-
@@ -68,31 +66,25 @@ xx_pca3 <-
 library(factoextra) #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
 
 # Color variables by the continuous variable
-fviz_pca_var(xx_pca, col.var = "contrib",
-                       gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
-  ggtitle(paste0("All", " (n =", count_phase, ")"))
-           # + theme(legend.position = "none")
-
-ggsave(here::here("analysis/figures/007-PCA-1.png"),
-       width = 3,
-       height = 3,
-       units = "in")
-
-# phase 2
-cv_two <- fviz_pca_var(xx_pca2, col.var = "contrib",
-                       gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
-  ggtitle(paste0("Phase 2", " (n =", count_phase2,")"))+
+cv_all <-
+fviz_pca_var(xx_pca) +
+  ggtitle(paste0("All phases", " (n = ", count_phase,")")) +
   theme(legend.position = "none")
 
+# phase 2
+cv_two <-
+  fviz_pca_var(xx_pca2) +
+  ggtitle(paste0("Phase 2", " (n = ", count_phase2,")"))
+
 # phase 3
-cv_three <- fviz_pca_var(xx_pca3, col.var = "contrib",
-                         gradient.cols = c("#00AFBB", "#E7B800", "#FC4E07")) +
-  ggtitle(paste0("Phase 3", " (n =", count_phase3,")"))
+cv_three <-
+  fviz_pca_var(xx_pca3) +
+  ggtitle(paste0("Phase 3", " (n = ", count_phase3,")"))
 
 library(patchwork)
-cv_two + cv_three
+cv_all + cv_two + cv_three
 
-ggsave(here::here("analysis/figures/007-PCA.png"),
+ggsave(here::here("analysis/figures/PCA-contribution-plot.png"),
        width = 7,
        height = 3,
        units = "in")
