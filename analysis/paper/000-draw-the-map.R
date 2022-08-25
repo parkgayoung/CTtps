@@ -1,26 +1,18 @@
+# This script draws the map, this is figure 1 in the paper.
+
+
 korean_archaeological_site_locations <-
-  readr::read_csv(here::here("analysis/data/sitelocation.csv"))
+  readr::read_csv(here::here("analysis/data/raw_data/sitelocation.csv"))
 
 korean_archaeological_site_locations <-
   tibble::rowid_to_column(korean_archaeological_site_locations, "ID")
 
-
-library(ggmap)
-
-# bounding box
-# 39.534214, 124.159154 ... 39.657415, 129.138604
-# 33.694662, 123.491142 ... 34.338454, 130.569658
-
-map <-
-  get_stamenmap(bbox = c(left = 124,
-                         bottom = 33,
-                         right = 	130,
-                         top = 39),
-                zoom = 10)
-
 library(ggrepel)
 # devtools::install_github('3wen/legendMap')
 library(legendMap)
+
+# load map tiles we previously saved
+map <- readRDS(here::here("analysis/data/raw_data/map_tiles.rds"))
 
 # map with site names next to the points
 map_of_sites <-
@@ -137,8 +129,7 @@ ggdraw() +
   theme(panel.background = element_rect(fill='white', colour="white"),
         plot.background = element_rect(fill='white', colour="white"))
 
-
-ggsave(here::here("analysis/figures/001-site-map.png"),
+ggsave(here::here("analysis/figures/site-map.png"),
        width = 4.45,
        height = 4.5,
        units = "in")
