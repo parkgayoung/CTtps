@@ -424,7 +424,6 @@ cv_by_stage_df %>%
   theme_bw()
 ```
 
-
 Compared to Phase 2, the influence of tang length and stem length of Phase 3 becomes more pronounced and while stem width is less effective (@fig-pca-attributes). However, there are no notable changes in correlations over time.
 
 We explored assemblages that contain multiple stemmed points to examine the temporal patterns with the premise that stemmed points from one assemblage were made by the same group of people. There are four assemblages, three assemblages from the Suyanggae site (SYG) and one from the Yongsandong site (YS) that contain seven or more stemmed points. SYG1_2 and SYG6_2 are from Phase 2 and SYG1_3 and YS_3 are from Phase 3. Following the previous studies of [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we only compared CV values of attributes, body length, maximum length, mid width, and tang width. @fig-eight shows that CV values for the four assemblages are mostly below 25, which represent transmissions through indirect bias. Among the assemblages, SYG1_2 (n=7) has higher CV values as well as the widest range of confidence intervals. Compared to the Phase 2, CV values of Phase 3 are lower, which is different from @fig-six results of body length and maximum length from all assemblages. It is assumed that those attributes became more standardized within the same assemblages. Compared to Suyanggae assemblages, Yongsandong has smaller CV values.
@@ -498,7 +497,7 @@ cv_plot_site_label %>%
   theme(strip.text.x = element_text(size = 6.5))
 ```
 
-##  Variation Between Raw Materials
+## Variation Between Raw Materials
 
 We examined the relationship between CV values and raw materials with a premise that the shape of stemmed points are highly dependent on raw materials. We exclude raw materials that were used for single point. @fig-ten shows that quartzite, the raw materials for Sachang stemmed points, has the highest CV value with a wide range of conference intervals. Quartz has high variations of CV among the attributes. On the other hand, shale has the lower CV, which is very stable throughout the attributes.
 
@@ -509,6 +508,11 @@ We examined the relationship between CV values and raw materials with a premise 
 # Acknowledgements
 
 <!-- The following line inserts a page break  -->
+
+# CRediT authorship contribution statement
+Gayoung Park: Conceptualization, Software, Validation, Formal analysis,  Methodology, Resources, Data curation,  Writing - original draft, Writing - Review & Editing, Visualization, Project administration.
+
+Ben Marwick: Software, Validation, Formal analysis, Investigation, Writing - Review & Editing, Visualization, Supervision
 
 \newpage
 
