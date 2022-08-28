@@ -119,7 +119,6 @@ After the first discovery in Seokjangri site in the 1960s, around 300 stemmed po
 
 We used previously developed chronologies that identify three phases in the Korean Late Paleolithic [@seong2015diversity; @Park_2013]. These chronologies were built on the presence of blades, stemmed point blanks, toolkit composition and radiocarbon ages. We arranged our 28 assemblages containing stemmed points in chronological order. For example, Sachang site has two assemblages that are fitted into phase 1 and 2. Applying the chronology is useful because some sites such as Yonghodong, Goryeri, Jungmal, and Mungyeong have no radiocarbon dates due to various research situations and limitations, chronological order help us estimate the time periods of those assemblages as well as understand the morphological change of stemmed points associated with the introduction of blade technology. Based on the existence of blade and micro blade and types of stemmed point blanks, we divided the assemblages into three chronological phases: 1) stemmed points made out of flakes and no blades in assemblages, 2) stemmed points made out of blade or flake and the existence of blade in assemblages, and 3) stemmed points made out of blade and the existence of micro blade in assemblages.
 
-
 ```{r}
 #| label: fig-map
 #| fig-cap: Korean Paleolithic sites mentioned in this study
@@ -262,7 +261,6 @@ ggdraw() +
 
 ```
 
-
 ## Methods
 
 In addition to attributes from previous studies of cultural transmission and projectile points, i.e. maximum length and width [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @garvey2018current], we used additional morphological attributes on the stemmed points to examine variations in shape and the relationship between each attribute (@fig-two). We obtained our morphological attribute data from landmark analysis of digitized images of the artifacts. Compared to traditional caliper measurements, morphometric data yields more easily interpretable numerical and visual outcomes [@buchanan2010geometric; @thulman2012discriminating; @cardillo2016environment; @petvrik2018shape; @macleod2018quantitative; @okumura2019archaeology; @suarez2019life]. We did not include weight and thickness as these measurements were not available to us. For the landmark analysis, we put a total of 11 landmarks on the outline of each stemmed point and computed distances between pairs of landmark coordinates to derive attributes for our statistical analyses. The landmarks we recorded were: (1) the tip of the point; (2) the left side of mid-point; (3) the left wing, which can be overlapped with the mid-point; (4) the left side of the mid-point on the tang curve; (5) the left side of 5mm above the basal end; (6) the center of the basal end; (7) the tip of the basal end, which can be overlapped with the center of the basal end ; (8) the right side of 5mm above the basal end ; (9) the right side of the mid-point on the tang curve; (10) the right wing; and (11) the right side of mid-pint, which can be overlapped with the right wing. We used the point tool in ImageJ [@schneider2012nih] to capture the landmarks and export them as XY coordinate data.
@@ -274,7 +272,7 @@ TL: Tang length, the closest wing from the tip to bottom,perpendicular to the le
 SL: (Maximum) stem length, perpendicular to the length axis. Closer tang curve's middle point from the tip to the most distant point of the basal end 9-7 or 4-7 depending on the artifact\
 MW: mid width, dimension from margin to margin at the mid-point of the length 2 - 11 axis, perpendicular to the width axis.\
 TW: tang width, dimension between each wing, perpendicular to the width axis 3 - 10\
-SW: stem width, width of the basal end of the point, 5mm above the end 5 - 8](images/ISKM%20talk%202021-cut.png){#fig-two width="221"}
+SW: stem width, width of the basal end of the point, 5mm above the end 5 - 8](images/ISKM%20talk%202021-cut.png){#fig-two width="212"}
 
 To measure the variations between stemmed points, we used Coefficients of Variation (CV) with confidence intervals. CV is the ratio of the standard deviation to the mean. It has been used as a robust statistical method to calculate the degree of standardization, precision, equality, homogeneity, etc. in various disciplines [@ng2006performance; @panichkitkosolkul2009improved; @panichkitkosolkul2013confidence]. In archaeological studies, CV has been applied to measure the variation between artifacts and test hypotheses about cultural evolutionary processes including distinguishing different types of learning biases affecting cultural transmission [@eerkens2001techniques; @eerkens2005cultural; @schillinger2014copying; @garvey2018current]. Eerkens and Bettinger [-@eerkens2001techniques] summarize CV values for artifacts made from various materials and find that the range of CV values for most archaeological datasets is between 2% (i.e. CV for planned production = 1.7 %) and about 60% (i.e. CV for random production = 57.7%) and the values over the upper limit likely reflect intended attempts to differentiate the products. Among the Great Basin Projectiles examined by Eerkens and Bettinger, the average CV was 22 and the range in CV values was 6-55. Considering the lower quality of raw materials in Korea, we sat roughly 25 as the threshold to decide the type of transmission biases.
 
@@ -652,7 +650,8 @@ We examined the relationship between CV values and raw materials with a premise 
 <!-- The following line inserts a page break  -->
 
 # CRediT authorship contribution statement
-Gayoung Park: Conceptualization, Software, Validation, Formal analysis,  Methodology, Resources, Data curation,  Writing - original draft, Writing - Review & Editing, Visualization, Project administration.
+
+Gayoung Park: Conceptualization, Software, Validation, Formal analysis, Methodology, Resources, Data curation, Writing - original draft, Writing - Review & Editing, Visualization, Project administration.
 
 Ben Marwick: Software, Validation, Formal analysis, Investigation, Writing - Review & Editing, Visualization, Supervision
 
