@@ -537,11 +537,42 @@ table_mslr_test_results_for_phase_differences <-
   unnest(mslr_result) %>%
   dplyr::select(-data)
 
+
 names(table_mslr_test_results_for_phase_differences) <- 
   c("Variable", "MSLR statistic", "p value")
 
 knitr::kable(table_mslr_test_results_for_phase_differences,
              caption = "CV values for the second and third chronological phases in the Korean Late Paleolithic period. The points represent CV values for each attribute. The vertical lines indicate the range of confidence intervals.")
+
+# apply t test to each variable
+# prepare df for t test : ML
+t_test_df_ML_2<- 
+df_sitename %>%
+  dplyr::select(-sitename, -SPstage.Raw_material) %>%
+  group_by(SPstage.Stage) %>%
+  add_tally() %>%
+  dplyr::filter(SPstage.Stage > 1)%>%
+  dplyr::select(-n) %>% 
+   pivot_longer(-SPstage.Stage,
+               names_to = "variable",
+               values_to = "value") %>% 
+  filter(variable == "ML", SPstage.Stage == 2)
+ 
+t_test_df_ML_3<- 
+df_sitename %>%
+  dplyr::select(-sitename, -SPstage.Raw_material) %>%
+  group_by(SPstage.Stage) %>%
+  add_tally() %>%
+  dplyr::filter(SPstage.Stage > 1)%>%
+  dplyr::select(-n) %>% 
+   pivot_longer(-SPstage.Stage,
+               names_to = "variable",
+               values_to = "value") %>% 
+  filter(variable == "ML", SPstage.Stage == 3)
+
+t.test(t_test_df_ML_2$value, t_test_df_ML_3$value)
+#t = 3.7637, df = 135.36, p-value = 0.0002485
+
 ```
 
 ```{r}
