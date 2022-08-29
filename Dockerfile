@@ -1,5 +1,5 @@
 # get the base image, the rocker/verse has R, RStudio and pandoc
-FROM rocker/tidyverse:4.2.0
+FROM rocker/tidyverse:4.1.2
 
 # required
 MAINTAINER Ben Marwick <benmawick@gmail.com>
@@ -11,7 +11,7 @@ COPY . /CTtps
 RUN  sudo apt-get update -y \
   && sudo apt-get install -y libnlopt-dev \
   && R -e "install.packages('remotes', repos = c(CRAN = 'https://cloud.r-project.org'))" \
-  && R -e "remotes::install_github('rstudio/renv')" \
+  && R -e "remotes::install_github(c('rstudio/renv', 'quarto-dev/quarto-r')" \
   # install pkgs we need
   && R -e "renv::restore()" \
   # run all the code
