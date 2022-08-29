@@ -10,7 +10,8 @@ korean_archaeological_site_locations <-
 library(ggrepel)
 # devtools::install_github('3wen/legendMap')
 library(legendMap)
-
+library(sp)
+library(ggmap)
 # load map tiles we previously saved
 map <- readRDS(here::here("analysis/data/raw_data/map_tiles.rds"))
 
