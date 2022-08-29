@@ -121,20 +121,12 @@ We used previously developed chronologies that identify three phases in the Kore
 
 ```{r}
 #| label: fig-map
-<<<<<<< HEAD
-#| fig-cap: Korean Paleolithic sites mentioned in this study.
-#| fig-width:   4.45
-#| fig-height:  4.5
-
-# Thisdraws the map
-=======
 #| fig-cap: Korean Paleolithic sites mentioned in this study
 #| fig-width:   4.45
 #| fig-height:  4.5
 
 # This script draws the map, this is figure 1 in the paper.
 
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
 
 korean_archaeological_site_locations <-
   readr::read_csv(here::here("analysis/data/raw_data/sitelocation.csv"))
@@ -142,22 +134,16 @@ korean_archaeological_site_locations <-
 korean_archaeological_site_locations <-
   tibble::rowid_to_column(korean_archaeological_site_locations, "ID")
 
-<<<<<<< HEAD
-library(ggmap)
-library(ggrepel)
-# devtools::install_github('3wen/legendMap')
-library(legendMap)
-
 # load map tiles we previously saved, we got these using the code in 
 # 000-download-map-tiles.R
-=======
+
 library(ggrepel)
 # devtools::install_github('3wen/legendMap')
 library(legendMap)
 library(sp)
 library(ggmap)
+
 # load map tiles we previously saved
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
 map <- readRDS(here::here("analysis/data/raw_data/map_tiles.rds"))
 
 # map with site names next to the points
@@ -168,11 +154,8 @@ map_of_sites <-
                  lat_dd),
              colour = "red",
              size = 2) +
-<<<<<<< HEAD
-  # label points with site name
-=======
+
 # label points with site name
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
   geom_text_repel(data = korean_archaeological_site_locations,
                   aes(long_dd ,
                       lat_dd,
@@ -215,10 +198,6 @@ library(maps)
 library(magrittr)
 library(maptools)
 library(raster)
-<<<<<<< HEAD
-=======
-library(ggplot2)
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
 
 #Defining a general CRS
 mycrs <- "+proj=longlat +datum=WGS84 +no_defs"
@@ -281,12 +260,6 @@ ggdraw() +
   ) +
   theme(panel.background = element_rect(fill='white', colour="white"),
         plot.background = element_rect(fill='white', colour="white"))
-<<<<<<< HEAD
-=======
-
-
-
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
 ```
 
 ## Methods
@@ -304,22 +277,12 @@ knitr::include_graphics(here::here("analysis/figures/hand-made-figures/ISKM-talk
 ```{r}
 #| label: tab-landmark-abbreviations
 
-<<<<<<< HEAD
 here::here("analysis/data/raw_data/table-of-landmark-abbreviations.csv") %>% 
   read_csv() %>% 
   knitr::kable(., caption = "Description of artefact landmarks used in this study")
 
 ```
-=======
-![(a) Stemmed point from Yongsandong site. with landmarks showing the attributes considered in this study and corresponding landmarks:\
-ML: Maximum length, tip to bottom, perpendicular to the length axis 1- 7\
-BL: Body length, tip to the closest wing, perpendicular to the length axis 1- 3 or 1-10 depending on the artifact\
-TL: Tang length, the closest wing from the tip to bottom,perpendicular to the length axis 3 - 7 or 10-7 depending on the artifact\
-SL: (Maximum) stem length, perpendicular to the length axis. Closer tang curve's middle point from the tip to the most distant point of the basal end 9-7 or 4-7 depending on the artifact\
-MW: mid width, dimension from margin to margin at the mid-point of the length 2 - 11 axis, perpendicular to the width axis.\
-TW: tang width, dimension between each wing, perpendicular to the width axis 3 - 10\
-SW: stem width, width of the basal end of the point, 5mm above the end 5 - 8](images/ISKM%20talk%202021-cut.png){#fig-two width="212"}
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
+
 
 To measure the variations between stemmed points, we used Coefficients of Variation (CV) with confidence intervals. CV is the ratio of the standard deviation to the mean. It has been used as a robust statistical method to calculate the degree of standardization, precision, equality, homogeneity, etc. in various disciplines [@ng2006performance; @panichkitkosolkul2009improved; @panichkitkosolkul2013confidence]. In archaeological studies, CV has been applied to measure the variation between artifacts and test hypotheses about cultural evolutionary processes including distinguishing different types of learning biases affecting cultural transmission [@eerkens2001techniques; @eerkens2005cultural; @schillinger2014copying; @garvey2018current]. Eerkens and Bettinger [-@eerkens2001techniques] summarize CV values for artifacts made from various materials and find that the range of CV values for most archaeological datasets is between 2% (i.e. CV for planned production = 1.7 %) and about 60% (i.e. CV for random production = 57.7%) and the values over the upper limit likely reflect intended attempts to differentiate the products. Among the Great Basin Projectiles examined by Eerkens and Bettinger, the average CV was 22 and the range in CV values was 6-55. Considering the lower quality of raw materials in Korea, we sat roughly 25 as the threshold to decide the type of transmission biases.
 
@@ -467,11 +430,7 @@ PCA <- prcomp(DF, center = TRUE, scale = TRUE)
 # remove stage 1 artefact
 xx_pca <-
   df_sitename %>%
-<<<<<<< HEAD
   dplyr::filter(SPstage.Stage != 1) %>%
-=======
-  filter(SPstage.Stage != 1) %>%
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
   dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
   prcomp(., center = TRUE, scale = TRUE)
 
@@ -494,11 +453,7 @@ count_phase3 <- length(which(label_phase[9] == 3))
 
 xx_pca2 <-
   df_sitename %>%
-<<<<<<< HEAD
   dplyr::filter(SPstage.Stage == 2) %>%
-=======
-  filter(SPstage.Stage == 2) %>%
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
   dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
   prcomp(., center = TRUE, scale = TRUE)
 
@@ -506,11 +461,7 @@ xx_pca2 <-
 
 xx_pca3 <-
   df_sitename %>%
-<<<<<<< HEAD
   dplyr::filter(SPstage.Stage == 3) %>%
-=======
-  filter(SPstage.Stage == 3) %>%
->>>>>>> 76d250fbb5bf37e72d7f72654f54663a37cb55a7
   dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
   prcomp(., center = TRUE, scale = TRUE)
 
