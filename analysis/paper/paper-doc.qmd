@@ -127,7 +127,6 @@ We used previously developed chronologies that identify three phases in the Kore
 
 # This script draws the map, this is figure 1 in the paper.
 
-
 korean_archaeological_site_locations <-
   readr::read_csv(here::here("analysis/data/raw_data/sitelocation.csv"))
 
@@ -268,7 +267,7 @@ In addition to attributes from previous studies of cultural transmission and pro
 
 ```{r}
 #| label: fig-labelled-schematic
-#| fig-height: 2
+#| fig-height: 1
 #| fig-cap: Stemmed point from Yongsandong site. with landmarks showing the attributes considered in this study and corresponding landmarks
 
 knitr::include_graphics(here::here("analysis/figures/hand-made-figures/ISKM-talk-2021-cut.png"))
