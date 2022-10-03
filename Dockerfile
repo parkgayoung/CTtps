@@ -15,4 +15,4 @@ RUN  sudo apt-get update -y \
   # install pkgs we need
   && R -e "renv::restore()" \
   # run all the code
-  && R -e "quarto::quarto_render('analysis/paper/paper.qmd')"
+  && R -e "quarto::quarto_render('/CTtps/analysis/paper/paper.qmd')"
