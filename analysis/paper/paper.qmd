@@ -274,13 +274,15 @@ knitr::include_graphics(here::here("analysis/figures/hand-made-figures/ISKM-talk
 ```
 
 ```{r}
-#| label: tab-landmark-abbreviations
+#| label: tbl-landmark-abbreviations
+#| tbl-cap: Description of artefact landmarks used in this study
 
 here::here("analysis/data/raw_data/table-of-landmark-abbreviations.csv") %>% 
-  read_csv() %>% 
-  knitr::kable(., caption = "Description of artefact landmarks used in this study")
+  read.csv() %>% 
+  knitr::kable(.)
 
 ```
+@tbl-landmark-abbreviations sth special~
 
 To measure the variations between stemmed points, we used Coefficients of Variation (CV) with confidence intervals. CV is the ratio of the standard deviation to the mean. It has been used as a robust statistical method to calculate the degree of standardization, precision, equality, homogeneity, etc. in various disciplines [@ng2006performance; @panichkitkosolkul2009improved; @panichkitkosolkul2013confidence]. In archaeological studies, CV has been applied to measure the variation between artifacts and test hypotheses about cultural evolutionary processes including distinguishing different types of learning biases affecting cultural transmission [@eerkens2001techniques; @eerkens2005cultural; @schillinger2014copying; @garvey2018current]. Eerkens and Bettinger [-@eerkens2001techniques] summarize CV values for artifacts made from various materials and find that the range of CV values for most archaeological datasets is between 2% (i.e. CV for planned production = 1.7 %) and about 60% (i.e. CV for random production = 57.7%) and the values over the upper limit likely reflect intended attempts to differentiate the products. Among the Great Basin Projectiles examined by Eerkens and Bettinger, the average CV was 22 and the range in CV values was 6-55. Considering the lower quality of raw materials in Korea, we sat roughly 25 as the threshold to decide the type of transmission biases.
 
@@ -497,7 +499,7 @@ Compared to Phase 2, except for maximum width and tang width, the other CV value
 \newpage
 
 ```{r}
-#| label: tab-cv-over-time
+#| label: tbl-cv-over-time
 
 #-- temporal patterns ----------------------------------------------------------------
 # Make a table of CVs for all variable grouped by stage, according to
@@ -556,36 +558,9 @@ names(table_mslr_test_results_for_phase_differences) <-
 knitr::kable(table_mslr_test_results_for_phase_differences,
              caption = "CV values for the second and third chronological phases in the Korean Late Paleolithic period. The points represent CV values for each attribute. The vertical lines indicate the range of confidence intervals.")
 
-# apply t test to each variable
-# prepare df for t test : ML
-t_test_df_ML_2<- 
-df_sitename %>%
-  dplyr::select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  dplyr::filter(SPstage.Stage > 1)%>%
-  dplyr::select(-n) %>% 
-   pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>% 
-  filter(variable == "ML", SPstage.Stage == 2)
- 
-t_test_df_ML_3<- 
-df_sitename %>%
-  dplyr::select(-sitename, -SPstage.Raw_material) %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  dplyr::filter(SPstage.Stage > 1)%>%
-  dplyr::select(-n) %>% 
-   pivot_longer(-SPstage.Stage,
-               names_to = "variable",
-               values_to = "value") %>% 
-  filter(variable == "ML", SPstage.Stage == 3)
-
-t.test(t_test_df_ML_2$value, t_test_df_ML_3$value)
-#t = 3.7637, df = 135.36, p-value = 0.0002485
 
 ```
+@tbl-cv-over-time says sth interesting
 
 ```{r}
 #| label: fig-plot-cv-over-time
