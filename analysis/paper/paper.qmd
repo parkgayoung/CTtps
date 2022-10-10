@@ -72,24 +72,6 @@ To contextualize this further, on one end of our spectrum we have socially isola
 
 On the other end of our spectrum, socially connected groups occupied places close to other groups or had regular contact with other groups over long or short distances. Individuals or groups learned the technology of stemmed points by copying a model from another individual or group. The model stemmed point might be a highly successful and frequently chosen one, and the learners copy all information about the point design as a package. In this social context, indirect bias is the dominant influence on transmission of lithic technology. If indirect bias was prominent in the Korean Paleolithic, we expect that stemmed points should be more standardized, and attributes on the stemmed points will be more correlated, and assemblages from multiple sites will be less varied.
 
-+-------+--------------------+---------+-------------+--------------------+-------------------------------------+----------------------------------------------------------+---------------+------------------+
-| Phase | SP                 | Blades  | Micro-blade | SP Blank           | Newly added raw materials           | New changes                                              | Example sites | Radiocarbon ages |
-+=======+====================+=========+=============+====================+=====================================+==========================================================+===============+==================+
-| 1     | Present            | Absent  | Absent      | Flake              | Higher-quality quartzite,\          | Increasing number of small flake tools, appearance of SP | Hwadaeri\     | \~35 ka\         |
-|       |                    |         |             |                    | Vein quartz                         |                                                          | Yonghodong\   | \                |
-|       |                    |         |             |                    |                                     |                                                          | Sachang       |                  |
-|       |                    |         |             |                    |                                     |                                                          |               |                  |
-|       |                    |         |             |                    |                                     |                                                          | \             |                  |
-+-------+--------------------+---------+-------------+--------------------+-------------------------------------+----------------------------------------------------------+---------------+------------------+
-| 2     | Present            | Present | Present     | Blade              | Porphyry, Siliceous shale, Hitherto | Appearance of blades, increasing number of SP            |               | 35-25 ka         |
-+-------+--------------------+---------+-------------+--------------------+-------------------------------------+----------------------------------------------------------+---------------+------------------+
-| 3     | Present until 16ka | Present | Present     | Blade, Micro-blade | Obsidian                            | Appearance of Micro-blade, microliths                    |               | 25-12 ka         |
-|       |                    |         |             |                    |                                     |                                                          |               |                  |
-|       |                    |         |             |                    |                                     |                                                          |               | \                |
-+-------+--------------------+---------+-------------+--------------------+-------------------------------------+----------------------------------------------------------+---------------+------------------+
-
-: Korean Paleolithic Chronology edited based on Seong[-@seong2015diversity] and Park [-@Park_2013]
-
 # Materials and methods {.unnumbered}
 
 ```{r}
@@ -261,6 +243,17 @@ ggdraw() +
         plot.background = element_rect(fill='white', colour="white"))
 ```
 
+```{r}
+#| label: tbl-korean-chronology
+#| tbl-cap: Korean Paleolithic Chronology edited based on Seong[-@seong2015diversity] and Park [-@Park_2013]
+
+here::here("analysis/data/raw_data/kr-paleolithic-chronology.csv") %>% 
+  read.csv() %>% 
+  knitr::kable(.)
+
+```
+
+
 ## Methods
 
 In addition to attributes from previous studies of cultural transmission and projectile points, i.e. maximum length and width [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @garvey2018current], we used additional morphological attributes on the stemmed points to examine variations in shape and the relationship between each attribute (@fig-labelled-schematic). We obtained our morphological attribute data from landmark analysis of digitized images of the artifacts. Compared to traditional caliper measurements, morphometric data yields more easily interpretable numerical and visual outcomes [@buchanan2010geometric; @thulman2012discriminating; @cardillo2016environment; @petvrik2018shape; @macleod2018quantitative; @okumura2019archaeology; @suarez2019life]. We did not include weight and thickness as these measurements were not available to us. For the landmark analysis, we put a total of 11 landmarks on the outline of each stemmed point and computed distances between pairs of landmark coordinates to derive attributes for our statistical analyses. The landmarks we recorded were: (1) the tip of the point; (2) the left side of mid-point; (3) the left wing, which can be overlapped with the mid-point; (4) the left side of the mid-point on the tang curve; (5) the left side of 5mm above the basal end; (6) the center of the basal end; (7) the tip of the basal end, which can be overlapped with the center of the basal end ; (8) the right side of 5mm above the basal end ; (9) the right side of the mid-point on the tang curve; (10) the right wing; and (11) the right side of mid-pint, which can be overlapped with the right wing. We used the point tool in ImageJ [@schneider2012nih] to capture the landmarks and export them as XY coordinate data.
@@ -282,7 +275,8 @@ here::here("analysis/data/raw_data/table-of-landmark-abbreviations.csv") %>%
   knitr::kable(.)
 
 ```
-@tbl-landmark-abbreviations sth special~
+
+@tbl-landmark-abbreviations sth special\~
 
 To measure the variations between stemmed points, we used Coefficients of Variation (CV) with confidence intervals. CV is the ratio of the standard deviation to the mean. It has been used as a robust statistical method to calculate the degree of standardization, precision, equality, homogeneity, etc. in various disciplines [@ng2006performance; @panichkitkosolkul2009improved; @panichkitkosolkul2013confidence]. In archaeological studies, CV has been applied to measure the variation between artifacts and test hypotheses about cultural evolutionary processes including distinguishing different types of learning biases affecting cultural transmission [@eerkens2001techniques; @eerkens2005cultural; @schillinger2014copying; @garvey2018current]. Eerkens and Bettinger [-@eerkens2001techniques] summarize CV values for artifacts made from various materials and find that the range of CV values for most archaeological datasets is between 2% (i.e. CV for planned production = 1.7 %) and about 60% (i.e. CV for random production = 57.7%) and the values over the upper limit likely reflect intended attempts to differentiate the products. Among the Great Basin Projectiles examined by Eerkens and Bettinger, the average CV was 22 and the range in CV values was 6-55. Considering the lower quality of raw materials in Korea, we sat roughly 25 as the threshold to decide the type of transmission biases.
 
@@ -560,6 +554,7 @@ knitr::kable(table_mslr_test_results_for_phase_differences,
 
 
 ```
+
 @tbl-cv-over-time says sth interesting
 
 ```{r}
