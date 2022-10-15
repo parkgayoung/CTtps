@@ -466,11 +466,54 @@ cv_by_stage_df %>%
   theme_bw()
 ```
 
-Compared to Phase 2, the influence of tang length and stem length of Phase 3 becomes more pronounced and while stem width is less effective (@fig-pca-attributes). However, there are no notable changes in correlations over time.
+We then explored assemblages that contain multiple stemmed points to examine the temporal patterns with the premise that stemmed points from one assemblage were made by the same group of people. There are four assemblages, three assemblages from the Suyanggae site (SYG) and one from the Yongsandong site (YS) that contain more than 5 stemmed points. SYG1_2 and SYG6_2 are from Phase 2 and SYG1_3 and YS_3 are from Phase 3. Following the previous studies of [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we only compared CV values of attributes, body length, maximum length, mid width, and tang width. @fig-plot-cv-four-assemblage shows that CV values for the four assemblages are mostly below 25, which represent transmissions through indirect bias. Among the assemblages, SYG1_2 (n=7) has higher CV values as well as the widest range of confidence intervals. Compared to the Phase 2, CV values of Phase 3 are lower, which is different from @fig-plot-cv-over-time results of body length and maximum length from all assemblages. It is assumed that those attributes became more standardized within the same assemblages. Compared to Suyanggae assemblages, Yongsandong has smaller CV values.
 
-We explored assemblages that contain multiple stemmed points to examine the temporal patterns with the premise that stemmed points from one assemblage were made by the same group of people. There are four assemblages, three assemblages from the Suyanggae site (SYG) and one from the Yongsandong site (YS) that contain seven or more stemmed points. SYG1_2 and SYG6_2 are from Phase 2 and SYG1_3 and YS_3 are from Phase 3. Following the previous studies of [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we only compared CV values of attributes, body length, maximum length, mid width, and tang width. @fig-eight shows that CV values for the four assemblages are mostly below 25, which represent transmissions through indirect bias. Among the assemblages, SYG1_2 (n=7) has higher CV values as well as the widest range of confidence intervals. Compared to the Phase 2, CV values of Phase 3 are lower, which is different from @fig-plot-cv-over-time results of body length and maximum length from all assemblages. It is assumed that those attributes became more standardized within the same assemblages. Compared to Suyanggae assemblages, Yongsandong has smaller CV values.
 
-![CV values of four attributes from assemblages that have 7 or more stemmed points. Among the four assemblages, SYG1_2 and SYG6_2 are from Phase 2 of the Korean Late Paleolithic chronology and SYG1_3 and YS_3 are from Phase 3.](images/006-cv-four-assemblage.png){#fig-eight width="386"}
+```{r}
+#| label: fig-plot-cv-four-assemblage
+#| fig-cap: CV values of four attributes from assemblages that more than 5 stemmed points. Among the four assemblages, SYG1_2 and SYG6_2 are from Phase 2 of the Korean Late Paleolithic chronology and SYG1_3 and YS_3 are from Phase 3.
+#| fig-width:   4.5
+#| fig-height:  4.5
+
+#### plot CVs by site with number of artefacts showing >5
+
+cv_by_site_df_label_more_than_5 <-
+  df_sitename %>%
+  unite(col = "site_phase",
+        c(sitename,
+          SPstage.Stage),
+        sep = "_") %>%
+  dplyr::select(-SPstage.Raw_material) %>%
+  group_by(site_phase) %>%
+  add_tally() %>%
+  filter( n > 5) %>%
+  mutate(label = as.factor(paste0(site_phase,' (N = ', n, ")"))) %>%
+  ungroup() %>%
+  dplyr::select(-n, -site_phase) %>%
+  pivot_longer(-label,
+               names_to = "variable",
+               values_to = "value") %>%
+  group_by(label, variable) %>%
+  summarise(cv_by_site =   sharma_cv(value),
+            cv_low_sharma =  sharma_int_low(value),
+            cv_high_sharma = sharma_int_high(value)) %>%
+  filter(variable %in% c("ML", "BL","MW", "TW"))
+
+cv_by_site_df_label_more_than_5 %>%
+  ggplot(aes(x = factor(variable),
+             y = cv_by_site)) +
+  geom_point() +
+  geom_errorbar(aes(ymin = cv_low_sharma,
+                    ymax = cv_high_sharma), width = 0.2) +
+  xlab("Attribute") +
+  ylab("Coefficient of Variation on Attributes") +
+  facet_wrap( ~ label, scales = "free_y") +
+  coord_cartesian(ylim = c(15,60)) +
+  theme_bw()
+
+```
+
+
 
 ## Variation Between sites
 
@@ -599,6 +642,8 @@ cv_plot_raw_materials_label %>%
 ## Principal Component Analysis
 
 PCA serves to examine correlation of attributes for determining the dominant mode of cultural transmission. @fig-pca-attributes shows positive relationship between attributes. Especially, there are strong relationships between body length and maximum length, tang width and mid width, and tang length and stem length. Body length and maximum length contribute the most to the shape of stemmed points and they are most correlated to each other. Other width and tang related attributes are close to each other but a bit far from body length and maximum length. Stem width contributes the least to the overall shape. We can assume that the body length and maximum length were prioritized when the manufacturing technique of stemmed points were transmitted.
+
+Compared to Phase 2, the influence of tang length and stem length of Phase 3 becomes more pronounced and while stem width is less effective. However, there are no notable changes in correlations over time.
 
 ```{r}
 #| label: fig-pca-attributes
