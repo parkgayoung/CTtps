@@ -293,7 +293,7 @@ Sample size can impact on accuracy of estimated CV that reflects the correspondi
 
 We chose Principal Component Analysis (PCA) to compute Pearson's r correlations between the attributes as previous studies did [@bettinger1999point; @eerkens2008cultural; @garvey2018current] and to investigate the relationship between attributes as well as the impact of each attribute on the overall shape of stemmed points. PCA is often used to detect relevant information from dataset, indicate relationships between variables as well as cases, extract general patterns in data, and identify which variables most influence these patterns [@cascalheira2018use; @suarez2019life]. PCA is widely used for geometric morphometric analysis of artifacts to extract general patterns of shape variation [@selden2014advances; @suarez2019life; @leplongeon2020backed; @ivanovaite2020all].
 
-All data treatment, analyses and visualization were performed in the R environment [@core2021team]. Our R code and data including the raw images are openly available online: https://github.com/parkgayoung/CTtps as well as https://osf.io/eb8mx/ to enable full reproducibility [@marwick2017computational].
+All data treatment, analyses and visualization were performed in the R environment [@core2021team]. Our R code and data including the raw images are openly available online: https://github.com/parkgayoung/CTtps as well as DOI: 10.17605/OSF.IO/EB8MX to enable full reproducibility [@marwick2017computational].
 
 # Results {.unnumbered}
 
