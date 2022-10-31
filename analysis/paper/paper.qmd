@@ -332,9 +332,9 @@ ggplot(data_box,
 
 # cv <- function(x, ... ) sd(x, ...) / mean(x, ...) * 100
 
-# use this one that is optimized for small samples 
+# use this one that is optimized for small samples, returns value 0-1, not % 
 
-mccv <- function(x, ... ) sd(x, ...) / mean(x, ...) * 100 * (1 + 1/(4*length(x)))
+mccv <- function(x, ... ) sd(x, ...) / mean(x, ...) * (1 + 1/(4*length(x)))
 
 # BM: this is the cvCI function from https://github.com/stamats/MKmisc, I 
 # removed all the non-sharma methods and replaced CV() with mccv() above
@@ -592,7 +592,7 @@ cv_by_full_site_df_label <-
   mutate(label = as.factor(paste0(full_sitename,' (N = ', n, ")"))) %>%
   dplyr::select(-n) %>%
   nest(-full_sitename, -label) %>%
-  dplyr::mutate(cv_by_site = purrr::map(data, ~map_df(.x, cv))) %>%
+  dplyr::mutate(cv_by_site = purrr::map(data, ~map_df(.x, mccv))) %>%
   dplyr::select(-cv_by_site)
 
 ## add label to main dataframe
@@ -655,7 +655,7 @@ cv_by_raw_materials_df_label <-
   mutate(label = as.factor(paste0(SPstage.Raw_material,' (N = ', n, ")"))) %>%
   dplyr::select(-n) %>%
   nest(-SPstage.Raw_material, -label) %>%
-  mutate(cv_by_site = purrr::map(data, ~map_df(.x, cv))) %>%
+  mutate(cv_by_site = purrr::map(data, ~map_df(.x, mccv))) %>%
   dplyr::select (-cv_by_site)
 
 ######add label to main dataframe
