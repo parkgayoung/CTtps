@@ -251,7 +251,7 @@ ggdraw() +
 #| tbl-cap: Total number of stemmed points found in sites and the number of stemmed points we used in the research. We excluded broken and unclear artifacts.
 
 here::here("analysis/data/raw_data/site-total-artifacts.csv") %>% 
-  read.csv() %>% 
+  read_csv() %>% 
   knitr::kable(.)
 
 ```
@@ -261,7 +261,7 @@ here::here("analysis/data/raw_data/site-total-artifacts.csv") %>%
 #| tbl-cap: Korean Paleolithic Chronology edited based on Seong [-@seong2015diversity] and Park [-@Park_2013]
 
 here::here("analysis/data/raw_data/Korean-paleolithic-chronology.csv") %>% 
-  read.csv() %>% 
+  read_csv() %>% 
   knitr::kable(.)
 
 ```
@@ -272,18 +272,22 @@ In addition to the metric attributes from previous studies of cultural transmiss
 
 ```{r}
 #| label: fig-labelled-schematic
-#| fig-height: 1
 #| fig-cap: Stemmed point from Yongsandong site. with landmarks showing the attributes considered in this study and corresponding landmarks
+#| out-width: "300px"
 
 knitr::include_graphics(here::here("analysis/figures/hand-made-figures/ISKM-talk-2021-cut.png"))
+
 ```
+
+
+
 
 ```{r}
 #| label: tbl-landmark-abbreviations
 #| tbl-cap: Description of artefact landmarks used in this study
 
 here::here("analysis/data/raw_data/table-of-landmark-abbreviations.csv") %>% 
-  read.csv() %>% 
+  read_csv() %>% 
   knitr::kable(.)
 
 ```
@@ -765,6 +769,7 @@ Compared to the Phase 2 and 3, we found that there are only minor differences be
 
 ```{r}
 #| label: tbl-cv-over-time
+#| tbl-cap: "Summary of significance tests for CV values between the two chronological phases"
 
 ####### significant test between the two phases ######
 library(cvequality)
@@ -793,14 +798,16 @@ table_mslr_test_results_for_phase_differences <-
                                                .$value,
                                                .$SPstage.Stage))) %>%
   unnest(mslr_result) %>%
-  dplyr::select(-data)
-
+  dplyr::select(-data) %>% 
+  # round numeric columns to 3 decimal places
+  mutate(across(where(is.numeric), round, 3)) %>% 
+  arrange(desc(p_value))
 
 names(table_mslr_test_results_for_phase_differences) <- 
   c("Variable", "MSLR statistic", "p value")
 
-knitr::kable(table_mslr_test_results_for_phase_differences)
-
+knitr::kable(table_mslr_test_results_for_phase_differences,
+             digits = 3)
 
 ```
 
