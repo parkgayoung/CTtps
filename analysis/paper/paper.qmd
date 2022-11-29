@@ -407,7 +407,26 @@ min_cv <- round(min(cv_data_sharma_named$all_cv_sharma), 1)
 
 ```
 
-@fig-plot-cv-all-attributes (panel A) shows a relatively wide distribution of body length (BL) and maximum length (ML) while the other attributes are more similar and shorter (under 2.5 cm). Among these attributes, stem width (SW) is the smallest, regardless of overall size of the stemmed points. This result may imply that the stem width was the most constrained dimension of the artefact. We might speculate that this is due to the requirements of halfting with wooden shafts, where the shafts were selected from a small range of diameters that optimised strength, weight and flexibility.
+```{r}
+#| label: fig-plot-attributes
+# Box plot for each attribute
+# mutate data to make plot with ggplot
+data_box <- gather(DF)
+# make box plot for each attributes
+plot_raw_measurements_for_attributes <- 
+ggplot(data_box,
+       aes(key, value)) +
+  geom_boxplot() +
+  geom_beeswarm(alpha = 0.3,
+                size = 0.8,
+                cex = 0.7) +
+  ylab("Length (cm)") +
+  xlab("") +
+  theme_bw()
+```
+
+
+Panel A of @fig-plot-cv-all-attributes shows a relatively wide distribution of body length (BL) and maximum length (ML) while the other attributes are more similar and shorter (under 2.5 cm). Among these attributes, stem width (SW) is the smallest, regardless of overall size of the stemmed points. This result may imply that the stem width was the most constrained dimension of the artefact. We might speculate that this is due to the requirements of halfting with wooden shafts, where the shafts were selected from a small range of diameters that optimised strength, weight and flexibility.
 
 ## Coefficient of variation
 
@@ -429,11 +448,13 @@ ggplot(cv_data_sharma_named,
                     ymax = all_high_sharma), 
                 width = 0.2) +
   ylab("CV") +
-  xlab("Variable") +
+  xlab("Artefact measurement") +
   geom_text(aes(label = round(all_cv_sharma,1)), 
             col="blue", 
             hjust = -0.3, 
             size = 3) +
+  # draw a line to show our threshold value
+  geom_hline(yintercept = 25, colour = "red") +
   theme_bw()
 
 library(cowplot)
@@ -445,11 +466,9 @@ plot_grid(plot_raw_measurements_for_attributes,
 
 ## Variation Over Time
 
-To understand the temporal patterns in the modes of cultural transmission, we grouped our assemblages into the three Korean Late Paleolithic chronological phases and computed CV values for each phase (@tbl-korean-chronology). Among the three phases of the chronology, we excluded Phase 1 for the analysis because there are only two stemmed points from Yonghodong and Sachang sites to compute. However, this does not mean that there were only two stemmed points for the Phase 1 because we excluded broken pieces from our sample to conduct the morphological analysis.
+To understand temporal patterns in the modes of cultural transmission, we grouped our assemblages into the three Korean Late Paleolithic chronological phases summarised in @tbl-korean-chronology, and computed CV values for all complete stemmed points each phase. We excluded Phase 1 from our analysis because there are only two complete stemmed points from Yonghodong and Sachang that date to this phase.
 
-After excluding the Phase 1 stemmed points, overall CV values become lower (@fig-plot-cv-over-time). Body length of Phase 2, maximum length, mid width, and tang width are under 25, which indicates as a result of indirect bias, while only maximum length are under 25 in Figure 4. On the other hand, Body length of Phase 3, stem length, stem width, and tang length are relatively higher then 25 and mostly over 30 indicating guided variation.
-
-Compared to Phase 2, except for maximum width and tang width, the other CV values of Phase 3 tend to be higher. In addition, Phase 3 tends to have wider confidence intervals. Stem width and tang length values are relatively steady over time. Our results show that stemmed points from Phase 2 are less varied than Phase 3 as well as Phase 1.
+@fig-plot-cv-over-time shows that the directional trend in CV values of artefact attributes is complicated. Half of the attributes are below our threshold value of 25, and half are above. Only body length changes from <25 to >25 over time, indicating more guided variation. For those attributes where the CV is <25, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width and tang length, indicating increasing influence of indirect bias for these attributes. For stem length, stem width and tang length, CV values remain above 25, and show a slight trend to increase over times, suggesting increased influence of guided variation for these attributes. 
 
 \newpage
 
@@ -489,7 +508,9 @@ cv_by_stage_df %>%
                     ymax = cv_high_sharma),
                 width = 0.2) +
   xlab("Phase") +
-  ylab("Coefficient of Variation on Attributes") +
+  ylab("Coefficient of Variation for all Attributes") +
+    # draw a line to show our threshold value
+  geom_hline(yintercept = 25, colour = "red") +
   facet_wrap( ~ variable, scales = "free_y") +
   theme_bw()
 ```
@@ -511,20 +532,20 @@ cv_by_site_df_label_more_than_5 <-
           SPstage.Stage),
         sep = "_") %>%
   dplyr::select(-SPstage.Raw_material) %>%
-  group_by(site_phase) %>%
+  dplyr::group_by(site_phase) %>%
   add_tally() %>%
-  filter( n > 5) %>%
+  dplyr::filter( n > 5) %>%
   mutate(label = as.factor(paste0(site_phase,' (N = ', n, ")"))) %>%
   ungroup() %>%
   dplyr::select(-n, -site_phase) %>%
   pivot_longer(-label,
                names_to = "variable",
                values_to = "value") %>%
-  group_by(label, variable) %>%
-  summarise(cv_by_site =   sharma_cv(value),
+  dplyr::group_by(label, variable) %>%
+  dplyr::summarise(cv_by_site =   sharma_cv(value),
             cv_low_sharma =  sharma_int_low(value),
             cv_high_sharma = sharma_int_high(value)) %>%
-  filter(variable %in% c("ML", "BL","MW", "TW"))
+  dplyr::filter(variable %in% c("ML", "BL","MW", "TW"))
 
 cv_by_site_df_label_more_than_5 %>%
   ggplot(aes(x = factor(variable),
@@ -532,6 +553,8 @@ cv_by_site_df_label_more_than_5 %>%
   geom_point() +
   geom_errorbar(aes(ymin = cv_low_sharma,
                     ymax = cv_high_sharma), width = 0.2) +
+    # draw a line to show our threshold value
+  geom_hline(yintercept = 25, colour = "red") +
   xlab("Attribute") +
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label, scales = "free_y") +
@@ -600,6 +623,8 @@ cv_plot_site_label %>%
                 width = 0.2) +
   xlab("Attribute") +
   ylab("Coefficient of Variation on Attributes") +
+    # draw a line to show our threshold value
+  geom_hline(yintercept = 25, colour = "red") +
   facet_wrap( ~ label, scales = "free_y") +
   theme(legend.position = "none") +
   coord_cartesian(ylim = c(0,250)) +
@@ -657,6 +682,8 @@ cv_plot_raw_materials_label %>%
   geom_point() +
   geom_errorbar(aes(ymin = cv_low_sharma,
                     ymax = cv_high_sharma), width = .2) +
+    # draw a line to show our threshold value
+  geom_hline(yintercept = 25, colour = "red") +
   xlab("Law Materials") +
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label, scales = "free_y") +
