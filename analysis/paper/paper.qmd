@@ -307,7 +307,6 @@ To measure the variation among the measurements of the stemmed points, we comput
 
 Sample size can impact the accuracy of CV estimates [@toebe2018sample; @kelley2007sample; @vanpool2011quantitative]. In previous archaeological studies, sample sizes for CV values has varied from five to more than a thousand artifacts [@bettinger1999point; @garvey2018current; @costin1995standardization; @wierer2013variability; @kvamme1996alternative; @rivals2009new]. A variety of methods are available for improving the reliability of CV measurements when using small samples. For example, @vanpool2011quantitative proposed a "corrected CV", for a smaller sample (i.e. n\<25). Statistical research has resulted in several methods for computing confidence intervals on CVs to show uncertainty [@koopmans1964confidence; @miller1991asymptomatic; @sharma1994asymptotic; @mckay1932distribution; @vangel1996confidence; @curto2009coefficient; @banik2011estimating; @panichkitkosolkul2013confidence; @mahmoudvand2009two; @gulhar2012comparison]. Although we have a total of `r total_number_of_sp` artifacts, most of our analyses here involves comparisons of smaller subsets of this sample. For example to explore temporal and regional patterns we compared samples of well under 25 pieces. Given these relatively small sample sizes in our study, we used the corrected CV formula, which we have implemented here in a function in the R programming language for others to use. We also computed confidence intervals using method proposed by @sharma1994asymptotic to increase the credibility of the comparisons and be transparent about the precision and accuracy of our results [@kelley2007sample; @albatineh2014confidence].
 
-To compute correlations between the attributes [@bettinger1999point; @eerkens2008cultural; @garvey2018current], we used Principal Component Analysis (PCA). PCA is commonly used to detect correlations among multiple variables, and has the advantage of allowing us to investigate the relationship between attributes as well as the impact of each attribute on the overall shape of stemmed points. PCA is often used to reduce dimensionality, detect patterns and clusters in data, indicate relationships between variables as well as cases, and identify which variables most influence these patterns [@cascalheira2018use; @suarez2019life]. PCA is widely used for geometric morphometric analysis of artifacts to extract general patterns of shape variation [@selden2014advances; @suarez2019life; @leplongeon2020backed; @ivanovaite2020all].
 
 All data preparation, analyses and visualization were computed in the R environment [@RCoreTeam]. Our R code and data, including the original artefact images, are fully and openly available in our compendium [@Marwick2018compendium] online at https://doi.org/10.17605/osf.io/eb8mx to enable transparency and reproducibility [@marwick2017computational].
 
@@ -477,7 +476,7 @@ To understand temporal patterns in the modes of cultural transmission, we groupe
 #| label: fig-plot-cv-over-time
 #| fig-cap: CV values for the second and third chronological phases in the Korean Late Paleolithic period. The points represent CV values for each attribute. The vertical lines indicate the range of confidence intervals.
 #| fig-width:   4.5
-#| fig-height:  4.5
+#| fig-height:  4
 
 #-- temporal patterns ----------------------------------------------------------------
 # Make a table of CVs for all variable grouped by stage, according to
@@ -520,9 +519,9 @@ One limitation of this aggregation of all stemmed points in our sample into each
 
 ```{r}
 #| label: fig-plot-cv-four-assemblage
-#| fig-cap: CV values of four attributes from assemblages that more than 5 stemmed points. Among the four assemblages, SYG1_2 and SYG6_2 are from Phase 2 of the Korean Late Paleolithic chronology and SYG1_3 and YS_3 are from Phase 3.
+#| fig-cap: CV values of four attributes from assemblages with more than 5 stemmed points. Among the four assemblages, SYG1_2 and SYG6_2 are from Phase 2 of the Korean Late Paleolithic chronology and SYG1_3 and YS_3 are from Phase 3.
 #| fig-width:   4.5
-#| fig-height:  4.5
+#| fig-height:  4
 
 #### plot CVs by site with number of artefacts showing >5
 
@@ -570,9 +569,9 @@ We examined the CV values per site to address our research question about the cu
 
 ```{r}
 #| label: fig-plot-cv-by-site
-#| fig-cap: CV values per site that has more than five stemmed points. The points represent CV values for each attribute. The vertical lines are confidence intervals.
+#| fig-cap: CV values per site for each site has more than five stemmed points. The points represent CV values for each attribute. The vertical lines are confidence intervals.
 #| fig-width:   8.5
-#| fig-height:  4.5
+#| fig-height:  4
 
 cv_by_site_df  <-
   df_full_sitename %>%
@@ -628,20 +627,20 @@ cv_plot_site_label %>%
   geom_hline(yintercept = 25, colour = "red") +
   facet_wrap( ~ label, scales = "free_y") +
   theme(legend.position = "none") +
-  coord_cartesian(ylim = c(0,100)) +
+  coord_cartesian(ylim = c(0,70)) +
   theme_bw() +
   theme(strip.text.x = element_text(size = 6.5))
 ```
 
 ## Variation Between Raw Materials
 
-We examined the relationship between CV values and raw materials to test the hypothesis that the shape of stemmed points was highly dependent on raw material. We excluded raw materials that were used for less than three points. @fig-plot-cv-by-raw-material shows that quartzite, the raw materials for stemmed points at Sachang, has the highest CV value with a wide range of conference intervals. Other raw materials are generally stable in variation throughout the attributes.
+We examined the relationship between CV values and raw materials to test the hypothesis that the shape of stemmed points was highly dependent on raw material. We excluded raw materials that were used for less than three points. @fig-plot-cv-by-raw-material shows that quartzite, the raw material for the stemmed points at Sachang, has the highest CV values, and also has wide conference intervals. Other raw materials are generally stable in variation throughout the attributes.
 
 ```{r}
 #| label: fig-plot-cv-by-raw-material
 #| fig-cap: CV values for raw materials that were used for making more than one stemmed point. The points represent CV values for each attribute. The vertical lines indicate the range of confidence intervals.
 #| fig-width:   8.5
-#| fig-height:  4.5
+#| fig-height:  4
 
 # CV by raw materials
 ### Make a table of CVs for all variable grouped by raw materials
@@ -688,88 +687,92 @@ cv_plot_raw_materials_label %>%
   xlab("Law Materials") +
   ylab("Coefficient of Variation on Attributes") +
   facet_wrap( ~ label, scales = "free_y") +
-  coord_cartesian(ylim = c(0,130)) +
+  coord_cartesian(ylim = c(0,250)) +
   theme_bw() 
 ```
 
-## Principal Component Analysis
-
-PCA serves to examine correlation of attributes for determining the dominant mode of cultural transmission. @fig-pca-attributes shows positive relationship between attributes. Especially, there are strong relationships between body length and maximum length, tang width and mid width, and tang length and stem length. Body length and maximum length contribute the most to the shape of stemmed points and they are most correlated to each other. Other width and tang related attributes are close to each other but a bit far from body length and maximum length. Stem width contributes the least to the overall shape. We can assume that the body length and maximum length were prioritized when the manufacturing technique of stemmed points were transmitted.
-
-For the temporal variation, we computed PCA for difference periods. Compared to Phase 2, the influence of tang length and stem length of Phase 3 becomes more pronounced and while stem width is less effective. However, there are no notable changes in correlations over time.
+## Correlation analysis of attributes
 
 ```{r}
-#| label: fig-pca-attributes
-#| fig-cap: PCA analysis for stemmed points, for all phases combined, then for only phase two and phase three. The direction of the arrow shows the relationship between attributes; arrows pointing in the same direction indicate variables that are highly postitively correlated. The length of the arrow indicates the strength of contribution to the stemmed point shape.
+#| label: fig-corr-analysis
+#| fig-cap: Correlation analysis of point attributes, calculated using Pear
 #| fig-width:   7
-#| fig-height:  3
+#| fig-height:  4
 
-library(ggbiplot)
-library(ggfortify)
-### PCA analysis using ggbiplot, ggfortify pkgs
+library(corrr)
 
-PCA <- prcomp(DF, center = TRUE, scale = TRUE)
-
-# remove stage 1 artefact
-xx_pca <-
+# correlation of all artefacts
+df_sitename_corr <- 
   df_sitename %>%
-  dplyr::filter(SPstage.Stage != 1) %>%
-  dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
-  prcomp(., center = TRUE, scale = TRUE)
+  dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>% 
+  correlate() %>% 
+  shave() 
 
-xx_pca1 <-
-  data.frame(xx_pca$x,
-             stage = as.factor( df_sitename$SPstage.Stage[df_sitename$SPstage.Stage !=1]))
+all_corr_plot <- rplot(df_sitename_corr, legend = FALSE)
+  
+df_sitename_corr_long <- 
+  df_sitename_corr %>% 
+    pivot_longer(-term)
 
-## CV with site (n=X)
-label_phase <-
-  df_sitename %>%
-  group_by(SPstage.Stage) %>%
-  add_tally() %>%
-  mutate(label = as.factor(paste0(SPstage.Stage,'\nN = ',n)))
-
-count_phase <- length(which(label_phase[9]>0))
-count_phase2 <- length(which(label_phase[9] == 2))
-count_phase3 <- length(which(label_phase[9] == 3))
-
-# phase 2
-
-xx_pca2 <-
+# correlation of phase 2 artefacts
+df_sitename_corr_p2 <- 
   df_sitename %>%
   dplyr::filter(SPstage.Stage == 2) %>%
-  dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
-  prcomp(., center = TRUE, scale = TRUE)
+  dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>% 
+  correlate() %>% 
+  shave() 
 
-# phase 3
+p2_corr_plot <- rplot(df_sitename_corr_p2, legend = FALSE)
+  
+df_sitename_corr_p2_long <- 
+  df_sitename_corr_p2 %>% 
+    pivot_longer(-term)
 
-xx_pca3 <-
+# correlation of phase 3 artefacts
+df_sitename_corr_p3 <- 
   df_sitename %>%
   dplyr::filter(SPstage.Stage == 3) %>%
-  dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>%
-  prcomp(., center = TRUE, scale = TRUE)
+  dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>% 
+  correlate() %>% 
+  shave() 
 
-##### using factoextra pkg
-library(factoextra) #http://www.sthda.com/english/articles/31-principal-component-methods-in-r-practical-guide/112-pca-principal-component-analysis-essentials/
+p3_corr_plot <-  
+  rplot(df_sitename_corr_p3) +
+   theme(legend.position = c(0.8, 0.8))
+  
 
-# Color variables by the continuous variable
-cv_all <-
-fviz_pca_var(xx_pca) +
-  ggtitle(paste0("All phases", " (n = ", count_phase,")")) +
-  theme(legend.position = "none")
+df_sitename_corr_p3_long <- 
+  df_sitename_corr_p3 %>% 
+    pivot_longer(-term)
 
-# phase 2
-cv_two <-
-  fviz_pca_var(xx_pca2) +
-  ggtitle(paste0("Phase 2", " (n = ", count_phase2,")"))
+# compare p2 and p3 correlations
+compare_p2_and_p3_correlations_plot <- 
+list(`phase 2` = df_sitename_corr_p2_long,
+     `phase 3` = df_sitename_corr_p3_long) %>% 
+  bind_rows(.id = "phase") %>% 
+  ggplot() +
+  aes(phase,
+      value) +
+  geom_boxplot() +
+  ggbeeswarm::geom_quasirandom(size = 4,
+                               alpha = 0.3) +
+  theme_minimal() +
+  labs(y = "Correlation coefficient")
 
-# phase 3
-cv_three <-
-  fviz_pca_var(xx_pca3) +
-  ggtitle(paste0("Phase 3", " (n = ", count_phase3,")"))
+library(cowplot)
+plot_grid(
+          plot_grid(p2_corr_plot, 
+                    p3_corr_plot,
+                    ncol = 1,
+                    labels = c("A", "B")),
+          compare_p2_and_p3_correlations_plot,
+          ncol = 2,
+          labels = c("", "C"),
+          rel_heights = c(1, 1.5))
 
-library(patchwork)
-cv_all + cv_two + cv_three
 ```
+
+
 
 # Discussion {.unnumbered}
 
