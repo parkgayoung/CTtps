@@ -309,7 +309,7 @@ Sample size can impact the accuracy of CV estimates [@toebe2018sample; @kelley20
 
 To compute correlations between the attributes [@bettinger1999point; @eerkens2008cultural; @garvey2018current], we used Principal Component Analysis (PCA). PCA is commonly used to detect correlations among multiple variables, and has the advantage of allowing us to investigate the relationship between attributes as well as the impact of each attribute on the overall shape of stemmed points. PCA is often used to reduce dimensionality, detect patterns and clusters in data, indicate relationships between variables as well as cases, and identify which variables most influence these patterns [@cascalheira2018use; @suarez2019life]. PCA is widely used for geometric morphometric analysis of artifacts to extract general patterns of shape variation [@selden2014advances; @suarez2019life; @leplongeon2020backed; @ivanovaite2020all].
 
-All data preparation, analyses and visualization were performed in the R environment [@RCoreTeam]. Our R code and data, including the original artefact images, are fully and openly available in our compendium [@Marwick2018compendium] online at https://doi.org/10.17605/osf.io/eb8mx to enable transparency and reproducibility [@marwick2017computational].
+All data preparation, analyses and visualization were computed in the R environment [@RCoreTeam]. Our R code and data, including the original artefact images, are fully and openly available in our compendium [@Marwick2018compendium] online at https://doi.org/10.17605/osf.io/eb8mx to enable transparency and reproducibility [@marwick2017computational].
 
 # Results {.unnumbered}
 
@@ -469,7 +469,7 @@ plot_grid(plot_raw_measurements_for_attributes,
 
 To understand temporal patterns in the modes of cultural transmission, we grouped our assemblages into the three Korean Late Paleolithic chronological phases summarised in @tbl-korean-chronology, and computed CV values for all complete stemmed points each phase. We excluded Phase 1 from our analysis because there are only two complete stemmed points from Yonghodong and Sachang that date to this phase.
 
-@fig-plot-cv-over-time shows that the directional trend in CV values of artefact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above. Only body length crosses the threshold value, changing from <`r threshold_value` to >`r threshold_value` over time, indicating a shift from indirect bias to guided variation. For those attributes where the CV is <`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width and tang length, indicating increasing influence of indirect bias for these attributes. For stem length, stem width and tang length, CV values remain above `r threshold_value`, and show a slight trend to increase over times, suggesting increased influence of guided variation for these attributes. 
+@fig-plot-cv-over-time shows that the directional trend in CV values of artefact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above. Only body length crosses the threshold value, changing from <`r threshold_value` to >`r threshold_value` over time, indicating a shift from indirect bias to guided variation. For those attributes where the CV is <`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width and tang length, indicating increasing influence of indirect bias for these attributes. For stem length, stem width and tang length, CV values remain above `r threshold_value`, and show a slight trend to increase over time, suggesting increased influence of guided variation for these attributes. 
 
 \newpage
 
@@ -516,7 +516,7 @@ cv_by_stage_df %>%
   theme_bw()
 ```
 
-One limitation of this aggregation of all stemmed points in our sample into each chronological phase is that the sample consists of a relatively large number of assemblages with only 1-2 stemmed points. These isolated finds are ambiguous with respect to a local tradition of artefact making, so to further investigate temporal change, we focus only the four assemblages that have five or more stemmed points in one chronological phase (@fig-plot-cv-over-time). These four assemblages are more likely to represent a consistent way of making stemmed points than isolated finds, and thus more relevant for comparing modes of cultural transmission of artefact making. The four assemblages include three from the Suyanggae site (SYG) and one from the Yongsandong site (YS). SYG1_2 and SYG6_2 are from Phase 2 (shown on the left side of the figure) and SYG1_3 and YS_3 are from Phase 3 (shown on the right side of the figure). Following the previous studies of [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we only compared CV values of attributes, body length, maximum length, mid width, and tang width. @fig-plot-cv-four-assemblage shows that CV values for the four assemblages are mostly below `r threshold_value`, which represent transmissions dominated by indirect bias. Among the assemblages, SYG1_2 (n=7) has higher CV values as well as the widest ranges of confidence intervals, perhaps due to its small sample size, relative to the other assemblages compared here. Overall we see only subtle changes in CV values from Phase 2 to Phase 3 in @fig-plot-cv-over-time. This suggests that the complex directional trends in @fig-plot-cv-over-time might be best interpreted as noise in an overall signal of indirect bias, rather than substantial changes in the type of bias dominating cultural transmission. 
+One limitation of this aggregation of all stemmed points in our sample into each chronological phase is that the sample consists of a relatively large number of assemblages with only 1-2 stemmed points. These isolated finds are ambiguous with respect to a local tradition of artefact making, so to further investigate temporal change, we focus only the four assemblages that have five or more stemmed points in one chronological phase (@fig-plot-cv-over-time). These four assemblages are more likely to represent a consistent, recurring way of making stemmed points than isolated finds, and thus more relevant for comparing modes of cultural transmission of artefact making. The four assemblages include three from the Suyanggae site (SYG) and one from the Yongsandong site (YS). SYG1_2 and SYG6_2 are from Phase 2 (shown on the left side of the figure) and SYG1_3 and YS_3 are from Phase 3 (shown on the right side of the figure). Following the previous studies of [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we only compared CV values of attributes, body length, maximum length, mid width, and tang width. @fig-plot-cv-four-assemblage shows that CV values for the four assemblages are mostly below `r threshold_value`, which represent transmissions dominated by indirect bias. Among the assemblages, SYG1_2 (n=7) has higher CV values as well as the widest ranges of confidence intervals, perhaps due to its small sample size, relative to the other assemblages compared here. Overall we see only subtle changes in CV values from Phase 2 to Phase 3 in @fig-plot-cv-over-time. This suggests that the complex directional trends in @fig-plot-cv-over-time might be best interpreted as noise in an overall signal of indirect bias, rather than substantial changes in the type of bias dominating cultural transmission. 
 
 ```{r}
 #| label: fig-plot-cv-four-assemblage
@@ -566,11 +566,11 @@ cv_by_site_df_label_more_than_5 %>%
 
 ## Variation Between sites
 
-We examined the CV values per site to address our research question about the cultural transmission over space. We excluded assemblages that contain a single point. @fig-plot-cv-by-site shows that Sachang site has the highest CV values with the widest confidence level. Sachang is part of Phase 1 and its CV values explain why the CV of all time is higher than Phase 2. Two assemblages from the Suyanggae site have relatively stable CV for attributes, which indicate highly standardized shapes of stemmed points. CV values of body length is the lowest while stem width the highest among all assemblages. Overall, there are no clear patterns between the sites.
+We examined the CV values per site to address our research question about the cultural transmission over space. We excluded assemblages that contain less than five points. @fig-plot-cv-by-site shows higher CV values for stem length and stem width, indicating high variability at the stem of the points from these sites. Overall size variability is similar between these three assemblages, suggesting a consistent approach to constraining shape variation over space, rather than site-specific variances. 
 
 ```{r}
 #| label: fig-plot-cv-by-site
-#| fig-cap: CV values per site that has more than one stemmed point. The points represent CV values for each attribute. The vertical lines indicate the range of confidence intervals.
+#| fig-cap: CV values per site that has more than five stemmed points. The points represent CV values for each attribute. The vertical lines are confidence intervals.
 #| fig-width:   8.5
 #| fig-height:  4.5
 
@@ -583,7 +583,7 @@ cv_by_site_df  <-
                 -SPstage.Raw_material) %>%
   group_by(full_sitename) %>%
   add_tally() %>%
-  dplyr::filter( n > 1) %>%
+  dplyr::filter( n > 5) %>%
   dplyr::select(-n) %>%
   pivot_longer(-full_sitename,
                names_to = "variable",
@@ -628,14 +628,14 @@ cv_plot_site_label %>%
   geom_hline(yintercept = 25, colour = "red") +
   facet_wrap( ~ label, scales = "free_y") +
   theme(legend.position = "none") +
-  coord_cartesian(ylim = c(0,250)) +
+  coord_cartesian(ylim = c(0,100)) +
   theme_bw() +
   theme(strip.text.x = element_text(size = 6.5))
 ```
 
 ## Variation Between Raw Materials
 
-We examined the relationship between CV values and raw materials with a premise that the shape of stemmed points are highly dependent on raw materials. We excluded raw materials that were used for single point. @fig-plot-cv-by-raw-material shows that quartzite, the raw materials for Sachang stemmed points, has the highest CV value with a wide range of conference intervals. Quartz has high variations of CV among the attributes. On the other hand, shale has the lower CV, which is very stable throughout the attributes.
+We examined the relationship between CV values and raw materials to test the hypothesis that the shape of stemmed points was highly dependent on raw material. We excluded raw materials that were used for less than three points. @fig-plot-cv-by-raw-material shows that quartzite, the raw materials for stemmed points at Sachang, has the highest CV value with a wide range of conference intervals. Other raw materials are generally stable in variation throughout the attributes.
 
 ```{r}
 #| label: fig-plot-cv-by-raw-material
@@ -650,7 +650,7 @@ cv_by_raw_materials <-
   dplyr::select(-SPstage.Stage, -lat_dd, -long_dd, -sitename, -full_sitename) %>%
   group_by(SPstage.Raw_material) %>%
   add_tally() %>%
-  dplyr::filter( n > 1) %>%
+  dplyr::filter( n >= 3) %>%
   dplyr::select(-n) %>%
   pivot_longer(-SPstage.Raw_material,
                names_to = "variable",
