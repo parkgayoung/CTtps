@@ -385,13 +385,13 @@ All data preparation, analyses and visualization were computed in the R environm
 ## Correlation analysis of attributes
 
 
-
+@fig-corr-analysis
 
 ```{r}
 #| label: fig-corr-analysis
-#| fig-cap: "A: xxx. B. xxx. C. xxx"
-#| fig-width:   7
-#| fig-height:  9
+#| fig-cap: "Correlation analysis by chronological phases. A: xxx. B. xxx. C. xxx"
+#| fig-width: 7
+#| fig-height: 3
 
 # BM: I added this section of analysis to replace the PCA sections. 
 
@@ -446,6 +446,7 @@ df_sitename_corr_p3_long <-
   df_sitename_corr_p3 %>% 
     pivot_longer(-term)
 
+
 # compare p2 and p3 correlations
 compare_p2_and_p3_correlations_plot <- 
 list(`phase 2` = df_sitename_corr_p2_long,
@@ -460,6 +461,26 @@ list(`phase 2` = df_sitename_corr_p2_long,
   theme_minimal() +
   labs(y = "Correlation coefficient")
 
+plot_grid(plot_grid(
+          plot_grid(p2_corr_plot, 
+                    p3_corr_plot,
+                    ncol = 1,
+                    labels = c("A", "B")),
+          compare_p2_and_p3_correlations_plot,
+          ncol = 2,
+          labels = c("", "C"),
+          rel_heights = c(1, 1.5)))
+
+```
+
+@fig-corr-raw-ass
+
+```{r}
+#| label: fig-corr-raw-ass
+#| fig-cap: A. sth sth B. sth sth.
+
+#| fig-width:7
+#| fig-height:5
 
 # correlation by raw material
 df_sitename_corr_raw_material <- 
@@ -513,21 +534,21 @@ correlations_by_site <-
 
 
 library(cowplot)
-plot_grid(plot_grid(
-          plot_grid(p2_corr_plot, 
-                    p3_corr_plot,
-                    ncol = 1,
-                    labels = c("A", "B")),
-          compare_p2_and_p3_correlations_plot,
-          ncol = 2,
-          labels = c("", "C"),
-          rel_heights = c(1, 1.5)),
-          correlations_by_raw_material,
+plot_grid(correlations_by_raw_material,
           correlations_by_site,
-          ncol = 1,
-          labels = c("", "D", "E"))
-
+                    ncol = 1,
+                    labels = c("A", "B"))
+          
+          
 ```
+
+
+
+
+
+## Coefficient of variation
+
+
 
 ```{r}
 #| label: prepare-for-cv-calcs
@@ -577,6 +598,7 @@ sharma_cvCI <- function(x,
                      class = "confint"))
 }
 ```
+
 
 ```{r}
 
@@ -649,9 +671,9 @@ ggplot(data_box,
 ```
 
 
-## Coefficient of variation
 
-<!-- BM: overall I think the CV values are really not that interesting or informative. They are difficult to interpret because they all cluster around 15-30, which seems to me to be the midpoint between 'highly standardised' (3-5) and 'highly different' (40-50). So I think we will struggle to convince any readers that we have any strong signals of cultural transmission biases in the CV data. Probably we can satisfy most readers that guided variation is the main bias in these data. That's my perspective after reading this paper several times, and re-reading several related papers by Bettiner and Eerkens and Lipo, and others  -->
+
+<!-- BM: overall I think the CV values are really not that interesting or informative. They are difficult to interpret because they all cluster around 15-30, which seems to me to be the midpoint between 'highly standardized' (3-5) and 'highly different' (40-50). So I think we will struggle to convince any readers that we have any strong signals of cultural transmission biases in the CV data. Probably we can satisfy most readers that guided variation is the main bias in these data. That's my perspective after reading this paper several times, and re-reading several related papers by Bettiner and Eerkens and Lipo, and others  -->
 
 Our results show that CV values for all attributes are distributed from `r min_cv` to `r max_cv` (@fig-plot-cv-all-attributes). Compared to the CVs of Great Basin projectile points [@eerkens2001techniques], the average CV for the Korean artifacts is higher. Unlike the distribution of the linear measurements, the CVs of body length and maximum length have the lowest values. The lower CV of maximum length indicates they are highly standardized with narrowest confidence intervals. Tang and stem related attributes (e.g. SL, SW, TL, TW) are less standardized with higher CV values and wider confidence intervals than other attributes Among all the attributes, only maximum length has the CV values lower than 25, which suggests the transmission of this attribute was more influenced by indirect bias than the others.
 
