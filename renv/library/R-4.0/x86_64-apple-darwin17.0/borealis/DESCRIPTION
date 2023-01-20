@@ -1,0 +1,34 @@
+Package: borealis
+Type: Package
+Title: Tools for reproducible geometric morphometric analysis
+Version: 2021.03.02
+Packaged: 2021-06-18 19:30:40 UTC; gayoungp
+Authors@R: person("Dave", "Angelini", email = "david.r.angelini@gmail.com",
+                  role = c("aut", "cre"))
+Description: This R package  provides tools for 2D geometric morphometric analysis 
+    with automatic recording of data provenance and data processing steps. Functions 
+    were developed for use by beginning R users. Includes several tutorial vignettes 
+    and sample datasets.  
+License: MIT + file LICENSE
+URL: https://github.com/aphanotus/borealis
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.1
+Imports: geomorph
+Suggests: dplyr, ggplot2, ggpubr, openxlsx, grid, ggplotify, viridis,
+        knitr, rmarkdown
+NeedsCompilation: no
+VignetteBuilder: knitr
+Author: Dave Angelini [aut, cre],
+Maintainer: Dave Angelini <dave.angelini@colby.edu>
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: borealis
+RemoteUsername: aphanotus
+RemoteRef: master
+RemoteSha: de8cdb22043156f4f8eb134117b453a31a172d3e
+GithubRepo: borealis
+GithubUsername: aphanotus
+GithubRef: master
+GithubSHA1: de8cdb22043156f4f8eb134117b453a31a172d3e
+Built: R 4.0.5; ; 2021-06-18 19:30:41 UTC; unix

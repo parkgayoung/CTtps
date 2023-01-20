@@ -1,0 +1,23 @@
+Package: legendMap
+Type: Package
+Title: North arrow and scale bar for ggplot2 graphics.
+Version: 1.0
+Date: 2016-05-23
+Author: Ewen Gallic
+Maintainer: Ewen Gallic <ewen.gallic@gmail.com>
+Description: Provides functions to add a North arrow and/or a scale bar to maps done using ggplot2.
+License: GPL-3
+Depends: maps, maptools, ggplot2, grid
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: legendMap
+RemoteUsername: 3wen
+RemoteRef: HEAD
+RemoteSha: 707f00ccdc494ce3aefead7abdf0d294bd6774df
+GithubRepo: legendMap
+GithubUsername: 3wen
+GithubRef: HEAD
+GithubSHA1: 707f00ccdc494ce3aefead7abdf0d294bd6774df
+NeedsCompilation: no
+Packaged: 2021-06-24 22:54:26 UTC; gayoungp
+Built: R 4.1.0; ; 2021-06-24 22:54:29 UTC; unix

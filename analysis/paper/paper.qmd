@@ -34,10 +34,10 @@ bibliography: references.bib
 csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
 
 abstract: |
-  The onset of the Late Paleolithic period in Korea, represented by the appearance of stemmed points and blades, was a key event in the dispersal of modern humans in Northeast Asia. Previous studies have mainly focussed on possible origin locations of these new technologies. The specific cultural processes of the appearance stemmed points and blades has rarely been considered. We investigate the cultural processes by applying a cultural transmission framework to investigate the social contexts of the emergence of these new technologies. Our main question is: what was the dominant mode of cultural transmission during this time of technological innovation in the Korean Late Paleolithic? Following Bettinger and Eerkens [-@bettinger1999point], we evaluated models of guided variation and indirect bias using data from Korean assemblages containing stemmed points. To evaluate these models and understand the transmission processes, we computed coefficients of variation (CV), and correlation coefficients. We found that information about the new technology was likely transmitted via selective combinations of guided variation and indirect bias. Some attributes including length and width were transmitted through indirect bias, while other attributes appear to have been more due to guided variation. Our results suggest that individuals or groups learned some part of the technology of stemmed points by copying a model from another another individual or group, and then modified the shape according to their specific circumstances. <!-- GP to revise and edit the abstract after completing the other tasks below -->
+  The onset of the Late Paleolithic period in Korea, represented by the appearance of stemmed points and blades, was a key event in the dispersal of modern humans in Northeast Asia. Previous studies have mainly focussed on possible origin locations of these new technologies. The specific cultural processes of the appearance stemmed points and blades has rarely been considered. We investigate the cultural processes by applying a cultural transmission framework to investigate the social contexts of the emergence of these new technologies. Our main question is: what was the dominant mode of cultural transmission during this time of technological innovation in the Korean Late Paleolithic? Following Bettinger and Eerkens [-@bettinger1999point], we evaluated models of guided variation and indirect bias using data from Korean assemblages containing stemmed points. To evaluate these models and understand the transmission processes, we computed correlation coefficients and coefficients of variation (CV). We found that information about the new technology was likely transmitted via selective combinations of guided variation and indirect bias over time. Some attributes including length and width were transmitted with less variation while other attributes appear to have more variation. Our results suggest that the dominant mode of cultural transmission for the earliest stemmed points was guided variation and then indirect bias was adapted to carry out the technological change. We assume that individuals or groups developed stemmed points by experimenting with existing blade technologies and then copied crucial part of a successful model to ensure the quality to optimize tool usage. As a result, the shape of stemmed points became standardized among their social groups.    
   
 keywords: |
-  Stemmed points; Korean Paleolithic; Cultural Transmission; Learning process, Transmission Biases
+  Stemmed points; Korean Paleolithic; Cultural Transmission; Learning process, Copying errors, Transmission Biases, Guided variation, Indirect bias
 ---
 
 # Introduction {.unnumbered}
@@ -48,7 +48,7 @@ The application of evolutionary theory to archaeological research has been produ
 
 The onset of the Late Paleolithic period in Korea is marked by the appearance of stemmed points around 40-35 ka. The stemmed point is a projectile point made out of an elongated flake or blade with slight retouch on the proximal end to shape an acute tip, and on the distal end to make a stem, which connects to a shaft. The stemmed point was the first composite tool type appearing on the Korean Peninsula, and represents new hunting strategies there, as well as other adjacent regions where it appeared later [@seong2008tanged; @lee2019were]. Stemmed points, combined with blade technology, multi-stage production sequences, and evidence of being resharpened and reused, are important aspects of the Late Paleolithic technological innovations in Korea because these features are rarely seen in earlier periods [@chang2013human; @bamforth2009projectile; @seong2015diversity]. Currently the earliest stemmed points in Northeast Asia are from Yongho-doing site in Korea dated to 38.5ka and made on elongate flakes [@seong2009emergence; @seong2015diversity; @bae2017origin]. After their first appearance in Korea, the stemmed points spread to the Japanese archipelago [@chang2013human].
 
-Previous studies of technological transitions during the Late Paleolithic in Korea have mainly focused on the possible origin locations of stemmed points, along with the issue of the timing and routes of modern human dispersal in eastern Asia. The debate about the origin of stemmed points can be summarized into two competing models: *in situ* evolution [@seong2009emergence] and heterogenic migration [@bae2010origin]. The *in situ* model claims that stemmed points and other Late Paleolithic assemblages including blade industries autonomously emerged in the Korean peninsula, as a form of convergent evolution [@seong2006structure; @seong2008tanged; @seong2009emergence]. To support his claim, @seong2009emergence examined the blade-to-flake ratios of stone artifact assemblages in South Korea. In his view, the blade industry represents a new technology while flakes indicate a continuously-used existing one. He argues that the increased ratio of blades in stone artifact assemblages during the Late Paleolithic shows an expansion of the new technology after its local invention. In addition, Seong claims that increased numbers of stemmed points over time, and standardization of their shape, supports the prominance of gradual, local, evolutionary processes in the emergence of new technologies .
+Previous studies of the technological transitions during the Late Paleolithic in Korea have mainly focused on the possible origin locations of stemmed points, along with the issue of the timing and routes of modern human dispersal in eastern Asia. The debate about the origin of stemmed points can be summarized into two competing models: *in situ* evolution [@seong2009emergence] and heterogenic migration [@bae2010origin]. The *in situ* model claims that stemmed points and other Late Paleolithic assemblages including blade industries autonomously emerged in the Korean peninsula, as a form of convergent evolution [@seong2006structure; @seong2008tanged; @seong2009emergence]. To support his claim, @seong2009emergence examined the blade-to-flake ratios of stone artifact assemblages in South Korea. In his view, the blade industry represents a new technology while flakes indicate a continuously-used existing one. He argues that the increased ratio of blades in stone artifact assemblages during the Late Paleolithic shows an expansion of the new technology after its local invention. In addition, Seong claims that increased numbers of stemmed points over time, and standardization of their shape, supports the prominance of gradual, local, evolutionary processes in the emergence of new technologies.
 
 In contrast, the migration model argues that the new blade industry, including stemmed points, and the earlier simple flake tool tradition, including large cores, polyhedrals, choppers and handaxes, came from different origins [@bae2010origin; @bae2012nature; @bae2013early]. While the *in situ* model claims that the heterogenic character is the result of indigenous development, the migration model proposes that it is the result of the continuous influx of modern human populations from both north and south. Specifically, the blade technology in claimed to have been introduced from Siberia, Mongolia, or other regions of northeast China following the Liaohe and Sunghe rivers around 35 ka BP, while the simple flake-tool tradition came from southern China [@bae2013early]. The migration of people from the southern route is supported by genetic studies of the Y chromosome, indicating that the O3-M122 M122 haplotype originated from southern East Asia and moved to northeastern Asia, including Korea, at 30-25 ka BP [@shi2005chromosome]. Bae et al. [-@bae2012nature] assume this southern migration could be related to paleoenvironmental fluctuations during the MIS 3 to 2 transition, which made the Yellow Sea/West Sea region open.
 
@@ -86,7 +86,7 @@ library(ggbeeswarm)
 # import the cleaned data ready to work on
 load(here::here("analysis/data/derived_data/data_main.RData"))
 
-# how many stemmed artefacts per site?
+# how many stemmed artifacts per site?
 stemmed_points_per_site <-
 df_full_sitename %>%
   dplyr::count(full_sitename) %>%
@@ -102,76 +102,11 @@ total_number_of_assemblages <- NULL # ADD CODE HERE
 
 After the first discovery of stemmed points at the Seokjangri site in the 1960s, around 300 have been found in nearly 30 sites across Korea (@fig-map). Most sites contain only a few points but a few sites have many more, such as Suyanggae (n = 55), Jingeuneul (n = 99), and Yongsandong (n = 38) [@Kim_2017]. Among these stemmed points, we selected those that are unbroken from the tip to the stem. We excluded artifacts that were recorded as stemmed points but lack a stem. This resulted in a sample of `r total_number_of_sp` stemmed points from 28 assemblages unearthed from `r total_number_of_sites` sites spanning the period 40-17 ka (@tbl-sp-number). The images of the stemmed points were obtained from published excavation reports and by direct photography during our research on local museum collections. We defined multiple assemblages in a site where artifact-bearing deposits were separated by culturally sterile deposits, or where distinct artifact-bearing stratigraphic units could be identified by major differences in the texture, color, and composition of the sedimentary deposits.
 
-To analyse change over time, we used previously developed chronologies that identify three phases in the Korean Late Paleolithic [@seong2015diversity; @Park_2013]. These chronologies were built on radiocarbon ages, and for sites without any, the presence/absence of blades, stemmed point blanks, and toolkit composition. Based on the existence of blade and micro blade and types of stemmed point blanks, we divided the assemblages into three chronological phases: 1) stemmed points made out of flakes and no blades in assemblages, 2) stemmed points made out of blade or flake and the existence of blade in assemblages, and 3) stemmed points made out of blade and the existence of micro blade in assemblages (@tbl-korean-chronology). Applying this division is necessary because some sites such as Yonghodong, Goryeri, Jungmal, and Mungyeong have no radiocarbon dates due to various research limitations. Inferring ages for these sites by analogy to the technological sequences at sites with dates is important for making maximal use of the available archaeological data to increase our sample size. We arranged our `r total_number_of_assemblages` assemblages containing stemmed points in into these three phases to facilitate observations of change over time. 
-
-Panel A of @fig-raw-materials-by-phase summarises the amount of stemmed points in each chronological phase, and the distribution of raw materials across the phases . We exclude phase 1 from our analyses below because of the small sample size. Shale is the dominant raw material in phase 2 and 3. In phase 3 there is an increase in the proportions of rhyolite and porphyry, driven largely by finds from Wolpyeng and Yongsangdong. Panel B in @fig-raw-materials-by-phase shows the count of stemmed points by raw material type at sites with more than five stemmed points. Much of the raw material diversity comes from isolated finds, with most sites with more than five points showing high homogeneity in raw materials. 
-
-<!-- BM: I have left many captions with only xxx. GP please fill them out with detailed and specific captions --> 
-
-```{r}
-#| label: fig-raw-materials-by-phase
-#| fig-cap: "A: xxx. B: Frequencies of stemmed points by site and raw material, for sites with five or more stemmed points "
-#| fig-height: 4
-
-df_full_sitename_fct <- 
-df_full_sitename %>% 
-  mutate(SPstage.Raw_material = factor(SPstage.Raw_material))
-
-#Create a custom color scale
-library(RColorBrewer)
-myColors <- 
-  brewer.pal(length(unique(df_full_sitename_fct$SPstage.Raw_material)),
-             "RdBu")
-names(myColors) <- levels(df_full_sitename_fct$SPstage.Raw_material)
-colScale <- scale_fill_manual(name = "Raw material",
-                                values = myColors)
-
-p1 <- 
-ggplot(df_full_sitename_fct) +
-  aes(SPstage.Stage,
-      fill = SPstage.Raw_material) +
-  geom_bar() +
-  theme_bw() +
-  labs(fill = "Raw material",
-       x = "Chronological Phase") +
-  theme(legend.position = "top",
-        legend.key.size = unit(0.5, 'cm'), #change legend key size
-        legend.key.height = unit(0.5, 'cm'), #change legend key height
-        legend.key.width = unit(0.5, 'cm'), #change legend key width
-        legend.title = element_text(size=8), #change legend title font size
-        legend.text = element_text(size=6)
-        ) +
-colScale
-
-p2 <- 
-  df_full_sitename_fct %>%
-  mutate(SPstage.Stage = paste0("Phase ", SPstage.Stage)) %>% 
-  group_by(full_sitename) %>% 
-  filter(n() >= 5) %>% 
-    ggplot() +
-    aes(full_sitename,
-        fill = SPstage.Raw_material) +
-    geom_bar() +
-    facet_wrap(~ SPstage.Stage) +
-  theme_bw () +
-  labs(fill = "Raw material",
-       x = "Site") +
- theme(legend.position = "none",
-       axis.text.x = element_text(size = 4)  ) +
-  scale_x_discrete(guide = guide_axis(n.dodge=2)) +
-   colScale
-
-library(cowplot)
-plot_grid(p1, p2,
-          ncol = 1,
-          rel_heights = c(1.5, 0.75),
-          labels = c("A", "B"))
-```
-
+\newpage
 
 ```{r}
 #| label: fig-map
-#| fig-cap: Korean Paleolithic sites mentioned in this study
+#| fig-cap: "Korean Paleolithic sites mentioned in this study."
 #| fig-width:   4.45
 #| fig-height:  4.5
 
@@ -313,7 +248,6 @@ ggdraw() +
 
 \newpage
 
-<!-- BM: I think these tables should appear before the figures above, what do you think? What do you think a typical reader is expecting? -->
 
 ```{r}
 #| label: tbl-sp-number
@@ -327,6 +261,8 @@ here::here("analysis/data/raw_data/site-total-artifacts.csv") %>%
 
 \newpage
 
+To analyze morphological change over time, we used previously developed chronologies that identify three phases in the Korean Late Paleolithic [@seong2015diversity; @Park_2013]. These chronologies were built on radiocarbon ages, and for sites without any, the presence/absence of blades, stemmed point blanks, and toolkit composition. Based on the existence of blade and micro blade and types of stemmed point blanks, we divided the Late Paleolithic assemblages into three chronological phases: 1) stemmed points made out of flakes and no blades in assemblages, 2) stemmed points made out of blade or flake and the existence of blade in assemblages, and 3) stemmed points made out of blade and the existence of micro blade in assemblages (@tbl-korean-chronology). Applying this division is necessary because some sites such as Yonghodong, Goryeri, Jungmal, and Mungyeong have no radiocarbon dates due to various research limitations. Inferring ages for these sites by analogy to the technological sequences at sites with dates is important for making maximal use of the available archaeological data to increase our sample size. We arranged our `r total_number_of_assemblages` assemblages containing stemmed points in into these three phases to facilitate observations of change over time.
+
 ```{r}
 #| label: tbl-korean-chronology
 #| tbl-cap: Korean Paleolithic Chronology edited based on Seong [-@seong2015diversity] and Park [-@Park_2013]
@@ -339,15 +275,79 @@ here::here("analysis/data/raw_data/Korean-paleolithic-chronology.csv") %>%
 
 \newpage
 
+Panel A of @fig-raw-materials-by-phase summarizes the amount of stemmed points in each chronological phase, and the distribution of raw materials across the phases. We exclude phase 1 from our analyses below because of the small sample size. Shale is the dominant raw material in both phase 2 and 3. In phase 3 there is an increase in the proportions of rhyolite and porphyry, driven largely by finds from Wolpyeng and Yongsangdong. Panel B in @fig-raw-materials-by-phase shows the count of stemmed points by raw material type at assemblages with more than five stemmed points. Much of the raw material diversity comes from isolated finds, with those assemblages with more than five points showing high homogeneity in raw materials.
+
+```{r}
+#| label: fig-raw-materials-by-phase
+#| fig-cap: "A: Three chronological phases of the Korean Late Paleolithic, and frequecies of stemmed points and distribution of raw materials in each phase. B: Frequencies of stemmed points by assemblage and raw material, for assemblages with five or more stemmed points."
+#| fig-height: 4
+
+df_full_sitename_fct <- 
+df_full_sitename %>% 
+  mutate(SPstage.Raw_material = factor(SPstage.Raw_material))
+
+#Create a custom color scale
+library(RColorBrewer)
+myColors <- 
+  brewer.pal(length(unique(df_full_sitename_fct$SPstage.Raw_material)),
+             "RdBu")
+names(myColors) <- levels(df_full_sitename_fct$SPstage.Raw_material)
+colScale <- scale_fill_manual(name = "Raw material",
+                                values = myColors)
+
+p1 <- 
+ggplot(df_full_sitename_fct) +
+  aes(SPstage.Stage,
+      fill = SPstage.Raw_material) +
+  geom_bar() +
+  theme_bw() +
+  labs(fill = "Raw material",
+       x = "Chronological Phase") +
+  theme(legend.position = "top",
+        legend.key.size = unit(0.5, 'cm'), #change legend key size
+        legend.key.height = unit(0.5, 'cm'), #change legend key height
+        legend.key.width = unit(0.5, 'cm'), #change legend key width
+        legend.title = element_text(size=8), #change legend title font size
+        legend.text = element_text(size=6)
+        ) +
+colScale
+
+p2 <- 
+  df_full_sitename_fct %>%
+  mutate(SPstage.Stage = paste0("Phase ", SPstage.Stage)) %>% 
+  group_by(full_sitename) %>% 
+  filter(n() >= 5) %>% 
+    ggplot() +
+    aes(full_sitename,
+        fill = SPstage.Raw_material) +
+    geom_bar() +
+    facet_wrap(~ SPstage.Stage) +
+  theme_bw () +
+  labs(fill = "Raw material",
+       x = "Site") +
+ theme(legend.position = "none",
+       axis.text.x = element_text(size = 5)  ) +
+  scale_x_discrete(guide = guide_axis(n.dodge= 2.3)) +
+   colScale
+
+library(cowplot)
+plot_grid(p1, p2,
+          ncol = 1,
+          rel_heights = c(1.5, 0.75),
+          labels = c("A", "B"))
+```
+
+\newpage
+
 ## Methods
 
-In addition to the metric attributes from previous studies of cultural transmission and projectile points, i.e. maximum length and width [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @garvey2018current], we also used morphological attributes on the stemmed points to examine variations in shape and the relationship between each attribute (@fig-labelled-schematic). We obtained our morphological attribute data from landmark analysis of digitized images of stemmed points. Compared to traditional caliper measurements, morphometric data yields more easily interpretable numerical and visual outcomes [@buchanan2010geometric; @thulman2012discriminating; @cardillo2016environment; @petvrik2018shape; @macleod2018quantitative; @okumura2019archaeology; @suarez2019life]. We did not include weight and thickness as these measurements were not available to us. For the landmark analysis, we put a total of 11 landmarks on the outline of each stemmed point and computed distances between pairs of landmark coordinates to derive attributes for our statistical analyses. The landmarks we recorded are described in @tbl-landmark-abbreviations and shown in @fig-labelled-schematic. We used the point tool in ImageJ [@schneider2012nih] to capture the landmarks from images of the artefacts, and export them as XY coordinate data for further analysis.
+Similar to the metric attributes from previous studies of cultural transmission and projectile points, i.e. maximum length and width [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @garvey2018current], we used morphological attributes on the stemmed points to examine variations in shape and the relationship between each attribute (@fig-labelled-schematic). We obtained our morphological attribute data from landmark analysis of digitized images of stemmed points. Compared to traditional caliper measurements, morphometric data yields more easily interpretable numerical and visual outcomes [@buchanan2010geometric; @thulman2012discriminating; @cardillo2016environment; @petvrik2018shape; @macleod2018quantitative; @okumura2019archaeology; @suarez2019life]. We did not include weight and thickness as these measurements were not available to us. For the landmark analysis, we put a total of 11 landmarks on the outline of each stemmed point and computed distances between pairs of landmark coordinates to derive attributes for our statistical analyses. The landmarks we recorded are described in @tbl-landmark-abbreviations and shown in @fig-labelled-schematic. We used the point tool in ImageJ [@schneider2012nih] to capture the landmarks from images of the artifacts, and export them as XY coordinate data for current and further analyses.
 
 \newpage
 
 ```{r}
 #| label: fig-labelled-schematic
-#| fig-cap: Stemmed point from Yongsandong site. with landmarks showing the attributes considered in this study and corresponding landmarks
+#| fig-cap: Stemmed point from Yongsandong site with landmarks showing the attributes considered in this study and further research
 #| out-width: "300px"
 
 knitr::include_graphics(here::here("analysis/figures/hand-made-figures/ISKM-talk-2021-cut.png"))
@@ -358,7 +358,7 @@ knitr::include_graphics(here::here("analysis/figures/hand-made-figures/ISKM-talk
 
 ```{r}
 #| label: tbl-landmark-abbreviations
-#| tbl-cap: Description of artefact landmarks used in this study
+#| tbl-cap: Description of artifact landmarks used in this study
 
 here::here("analysis/data/raw_data/table-of-landmark-abbreviations.csv") %>% 
   read_csv() %>% 
@@ -370,13 +370,14 @@ threshold_value <- 25
 
 \newpage
 
-To measure the variation among the measurements of the stemmed points, we computed Coefficients of Variation (CV) with confidence intervals. The CV is the ratio of the standard deviation to the mean. It has been used as a robust statistical method to calculate the degree of standardization, precision, equality, homogeneity, etc. in various disciplines [@ng2006performance; @panichkitkosolkul2009improved; @panichkitkosolkul2013confidence]. In archaeological studies, CV has been applied to measure the variation between artifacts and to test hypotheses about cultural evolutionary processes, including distinguishing between different types of learning biases affecting cultural transmission [@eerkens2001techniques; @eerkens2005cultural; @schillinger2014copying; @garvey2018current]. Eerkens and Bettinger [-@eerkens2001techniques] summarized CV values for artifacts made from various materials and find that the range of CV values for most archaeological datasets is between 2 (i.e. CV for planned production = 1.7) and about 60 (i.e. CV for random production = 57.7) and the values over the upper limit likely reflect  attempts to intentionally differentiate the products. Among the Great Basin projectiles examined by Eerkens and Bettinger, the average CV was 22 and the range in CV values was 6-55. Considering the lower quality of raw materials in Korea compared to the Great Basin, and the median of the CV range (30.5) for the Korean lithics, we selected `r threshold_value` as the threshold to decide between guided variation and indirect bias. We premised that CV values that are lower than `r threshold_value` represent guided variation while CV values over `r threshold_value` reflect indirect bias. <!-- BM: I STILL THIS WE NEED A MORE COMPELLING AND STRONGER JUSTIFICATION FOR THE THRESHOLD VALUE, BASED ON SOME THEORY IN THE LITERATURE. PLEASE ADD SOMETHING. I EXPECT REVIEWERS WILL GET STUCK ON THIS AND DEMAND MORE DETAILS. THE CHOICE OF VALUE HAS A HUGE EFFECT ON OUR INTERPRETATIONS BELOW -->
+Following @bettinger1999point we computed Pearson's correlation coefficients for all measurements of the seven attributes that we measured on the stemmed points. The correlation of artifact attributes was proposed by @bettinger1999point to be a key indicator of indirect bias during cultural transmission. This is based on the assumption that assumed that artifact-making was transmitted in packages of traits taken from socially successful individuals who were role-models. In their work points from Eastern California and Central Nevada, @bettinger1999point interpreted correlation coefficient values of around 0.5 and higher as evidence of indirect bias, and lower values as evidence of guided variation.
+
+To measure the variation among the measurements of the stemmed points, we computed Coefficients of Variation (CV) with confidence intervals. The CV is the ratio of the standard deviation to the mean. It has been used as a robust statistical method to calculate the degree of standardization, precision, equality, homogeneity, etc. in various disciplines [@ng2006performance; @panichkitkosolkul2009improved; @panichkitkosolkul2013confidence]. In archaeological studies, CV has been applied to measure the variation between artifacts and to test hypotheses about cultural evolutionary processes, including distinguishing between different types of learning biases affecting cultural transmission [@eerkens2001techniques; @eerkens2005cultural; @schillinger2014copying; @garvey2018current]. Based on the Weber Fraction for visual measurement of line lenght, Eerkens and Bettinger [-@eerkens2001techniques] claim that over 57.7% of the CV is the result of random production and below 1.7% is the byproduct of using a scale or template. They also presented average CV values (%) for artifacts made from various materials (See Table 1 from @eerkens2001techniques). Among those various material artifacts, the most comparable artifacts to the stemmed points are Great Basin projectiles points, whose CV value ranged from 6-55, with an average of 22. Additionally, projectile points from the US Southwest have CV values ranged from 11 to 33 [@garvey2018current]. We sat `r threshold_value` as a rough threshold to evaluate the transmission biases referring to the example of Great Basin projectile points. Specifically, we calculated CV values of Rosegate points from Monitor Valley, which was speculated as the byproducts of indirect bias (raw data from table 5 of @bettinger1999point). With the exception of weight, the CV range for metric attributes is 17.01 to 24.59. Variation is generated by small errors that are transmitted between individuals and the errors gets bigger through generations [@eerkens2005cultural]. The errors are also highly associated with raw materials. Some raw materials, such as clay, are easier to control while, less predictable and controllable materials such as stone are likely to have inflated CV values [@eerkens2001techniques].
+We chose higher side on the CV range of Rosegate points as the threshold of our research considering the lower quality raw materials of stemmed points and longer duration of their transmission process, which is roughly whole period of the Korean Late Paleolithic (approx.30,000yrs). We premised that CV values that are lower than `r threshold_value` represent guided variation while CV values over `r threshold_value` reflect indirect bias.
 
 Sample size can impact the accuracy of CV estimates [@toebe2018sample; @kelley2007sample; @vanpool2011quantitative]. In previous archaeological studies, sample sizes for CV values has varied from five to more than a thousand artifacts [@bettinger1999point; @garvey2018current; @costin1995standardization; @wierer2013variability; @kvamme1996alternative; @rivals2009new]. A variety of methods are available for improving the reliability of CV measurements when using small samples. For example, @vanpool2011quantitative proposed a "corrected CV", for a smaller sample (i.e. n\<25). Statistical research has resulted in several methods for computing confidence intervals on CVs to show uncertainty [@koopmans1964confidence; @miller1991asymptomatic; @sharma1994asymptotic; @mckay1932distribution; @vangel1996confidence; @curto2009coefficient; @banik2011estimating; @panichkitkosolkul2013confidence; @mahmoudvand2009two; @gulhar2012comparison]. Although we have a total of `r total_number_of_sp` artifacts, most of our analyses here involves comparisons of smaller subsets of this sample. For example to explore temporal and regional patterns we compared samples of well under 25 pieces. Given these relatively small sample sizes in our study, we used the corrected CV formula, which we have implemented here in a function in the R programming language for others to use. We also computed confidence intervals using method proposed by @sharma1994asymptotic to increase the credibility of the comparisons and be transparent about the precision and accuracy of our results [@kelley2007sample; @albatineh2014confidence].
 
-Following @bettinger1999point we computed Pearson's correlation coefficients for all measurements of the seven attributes that we measured on the stemmed points. The correlation of artefact attributes was proposed by @bettinger1999point to be a key indicator of indirect bias during cultural transmission. This is based on the assumption that assumed that artefact-making was transmitted in packages of traits taken from socially successful individuals who were role-models. In their work points from Eastern California and Central Nevada, @bettinger1999point interpreted correlation coefficient values of around 0.5 and higher as evidence of indirect bias, and lower values as evidence of guided variation. 
-
-All data preparation, analyses and visualization were computed in the R environment [@RCoreTeam]. Our R code and data, including the original artefact images, are fully and openly available in our compendium [@Marwick2018compendium] online at https://doi.org/10.17605/osf.io/eb8mx to enable transparency and reproducibility [@marwick2017computational].
+All data preparation, analyses and visualization were computed in the R environment [@RCoreTeam]. Our R code and data, including the original artifact images, are fully and openly available in our compendium [@Marwick2018compendium] online at https://doi.org/10.17605/osf.io/eb8mx to enable transparency and reproducibility [@marwick2017computational].
 
 # Results {.unnumbered}
 
@@ -494,17 +495,17 @@ ggplot(data_box,
   theme_bw()
 ```
 
-Panel A of @fig-plot-cv-all-attributes shows a relatively wide distribution of body length (BL) and maximum length (ML) while the other attributes are more similar and shorter (under 2.5 cm). Among these attributes, stem width (SW) is the smallest, regardless of overall size of the stemmed points. 
+Panel A of @fig-plot-cv-all-attributes shows a relatively wide distribution of body length (BL) and maximum length (ML) while the other attributes are more similar and shorter (under 2.5 cm). Among these attributes, stem width (SW) is the smallest, regardless of overall size of the stemmed points.
 
 ## Coefficient of variation
 
-<!-- BM: overall I think the CV values are really not that interesting or informative. They are difficult to interpret because they all cluster around 15-30, which seems to me to be the midpoint between 'highly standardised' (3-5) and 'highly different' (40-50). So I think we will struggle to convince any readers that we have any strong signals of cultural transmission biases in the CV data. Probably we can satisfy most readers that guided variation is the main bias in these data. That's my perspective after reading this paper several times, and re-reading several related papers by Bettiner and Eerkens and Lipo, and others  --> 
+<!-- BM: overall I think the CV values are really not that interesting or informative. They are difficult to interpret because they all cluster around 15-30, which seems to me to be the midpoint between 'highly standardised' (3-5) and 'highly different' (40-50). So I think we will struggle to convince any readers that we have any strong signals of cultural transmission biases in the CV data. Probably we can satisfy most readers that guided variation is the main bias in these data. That's my perspective after reading this paper several times, and re-reading several related papers by Bettiner and Eerkens and Lipo, and others  -->
 
-Our results show that CV values for all attributes are distributed from `r min_cv` to `r max_cv` (@fig-plot-cv-all-attributes). Compared to the CVs of Great Basin projectile points [@eerkens2001techniques], the average CV for the Korean artefacts is higher. Unlike the distribution of the linear measurements, the CVs of body length and maximum length have the lowest values. The lower CV of maximum length indicates they are highly standardized with narrowest confidence intervals. Tang and stem related attributes (e.g. SL, SW, TL, TW) are less standardized with higher CV values and wider confidence intervals than other attributes Among all the attributes, only maximum length has the CV values lower than 25, which suggests the transmission of this attribute was more influenced by indirect bias than the others.
+Our results show that CV values for all attributes are distributed from `r min_cv` to `r max_cv` (@fig-plot-cv-all-attributes). Compared to the CVs of Great Basin projectile points [@eerkens2001techniques], the average CV for the Korean artifacts is higher. Unlike the distribution of the linear measurements, the CVs of body length and maximum length have the lowest values. The lower CV of maximum length indicates they are highly standardized with narrowest confidence intervals. Tang and stem related attributes (e.g. SL, SW, TL, TW) are less standardized with higher CV values and wider confidence intervals than other attributes Among all the attributes, only maximum length has the CV values lower than 25, which suggests the transmission of this attribute was more influenced by indirect bias than the others.
 
 ```{r}
 #| label: fig-plot-cv-all-attributes
-#| fig-cap: A. Boxplot for each attribute measured on the stemmed points. The black bold horizontal lines in the middle of boxes represent the median value. The dots represent individual artefacts. B. The points and blue colored numbers represent CV values for each attribute measured on the stemmed points. 95% confidence intervals for the CVs were computed using Sharma and Krishna's method. The vertical lines indicate the confidence intervals.
+#| fig-cap: A. Boxplot for each attribute measured on the stemmed points. The black bold horizontal lines in the middle of boxes represent the median value. The dots represent individual artifacts. B. The points and blue colored numbers represent CV values for each attribute measured on the stemmed points. 95% confidence intervals for the CVs were computed using Sharma and Krishna's method. The vertical lines indicate the confidence intervals.
 
 #| fig-width:7
 #| fig-height:4
@@ -518,7 +519,7 @@ ggplot(cv_data_sharma_named,
                     ymax = all_high_sharma), 
                 width = 0.2) +
   ylab("CV") +
-  xlab("Artefact measurement") +
+  xlab("Artifact measurement") +
   geom_text(aes(label = round(all_cv_sharma,1)), 
             col="blue", 
             hjust = -0.3, 
@@ -538,7 +539,7 @@ plot_grid(plot_raw_measurements_for_attributes,
 
 To understand temporal patterns in the modes of cultural transmission, we grouped our assemblages into the three Korean Late Paleolithic chronological phases summarised in @tbl-korean-chronology, and computed CV values for all complete stemmed points each phase. We excluded Phase 1 from our analysis because there are only two complete stemmed points from Yonghodong and Sachang that date to this phase.
 
-@fig-plot-cv-over-time shows that the directional trend in CV values of artefact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above. Only body length crosses the threshold value, changing from <`r threshold_value` to >`r threshold_value` over time, indicating a shift from indirect bias to guided variation. For those attributes where the CV is <`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width and tang length, indicating increasing influence of indirect bias for these attributes. For stem length, stem width and tang length, CV values remain above `r threshold_value`, and show a slight trend to increase over time, suggesting increased influence of guided variation for these attributes. 
+@fig-plot-cv-over-time shows that the directional trend in CV values of artifact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above. Only body length crosses the threshold value, changing from \<`r threshold_value` to \>`r threshold_value` over time, indicating a shift from indirect bias to guided variation. For those attributes where the CV is \<`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width and tang length, indicating increasing influence of indirect bias for these attributes. For stem length, stem width and tang length, CV values remain above `r threshold_value`, and show a slight trend to increase over time, suggesting increased influence of guided variation for these attributes.
 
 \newpage
 
@@ -551,7 +552,7 @@ To understand temporal patterns in the modes of cultural transmission, we groupe
 #-- temporal patterns ----------------------------------------------------------------
 # Make a table of CVs for all variable grouped by stage, according to
 # stemmed point chronology
-# Exclude the first phase that has only two artefacts
+# Exclude the first phase that has only two artifacts
 
 cv_by_stage_df  <-
   df_sitename %>%
@@ -585,7 +586,7 @@ cv_by_stage_df %>%
   theme_bw()
 ```
 
-One limitation of this aggregation of all stemmed points in our sample into each chronological phase is that the sample consists of a relatively large number of assemblages with only 1-2 stemmed points. These isolated finds are ambiguous with respect to a local tradition of artefact making, so to further investigate temporal change, we focus only the four assemblages that have five or more stemmed points in one chronological phase (@fig-plot-cv-four-assemblage). These four assemblages are more likely to represent a consistent, recurring way of making stemmed points than isolated finds, and thus more relevant for comparing modes of cultural transmission of artefact making. The four assemblages include three from the Suyanggae site (SYG) and one from the Yongsandong site (YS). SYG1_2 and SYG6_2 are from Phase 2 (shown on the left side of the figure) and SYG1_3 and YS_3 are from Phase 3 (shown on the right side of the figure). Following the previous studies of [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we only compared CV values of attributes, body length, maximum length, mid width, and tang width. @fig-plot-cv-four-assemblage shows that CV values for the four assemblages are mostly slightly below `r threshold_value`. Among the assemblages, SYG1_2 (n=7) has higher CV values as well as the widest ranges of confidence intervals, perhaps due to its small sample size, relative to the other assemblages compared here. Overall we see only subtle changes in CV values from Phase 2 to Phase 3 in @fig-plot-cv-four-assemblage. This suggests that the complex directional trends in @fig-plot-cv-over-time might be best interpreted as noise in an overall signal of guided variation, rather than substantial changes in the type of bias dominating cultural transmission. 
+One limitation of this aggregation of all stemmed points in our sample into each chronological phase is that the sample consists of a relatively large number of assemblages with only 1-2 stemmed points. These isolated finds are ambiguous with respect to a local tradition of artifact making, so to further investigate temporal change, we focus only the four assemblages that have five or more stemmed points in one chronological phase (@fig-plot-cv-four-assemblage). These four assemblages are more likely to represent a consistent, recurring way of making stemmed points than isolated finds, and thus more relevant for comparing modes of cultural transmission of artifact making. The four assemblages include three from the Suyanggae site (SYG) and one from the Yongsandong site (YS). SYG1_2 and SYG6_2 are from Phase 2 (shown on the left side of the figure) and SYG1_3 and YS_3 are from Phase 3 (shown on the right side of the figure). Following the previous studies of [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we only compared CV values of attributes, body length, maximum length, mid width, and tang width. @fig-plot-cv-four-assemblage shows that CV values for the four assemblages are mostly slightly below `r threshold_value`. Among the assemblages, SYG1_2 (n=7) has higher CV values as well as the widest ranges of confidence intervals, perhaps due to its small sample size, relative to the other assemblages compared here. Overall we see only subtle changes in CV values from Phase 2 to Phase 3 in @fig-plot-cv-four-assemblage. This suggests that the complex directional trends in @fig-plot-cv-over-time might be best interpreted as noise in an overall signal of guided variation, rather than substantial changes in the type of bias dominating cultural transmission.
 
 ```{r}
 #| label: fig-plot-cv-four-assemblage
@@ -593,7 +594,7 @@ One limitation of this aggregation of all stemmed points in our sample into each
 #| fig-width:   4.5
 #| fig-height:  4
 
-#### plot CVs by site with number of artefacts showing >5
+#### plot CVs by site with number of artifacts showing >5
 
 cv_by_site_df_label_more_than_5 <-
   df_sitename %>%
@@ -635,7 +636,7 @@ cv_by_site_df_label_more_than_5 %>%
 
 ## Variation Between sites
 
-We examined the CV values per site to address our research question about the cultural transmission over space. We excluded assemblages that contain less than five points. @fig-plot-cv-by-site shows higher CV values for stem length and stem width, indicating high variability at the stem of the points from these sites. Overall size variability is similar between these three assemblages, suggesting a consistent approach to constraining shape variation over space, rather than site-specific variances. 
+We examined the CV values per site to address our research question about the cultural transmission over space. We excluded assemblages that contain less than five points. @fig-plot-cv-by-site shows higher CV values for stem length and stem width, indicating high variability at the stem of the points from these sites. Overall size variability is similar between these three assemblages, suggesting a consistent approach to constraining shape variation over space, rather than site-specific variances.
 
 ```{r}
 #| label: fig-plot-cv-by-site
@@ -763,7 +764,7 @@ cv_plot_raw_materials_label %>%
 
 ## Correlation analysis of attributes
 
-<!-- BM: You'll see I've completely removed the PCA content. I did some more reading into what PCA calculates, and it is not correlation coefficients of the variables with each other, but with the Principal Components that it calculates. So that's a very different kind of correlation, compared to what we see in the previous literature on transmission biases. I suppose we could use it and interpret it, if you want to investigate that further. I could not think of anything straightforward over the several days I have been editing this. I saw that you did not give them the same treatment as the CV values with exploring variation by raw material and by site, so I guess you were not very interested in the PCA results. My perspective is that we should look for the quickest and simplest way to complete this paper. So I have replaced the PCA with the same kind of correlation analysis that we see elsewhere so we can use the previously published papers to guide our interpretation of our results --> 
+<!-- BM: You'll see I've completely removed the PCA content. I did some more reading into what PCA calculates, and it is not correlation coefficients of the variables with each other, but with the Principal Components that it calculates. So that's a very different kind of correlation, compared to what we see in the previous literature on transmission biases. I suppose we could use it and interpret it, if you want to investigate that further. I could not think of anything straightforward over the several days I have been editing this. I saw that you did not give them the same treatment as the CV values with exploring variation by raw material and by site, so I guess you were not very interested in the PCA results. My perspective is that we should look for the quickest and simplest way to complete this paper. So I have replaced the PCA with the same kind of correlation analysis that we see elsewhere so we can use the previously published papers to guide our interpretation of our results -->
 
 <!-- BM: GP to write up the correlation coefficients results in detail, according to what you see in the plot made by the code below. I've already done all the analysis here. Your task is to describe it here, and then contextualise and interpret it in the next section. Use this paper as a template for how detailed you need to be here: "Point Typologies, Cultural Transmission, and the Spread of Bow-and-Arrow Technology". Aim for a style of writing that is detailed, direct, specific, short sentences.  -->
 
@@ -777,7 +778,7 @@ cv_plot_raw_materials_label %>%
 
 library(corrr)
 
-# correlation of all artefacts
+# correlation of all artifacts
 df_sitename_corr <- 
   df_sitename %>%
   dplyr::select(-sitename, -SPstage.Stage, -SPstage.Raw_material) %>% 
@@ -790,7 +791,7 @@ df_sitename_corr_long <-
   df_sitename_corr %>% 
     pivot_longer(-term)
 
-# correlation of phase 2 artefacts
+# correlation of phase 2 artifacts
 df_sitename_corr_p2 <- 
   df_sitename %>%
   dplyr::filter(SPstage.Stage == 2) %>%
@@ -804,7 +805,7 @@ df_sitename_corr_p2_long <-
   df_sitename_corr_p2 %>% 
     pivot_longer(-term)
 
-# correlation of phase 3 artefacts
+# correlation of phase 3 artifacts
 df_sitename_corr_p3 <- 
   df_sitename %>%
   dplyr::filter(SPstage.Stage == 3) %>%
@@ -913,7 +914,7 @@ plot_grid(plot_grid(
 
 To investigate the social contexts of technological transitions represented by the emergence of stemmed points during the Korean Late Paleolithic, we applied concepts of cultural transmission. We asked three questions to examine the dominant mode of cultural transmission and the transmission process over time: what is the dominant mode of cultural transmission for technological innovation in the Korean Late Paleolithic? Do the modes of cultural transmission vary over time? and Do the modes of cultural transmission vary over space? We focused on two transmission biases: guided variation (socially isolated groups made stemmed points through trial and error) and indirect bias (socially connected groups whose knowledge of stemmed points derived from copying others). We set roughly `r threshold_value` as our threshold of the CV value to decide between these two types of transmission biases, based on prior work on Great Basin Projectiles [@eerkens2001techniques]. If the CV value is lower than 25, we interpreted this as indicating indirect bias while values higher than 25 were interpreted as guided variation.
 
-The CV values for all stemmed point attributes are mostly over 25, except for maximum length, which is just below. Change in CV values for over time in the Korean Late Paleolithic period is complex, with no clear directional changes (@fig-plot-cv-over-time). Comparing chronological phases 2 and 3, we found that there are only minor differences between the two phases. Applying the Modified Signed-Likelihood Ratio Test (SLRT) <!-- GP to add a citation for this test here --> to test for the equality of CVs, we found no statistically significant changes in the CV values of any attributes (@tbl-cv-over-time) between the two phases. In exploring individual assemblages that contain multiple stemmed points we found confirmation of minimal change in CV values over time (@fig-plot-cv-four-assemblage). 
+The CV values for all stemmed point attributes are mostly over 25, except for maximum length, which is just below. Change in CV values for over time in the Korean Late Paleolithic period is complex, with no clear directional changes (@fig-plot-cv-over-time). Comparing chronological phases 2 and 3, we found that there are only minor differences between the two phases. Applying the Modified Signed-Likelihood Ratio Test (SLRT) <!-- GP to add a citation for this test here --> to test for the equality of CVs, we found no statistically significant changes in the CV values of any attributes (@tbl-cv-over-time) between the two phases. In exploring individual assemblages that contain multiple stemmed points we found confirmation of minimal change in CV values over time (@fig-plot-cv-four-assemblage).
 
 ```{r}
 #| label: tbl-cv-over-time
@@ -959,23 +960,25 @@ knitr::kable(table_mslr_test_results_for_phase_differences,
 
 ```
 
-In exploring geographical variation we found no clear pattern variation in CV between sites with more than five stemmed points (@fig-plot-cv-by-site). The most striking pattern in this site comparison is that CV values of body length, maximum length, mid width, and tang width are generally lower than tang length, stem length, and stem width, similar to what is evident in @fig-plot-cv-all-attributes. The attributes with lower CV values could be transmitted in a social context dominated by indirect bias, while the higher CV attributes could be influenced more by specific manufacturing and maintenance situations. We assume that the lower CV values of the four attributes could imply that those four attributes are closely associated with the projectile function of the tool so that the knappers wanted to standardize the shape. For example, body length is related to penetration, durability, hardness, and rejuvenation of a projectile point and tang width is connected to wound damage, penetration, durability and hardness [@odell1986experiments; @shea2001experimental; @cheshier2006projectile; @yaroshevich2016projectile; @bebber2017developing; @wood2018wound]. This can be contrasted with tang length, stem length, and stem width, which are away from the impact end of the artefact. These were allowed to vary more freely between points, perhaps to be able to accommodate shafts of different types of wood with varying properties of strength, flexibility, and weight.
+In exploring geographical variation we found no clear pattern variation in CV between sites with more than five stemmed points (@fig-plot-cv-by-site). The most striking pattern in this site comparison is that CV values of body length, maximum length, mid width, and tang width are generally lower than tang length, stem length, and stem width, similar to what is evident in @fig-plot-cv-all-attributes. The attributes with lower CV values could be transmitted in a social context dominated by indirect bias, while the higher CV attributes could be influenced more by specific manufacturing and maintenance situations. We assume that the lower CV values of the four attributes could imply that those four attributes are closely associated with the projectile function of the tool so that the knappers wanted to standardize the shape. For example, body length is related to penetration, durability, hardness, and rejuvenation of a projectile point and tang width is connected to wound damage, penetration, durability and hardness [@odell1986experiments; @shea2001experimental; @cheshier2006projectile; @yaroshevich2016projectile; @bebber2017developing; @wood2018wound]. This can be contrasted with tang length, stem length, and stem width, which are away from the impact end of the artifact. These were allowed to vary more freely between points, perhaps to be able to accommodate shafts of different types of wood with varying properties of strength, flexibility, and weight.
 
-The most striking differences in CV values is evident in comparisons of points grouped by raw materials. Artefacts made from quartzite have much higher CV values, and wider confidence intervals, than all other raw materials (@fig-plot-cv-by-raw-material). This likely reflects the relatively unpredictable knapping quality of quartzite due to the presence of visible grains. These grains can redirect knapping forces in unexpected directions, resulting in unintended flake removals. This makes is harder for the knapper to repeatedly produce the same size and shape end product. This hints at the possibility that physical properties of the stone artefact raw materials were a key mechanism in determining shape and size variability. However with only three artefacts made from quartzite in our sample, further analysis is needed to make robust conclusions about the influence of raw materials here. 
+The most striking differences in CV values is evident in comparisons of points grouped by raw materials. Artifacts made from quartzite have much higher CV values, and wider confidence intervals, than all other raw materials (@fig-plot-cv-by-raw-material). This likely reflects the relatively unpredictable knapping quality of quartzite due to the presence of visible grains. These grains can redirect knapping forces in unexpected directions, resulting in unintended flake removals. This makes is harder for the knapper to repeatedly produce the same size and shape end product. This hints at the possibility that physical properties of the stone artifact raw materials were a key mechanism in determining shape and size variability. However with only three artifacts made from quartzite in our sample, further analysis is needed to make robust conclusions about the influence of raw materials here.
 
 <!-- BM: GP to write up the discussion of the correlation analysis in detail. Use this paper as a template for how detailed you need to be here: "Point Typologies, Cultural Transmission, and the Spread of Bow-and-Arrow Technology". Aim to improve your writing, make it better than your usual style. -->
 
 # Conclusion {.unnumbered}
 
-In this research, we investigated the social context of technological innovation in the Korean Late Paleolithic. Following previous studies of applying cultural transmission to the introduction of bow and arrow technology in the Great Basin [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @garvey2018current], we investigated two transmission biases, guided variation (trial and error) and indirect bias (copying a model). We proposed  two scenarios for explaining the introduction of new technology: socially isolated groups that made stemmed points through trial and error (guided variation) or socially connected groups whose knowledge of stemmed points derived from copying others that they regularly came in contact with (indirect bias). We asked three questions: what is the dominant mode of cultural transmission for technological innovation in the Korean Late Paleolithic? Do the modes of cultural transmission vary over time? And do the modes of cultural transmission vary over space? 
+In this research, we investigated the social context of technological innovation in the Korean Late Paleolithic. Following previous studies of applying cultural transmission to the introduction of bow and arrow technology in the Great Basin [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @garvey2018current], we investigated two transmission biases, guided variation (trial and error) and indirect bias (copying a model). We proposed two scenarios for explaining the introduction of new technology: socially isolated groups that made stemmed points through trial and error (guided variation) or socially connected groups whose knowledge of stemmed points derived from copying others that they regularly came in contact with (indirect bias). We asked three questions: what is the dominant mode of cultural transmission for technological innovation in the Korean Late Paleolithic? Do the modes of cultural transmission vary over time? And do the modes of cultural transmission vary over space?
 
-We conclude that the dominant mode of cultural transmission for the earliest stemmed points was guided variation (trial and error). This is indicated by relatively high CV values of around and above 25 and mostly low correlation coefficients of less than 0.5. A social context that favoured trial and error for artefact making is consistent with Seong's _in situ_ model for the appearance of stemmed points in Korea. This model proposes that people developed stemmed points by experimenting with existing blade technologies. Our results support experimentation and trial and error as important processes in the cultural transmission of this artefact technology.  
+We conclude that the dominant mode of cultural transmission for the earliest stemmed points was guided variation (trial and error). This is indicated by relatively high CV values of around and above 25 and mostly low correlation coefficients of less than 0.5. A social context that favoured trial and error for artifact making is consistent with Seong's *in situ* model for the appearance of stemmed points in Korea. This model proposes that people developed stemmed points by experimenting with existing blade technologies. Our results support experimentation and trial and error as important processes in the cultural transmission of this artifact technology.
 
 The correlation coefficients suggest a change in the dominant bias of cultural transmission over time, with values at 0.5 and higher in chronological phase 3, after 25 ka. This is in the same range of correlation coefficients that Bettinger and Eerkens interpreted as indirect bias. This may suggest a shift in the social context of transmission of tool-making skills away from trial and error and towards increased reliance on copying a model. We might speculate that cooler conditions of the Last Glacial Maximum promoted greater integration of social networks to buffer risks of resource failure <!-- GP to find something relevant by Fitzhugh to cite here -->. With more frequent contacts and connections with members of the social network, there may have been more opportunities to learn point-making directly from socially successful individuals.
 
-In comparing sites with more than five stemmed points, we found complex variation in CV values that may suggest mixtures of biases in the transmission of tool-making techniques. We did not find strong support for distinctive forms of cultural transmission of tool-making at different sites. Correlation coefficient values across the sites affirm the overall chronological trend indicating indirect bias in phase three. Raw materials appear to be important in driving this trend, with acid volcanic rocks and porphyry becoming more abundant in phase 3, and dominating assemblages at Wolpyeng and Yonsangdong that date to this period. One possibility is that these raw materials were part of an adaptive shift during the Last Glacial Maximum, perhaps the cooler climate favoured an expanded range for searching for raw materials, leading to a higher diversity. Similarly, higher mobility may have resulted in more frequent contacts and connections with members of social networks. This may have provided more opportunities to learn point-making directly from socially successful individuals, and increased the contribution of indirect bias during cultural transmission during phase 3.  
+In comparing sites with more than five stemmed points, we found complex variation in CV values that may suggest mixtures of biases in the transmission of tool-making techniques. We did not find strong support for distinctive forms of cultural transmission of tool-making at different sites. Correlation coefficient values across the sites affirm the overall chronological trend indicating indirect bias in phase three. Raw materials appear to be important in driving this trend, with acid volcanic rocks and porphyry becoming more abundant in phase 3, and dominating assemblages at Wolpyeng and Yonsangdong that date to this period. One possibility is that these raw materials were part of an adaptive shift during the Last Glacial Maximum, perhaps the cooler climate favoured an expanded range for searching for raw materials, leading to a higher diversity. Similarly, higher mobility may have resulted in more frequent contacts and connections with members of social networks. This may have provided more opportunities to learn point-making directly from socially successful individuals, and increased the contribution of indirect bias during cultural transmission during phase 3.
 
-<!-- BM: GP to check where we can cite our QSR paper in the conclusion. Does what we say here agree with what we said in the QSR paper? GP to edit the conclusion here to show good harmony with our previous paper -->.
+<!-- BM: GP to check where we can cite our QSR paper in the conclusion. Does what we say here agree with what we said in the QSR paper? GP to edit the conclusion here to show good harmony with our previous paper -->
+
+.
 
 # Acknowledgements
 
