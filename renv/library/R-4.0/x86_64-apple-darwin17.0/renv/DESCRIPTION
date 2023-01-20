@@ -1,0 +1,39 @@
+Package: renv
+Type: Package
+Title: Project Environments
+Version: 0.10.0-14
+Authors@R: c(
+    person("Kevin", "Ushey", role = c("aut", "cre"), email = "kevin@rstudio.com"),
+    person("RStudio", role = c("cph"))
+    )
+Description: A dependency management toolkit for R. Using 'renv', you can create
+    and manage project-local R libraries, save the state of these libraries to
+    a 'lockfile', and later restore your library as required. Together, these
+    tools can help make your projects more isolated, portable, and reproducible.
+License: MIT + file LICENSE
+URL: https://rstudio.github.io/renv
+BugReports: https://github.com/rstudio/renv/issues
+Imports: utils
+Suggests: covr, knitr, packrat, remotes, reticulate, rmarkdown,
+        rstudioapi, testthat, uuid, yaml
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.1.0
+Roxygen: list(markdown = TRUE)
+VignetteBuilder: knitr
+RemoteType: github
+RemoteHost: api.github.com
+RemoteRepo: renv
+RemoteUsername: rstudio
+RemoteRef: master
+RemoteSha: d7f35c4074aa77fc849d1f537387c35bec2f7268
+GithubRepo: renv
+GithubUsername: rstudio
+GithubRef: master
+GithubSHA1: d7f35c4074aa77fc849d1f537387c35bec2f7268
+NeedsCompilation: no
+Packaged: 2020-05-16 01:08:48 UTC; gayoungp
+Author: Kevin Ushey [aut, cre],
+  RStudio [cph]
+Maintainer: Kevin Ushey <kevin@rstudio.com>
+Built: R 4.0.0; ; 2020-05-16 01:08:49 UTC; unix

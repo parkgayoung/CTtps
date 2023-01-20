@@ -1,0 +1,151 @@
+arrayspecs              Convert landmark data matrix into array (p x k
+                        x n)
+bilat.symmetry          Analysis of bilateral symmetry
+buildtemplate           Build 3D surface template
+combine.subsets         Combine separate landmark configurations
+compare.CR              Comparisons of Effect Sizes from Modularity
+                        Analyses
+compare.evol.rates      Comparing net rates of shape evolution on
+                        phylogenies
+compare.multi.evol.rates
+                        Comparing net rates of evolution among traits
+                        on phylogenies
+compare.pls             Comparisons of Effect Sizes from Partial Least
+                        Squares
+coords.subset           Subset landmark coordinates via a factor
+define.links            Define links between landmarks
+define.modules          Define modules (landmark partitions)
+define.sliders          Select points to "slide" along curves
+digit.curves            Calculate semilandmarks along a curve
+digit.fixed             Digitize 3D landmarks on mesh3d object
+digitize2d              Digitize 2D landmarks on .jpg files
+digitsurface            Digitize 3D fixed landmarks and surface
+                        semilandmarks
+editTemplate            Edit 3D template
+estimate.missing        Estimate locations of missing landmarks
+findMeanSpec            Identify specimen closest to the mean of a set
+                        of Procrustes shape variables
+fixed.angle             Rotate a subset of 2D landmarks to common
+                        articulation angle
+geomorph-package        Geometric morphometric analyses for 2D/3D data
+geomorph.data.frame     Create a data frame with shape data
+globalIntegration       Quantify global integration relative to
+                        self-similarity
+gm.prcomp               Principal and phylogenetically-aligned
+                        components analysis of shape data
+gpagen                  Generalized Procrustes analysis of points,
+                        curves, and surfaces
+gridPar                 Set up parameters for grids, points, and links
+                        in plotRefToTarget
+hummingbirds            Landmark data from hummingbird bills (includes
+                        sliding semilandmarks on curves)
+integration.test        Quantify morphological integration between
+                        modules
+interlmkdist            Calculate linear distances between landmarks
+larvalMorph             Head and tail shapes of larval salamanders
+lizards                 Dorsal head shape data of lizards
+make_ggplot             Convert geomorph plots to ggplot objects
+modularity.test         Evaluate the degree of modular signal in shape
+                        data
+morphol.disparity       Morphological disparity for one or more groups
+                        of specimens
+mosquito                Landmarks on mosquito wings
+mshape                  Estimate mean shape for a set of aligned
+                        specimens
+phylo.integration       Quantify phylogenetic morphological integration
+                        between two or more sets of variables under
+                        Brownian motion
+phylo.modularity        Evaluate the degree of phylogenetic modular
+                        signal in Procrustes shape variables
+physignal               Assessing phylogenetic signal in Procrustes
+                        shape variables
+picknplot.shape         Pick points in geomorph scatterplots to
+                        visualize shape variation
+plethShapeFood          Head shape and food use data from Plethodon
+                        salamanders
+plethodon               Landmark data from Plethodon salamander heads
+plethspecies            Head shape and phylogenetic relationships for
+                        several Plethodon salamander species
+plot.CR                 Plot Function for geomorph
+plot.CR.phylo           Plot Function for geomorph
+plot.bilat.symmetry     Plot Function for geomorph
+plot.evolrate           Plot Function for geomorph
+plot.gm.prcomp          Plot Function for geomorph
+plot.gpagen             Plot Function for geomorph
+plot.mshape             Plot Function for geomorph
+plot.physignal          Plot Function for geomorph
+plot.pls                Plot Function for geomorph
+plot.procD.lm           Plot Function for geomorph
+plotAllSpecimens        Plot landmark coordinates for all specimens
+plotAllometry           Plotting to assist visualization of shape-size
+                        covariation (allometry)
+plotOutliers            Find potential outliers
+plotRefToTarget         Plot shape differences between a reference and
+                        target specimen
+plotspec                Plot 3D specimen, fixed landmarks and surface
+                        semilandmarks
+print.CR                Print/Summary Function for geomorph
+print.CR.phylo          Print/Summary Function for geomorph
+print.bilat.symmetry    Print/Summary Function for geomorph
+print.combined.set      Print/Summary Function for geomorph
+print.compare.CR        Print/Summary Function for geomorph
+print.compare.pls       Print/Summary Function for geomorph
+print.evolrate          Print/Summary Function for geomorph
+print.evolrate1         Print/Summary Function for geomorph
+print.geomorphShapes    Print/Summary function for geomorph
+print.gm.prcomp         Print/Summary function for geomorph
+print.gpagen            Print/Summary Function for geomorph
+print.morphol.disparity
+                        Print/Summary Function for geomorph
+print.physignal         Print/Summary Function for geomorph
+print.pls               Print/Summary Function for geomorph
+print.procD.lm          Print/Summary Function for geomorph
+procD.lm                Procrustes ANOVA/regression for Procrustes
+                        shape variables
+procD.pgls              Phylogenetic ANOVA/regression for Procrustes
+                        shape variables
+pupfish                 Landmarks on pupfish
+ratland                 Landmark data from dataset rat
+read.morphologika       Read landmark data from Morphologika file(s)
+read.ply                Read mesh data (vertices and faces) from ply
+                        files
+readland.fcsv           Read landmark data matrix from fcsv file
+readland.nts            Read landmark data matrix from nts file
+readland.shapes         Read landmark data from a shapes object
+                        (StereoMorph)
+readland.tps            Read landmark data from tps file
+readmulti.nts           Read and combine multiple nts files
+readmulti.tps           Read and combine multiple tps files
+rotate.coords           Rotate or flip landmark or coordinate
+                        configurations
+scallopPLY              3D scan of a scallop shell from a .ply file in
+                        mesh3d format
+scallops                Landmark data from scallop shells
+shape.predictor         Shape prediction from numeric predictors
+shapeHulls              Update Plots with Convex Hulls for Groups
+summary.CR              Print/Summary Function for geomorph
+summary.CR.phylo        Print/Summary Function for geomorph
+summary.bilat.symmetry
+                        Print/Summary Function for geomorph
+summary.combined.set    Print/Summary Function for geomorph
+summary.compare.CR      Print/Summary Function for geomorph
+summary.compare.pls     Print/Summary Function for geomorph
+summary.evolrate        Print/Summary Function for geomorph
+summary.evolrate1       Print/Summary Function for geomorph
+summary.geomorphShapes
+                        Print/Summary Function for geomorph
+summary.gm.prcomp       Print/Summary Function for geomorph
+summary.gpagen          Print/Summary Function for geomorph
+summary.morphol.disparity
+                        Print/Summary Function for geomorph
+summary.physignal       Print/Summary Function for geomorph
+summary.pls             Print/Summary Function for geomorph
+summary.procD.lm        Print/Summary Function for geomorph
+two.b.pls               Two-block partial least squares analysis for
+                        Procrustes shape variables
+two.d.array             Convert (p x k x n) data array into 2D data
+                        matrix
+warpRefMesh             Creates a mesh3d object warped to the mean
+                        shape
+warpRefOutline          Creates a 2D outline warped to the mean shape
+writeland.tps           Write landmark data to tps file

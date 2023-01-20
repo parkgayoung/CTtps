@@ -1,0 +1,49 @@
+Arey301A.scope          Pixel-to-metric distance conversions for the
+                        dissecting scope in Arey 301A
+Bombus.forewings        Bumblebee forewing shape data
+Bombus.tree             A phylogeny of bumblebee species
+East1916                Quantative Genetics Data from East 1916
+East1916.wide           Quantative Genetics Data from East 1916
+Jadera                  Shape data from _Jadera haematoloma_
+JaderaRNAi              Shape data from _Jadera haematoloma_ RNAi
+                        specimens
+add.provenance          Add data provenance to a list
+adonis.aic              Generalized AIC for adonis models
+align.angle             Align a subset of landmarks by rotation from
+                        one point
+align.bilat             Align landmarks across a line of symmetry
+align.extension         Align a subset of landmarks by linear extension
+align.procrustes        Generalized Procrustes alignment with
+                        interactive outlier detection and removal
+align.reflect           Consistently orient specimens in an array of
+                        coordinate shape values
+centroid.scaled.distances
+                        Calculate the matrix of distances between shape
+                        coordinates, scaled by centroid size
+create.tps              Convert landmark data from xlsx or csv to tps
+                        format
+distance                Euclidean distance between points in 2D space
+estimate.missing.landmarks
+                        Estimate the location of missing landmarks
+filter.shapes           Filter landmark coordinate shape data via a
+                        factor
+gg.shape.space          Shape space in the ggplot style
+ggGMMplot               Morphospace in the ggplot style
+landmark.plot           Plot the relative position of landmarks
+listed.gdf              Converts list elements gpagen and metadata into
+                        a geomorph data frame
+mantis                  Simulated dataset of Mantis forelimb shapes
+pairs                   Scatterplot Matrices
+pcvar                   Proportional Variance from Principal Components
+phy.names               Add information to the names in a phylip
+                        alignment file
+qPCR.plot               Plot raw qPCR data
+read.mmm                Read in and convert linear multivariate
+                        morphometric data
+read.tps                Read shape data from a TPS file
+rmd.anova.table         Format anova output for R markdown
+scaling.plot            Scaling plots in the ggplot style
+shape.space             Shape space in the ggplot style
+subset.gmm              Subset a geometric morphometric shape dataset
+subsetgmm               Subset a geometric morphometric shape dataset
+write.provenance        Write data provenance to a file
