@@ -459,7 +459,8 @@ list(`phase 2` = df_sitename_corr_p2_long,
   ggbeeswarm::geom_quasirandom(size = 2,
                                alpha = 0.3) +
   theme_minimal() +
-  labs(y = "Correlation coefficient")
+  labs(y = "Correlation coefficient") +
+theme(axis.title.y = element_text(size = 13))
 
 plot_grid(plot_grid(
           plot_grid(p2_corr_plot, 
@@ -505,7 +506,8 @@ correlations_by_raw_material <-
                                alpha = 0.3) +
   theme_minimal() +
   labs(y = "Correlation coefficient",
-       x = "Raw material")
+       x = "Raw material") +
+theme(axis.title.y = element_text(size = 7.5)) 
 
 # correlation by site
 df_sitename_corr_site <- 
@@ -530,7 +532,8 @@ correlations_by_site <-
                                alpha = 0.3) +
   theme_minimal() +
   labs(y = "Correlation coefficient",
-       x = "Site")
+       x = "Assemblage") +
+theme(axis.title.y = element_text(size = 7.5))
 
 
 library(cowplot)
@@ -646,9 +649,6 @@ max_cv <- round(max(cv_data_sharma_named$all_cv_sharma), 1)
 min_cv <- round(min(cv_data_sharma_named$all_cv_sharma), 1)
 
 ```
-
-
-
 
 
 
