@@ -490,6 +490,8 @@ plot_grid(plot_grid(
 
 
 
+
+
 ```{r}
 #| label: fig-plot-cor-four-assemblage
 #| fig-cap: Correlation for assemblages with more than 5 stemmed points. Among the four assemblages, SYG1_2 and SYG6_2 are from Phase 2 of the Korean Late Paleolithic chronology and SYG1_3 and YS_3 are from Phase 3.
