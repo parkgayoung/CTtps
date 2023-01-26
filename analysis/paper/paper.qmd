@@ -34,7 +34,7 @@ bibliography: references.bib
 csl: "../templates/journal-of-archaeological-science.csl" # Insert path for the bib-style
 
 abstract: |
-  The onset of the Late Paleolithic period in Korea, represented by the appearance of stemmed points and blades, was a key event in the dispersal of modern humans in Northeast Asia. Previous studies have mainly focussed on possible origin locations of these new technologies. The specific cultural processes of the appearance stemmed points and blades has rarely been considered. We investigate the cultural processes by applying a cultural transmission framework to investigate the social contexts of the emergence of these new technologies. Our main question is: what was the dominant mode of cultural transmission during this time of technological innovation in the Korean Late Paleolithic? Following Bettinger and Eerkens [-@bettinger1999point], we evaluated models of guided variation and indirect bias using data from Korean assemblages containing stemmed points. To evaluate these models and understand the transmission processes, we computed correlation coefficients and coefficients of variation (CV). We found that information about the new technology was likely transmitted via selective combinations of guided variation and indirect bias over time. Some attributes including length and width were transmitted with less variation while other attributes appear to have more variation. Our results suggest that the dominant mode of cultural transmission for the earliest stemmed points was guided variation and then indirect bias was adapted to carry out the technological change. We assume that individuals or groups developed stemmed points by experimenting with existing blade technologies and then copied crucial part of a successful model to ensure the quality to optimize tool usage. As a result, the shape of stemmed points became standardized among their social groups.    
+  The onset of the Late Paleolithic period in Korea, represented by the appearance of stemmed points and blades, was a key event in the dispersal of modern humans in Northeast Asia. Previous studies have mainly focussed on possible origin locations of these new technologies. The specific cultural processes of the appearance stemmed points and blades has rarely been considered. We investigate the cultural processes by applying a cultural transmission framework to investigate the social contexts of the emergence of these new technologies. Our main question is: what was the dominant mode of cultural transmission during this time of technological innovation in the Korean Late Paleolithic? Following Bettinger and Eerkens [-@bettinger1999point], we evaluated models of guided variation and indirect bias using data from Korean assemblages containing stemmed points. To evaluate these models and understand the transmission processes, we computed correlation coefficients and coefficients of variation (CV). We found that information about the new technology was likely transmitted via selective combinations of guided variation and indirect bias over time. Some attributes including length and width were transmitted with less variation while other attributes appear to have more variation. Our results suggest that the dominant mode of cultural transmission for the earliest stemmed points was guided variation and then indirect bias was adapted to carry out the technological change. We assume that individuals or groups developed stemmed points by experimenting with existing blade technologies and then copied crucial part of a successful model to ensure the quality to optimize tool usage. As a result, the shape of stemmed points became more standardized among their social groups.    
   
 keywords: |
   Stemmed points; Korean Paleolithic; Cultural Transmission; Learning process, Copying errors, Transmission Biases, Guided variation, Indirect bias
@@ -92,15 +92,24 @@ df_full_sitename %>%
   dplyr::count(full_sitename) %>%
   arrange(desc(n))
 
+# how many assemblages do we use?
+stemmed_points_ass <- df_sitename %>%
+  unite(col = "site_phase",
+        c(sitename,
+          SPstage.Stage),
+        sep = "_") %>%
+  dplyr::select(-SPstage.Raw_material) %>%
+  dplyr::count(site_phase)
+
 # prepare some values to use in the text below
 total_number_of_sp <- sum(stemmed_points_per_site$n)
 total_number_of_sites <-nrow(stemmed_points_per_site)
-total_number_of_assemblages <- NULL # ADD CODE HERE
+total_number_of_assemblages <- nrow(stemmed_points_ass)
 ```
 
 ## Materials and stemmed points chronology
 
-After the first discovery of stemmed points at the Seokjangri site in the 1960s, around 300 have been found in nearly 30 sites across Korea (@fig-map). Most sites contain only a few points but a few sites have many more, such as Suyanggae (n = 55), Jingeuneul (n = 99), and Yongsandong (n = 38) [@Kim_2017]. Among these stemmed points, we selected those that are unbroken from the tip to the stem. We excluded artifacts that were recorded as stemmed points but lack a stem. This resulted in a sample of `r total_number_of_sp` stemmed points from 28 assemblages unearthed from `r total_number_of_sites` sites spanning the period 40-17 ka (@tbl-sp-number). The images of the stemmed points were obtained from published excavation reports and by direct photography during our research on local museum collections. We defined multiple assemblages in a site where artifact-bearing deposits were separated by culturally sterile deposits, or where distinct artifact-bearing stratigraphic units could be identified by major differences in the texture, color, and composition of the sedimentary deposits.
+After the first discovery of stemmed points at the Seokjangri site in the 1960s, around 300 have been found in nearly 30 sites across Korea (@fig-map). Most sites contain only a few points but a few sites have many more, such as Suyanggae (n = 55), Jingeuneul (n = 99), and Yongsandong (n = 38) [@Kim_2017]. Among these stemmed points, we selected those that are unbroken from the tip to the stem. We excluded artifacts that were recorded as stemmed points but lack a stem. This resulted in a sample of `r total_number_of_sp` stemmed points from `r total_number_of_assemblages` assemblages unearthed from `r total_number_of_sites` sites spanning the period 40-17 ka (@tbl-sp-number). The images of the stemmed points were obtained from published excavation reports and by direct photography during our research on local museum collections. We defined multiple assemblages in a site where artifact-bearing deposits were separated by culturally sterile deposits, or where distinct artifact-bearing stratigraphic units could be identified by major differences in the texture, color, and composition of the sedimentary deposits.
 
 \newpage
 
@@ -261,11 +270,11 @@ here::here("analysis/data/raw_data/site-total-artifacts.csv") %>%
 
 \newpage
 
-To analyze morphological change over time, we used previously developed chronologies that identify three phases in the Korean Late Paleolithic [@seong2015diversity; @Park_2013]. These chronologies were built on radiocarbon ages, and for sites without any, the presence/absence of blades, stemmed point blanks, and toolkit composition. Based on the existence of blade and micro blade and types of stemmed point blanks, we divided the Late Paleolithic assemblages into three chronological phases: 1) stemmed points made out of flakes and no blades in assemblages, 2) stemmed points made out of blade or flake and the existence of blade in assemblages, and 3) stemmed points made out of blade and the existence of micro blade in assemblages (@tbl-korean-chronology). Applying this division is necessary because some sites such as Yonghodong, Goryeri, Jungmal, and Mungyeong have no radiocarbon dates due to various research limitations. Inferring ages for these sites by analogy to the technological sequences at sites with dates is important for making maximal use of the available archaeological data to increase our sample size. We arranged our `r total_number_of_assemblages` assemblages containing stemmed points in into these three phases to facilitate observations of change over time.
+To analyze morphological change over time, we used previously developed chronologies that identify three phases in the Korean Late Paleolithic [@seong2015diversity; @Park_2013]. These chronologies were built on radiocarbon ages, and for sites without any, the presence/absence of blades, stemmed point blanks, and toolkit composition. Based on the existence of blade and micro blade and types of stemmed point blanks, we divided the Korean Late Paleolithic assemblages into three chronological phases: 1) stemmed points made out of flakes and no blades in assemblages, 2) stemmed points made out of blade or flake and the existence of blade in assemblages, and 3) stemmed points made out of blade and the existence of micro blade in assemblages (@tbl-korean-chronology). Applying this division is necessary because some sites such as Yonghodong, Goryeri, Jungmal, and Mungyeong have no radiocarbon ages due to various research limitations. Inferring ages for these sites by analogy to the technological sequences at sites with dates is important for making maximal use of the available archaeological data to increase our sample size. We arranged our `r total_number_of_assemblages` assemblages containing stemmed points in into these three phases to facilitate observations of change over time.
 
 ```{r}
 #| label: tbl-korean-chronology
-#| tbl-cap: Korean Paleolithic Chronology edited based on Seong [-@seong2015diversity] and Park [-@Park_2013]
+#| tbl-cap: Korean Late Paleolithic Chronology edited based on Seong [-@seong2015diversity] and Park [-@Park_2013]
 
 here::here("analysis/data/raw_data/Korean-paleolithic-chronology.csv") %>% 
   read_csv() %>% 
@@ -275,7 +284,7 @@ here::here("analysis/data/raw_data/Korean-paleolithic-chronology.csv") %>%
 
 \newpage
 
-Panel A of @fig-raw-materials-by-phase summarizes the amount of stemmed points in each chronological phase, and the distribution of raw materials across the phases. We exclude phase 1 from our analyses below because of the small sample size. Shale is the dominant raw material in both phase 2 and 3. In phase 3 there is an increase in the proportions of rhyolite and porphyry, driven largely by finds from Wolpyeng and Yongsangdong. Panel B in @fig-raw-materials-by-phase shows the count of stemmed points by raw material type at assemblages with more than five stemmed points. Much of the raw material diversity comes from isolated finds, with those assemblages with more than five points showing high homogeneity in raw materials.
+Panel A of @fig-raw-materials-by-phase summarizes the amount of stemmed points in each chronological phase, and the distribution of raw materials across the phases. We exclude phase 1 from our analyses below because of the small sample size to compute correlation and CV. Shale is the dominant raw material in both phase 2 and 3. In phase 3 there is an increase in the proportions of porphyry, driven largely by finds from Yongsangdong, and other raw materials. Panel B in @fig-raw-materials-by-phase shows the count of stemmed points by raw material type at assemblages with more than five stemmed points. Much of the raw material diversity comes from isolated finds, with those assemblages with more than five points showing high homogeneity in raw materials.
 
 ```{r}
 #| label: fig-raw-materials-by-phase
@@ -316,7 +325,7 @@ p2 <-
   df_full_sitename_fct %>%
   mutate(SPstage.Stage = paste0("Phase ", SPstage.Stage)) %>% 
   group_by(full_sitename) %>% 
-  filter(n() >= 5) %>% 
+  filter(n() > 5) %>% 
     ggplot() +
     aes(full_sitename,
         fill = SPstage.Raw_material) +
@@ -364,36 +373,38 @@ here::here("analysis/data/raw_data/table-of-landmark-abbreviations.csv") %>%
   read_csv() %>% 
   knitr::kable(.)
 
-# to ensure we don't have any copy-paste errors
+# to ensure we don't have any copy-paste errors 
+# Correlation threshold
+threshold_value_cor <- 0.5
+
+# CV threshold
 threshold_value <- 25
 ```
 
 \newpage
 
-Following @bettinger1999point we computed Pearson's correlation coefficients for all measurements of the seven attributes that we measured on the stemmed points. The correlation of artifact attributes was proposed by @bettinger1999point to be a key indicator of indirect bias during cultural transmission. This is based on the assumption that assumed that artifact-making was transmitted in packages of traits taken from socially successful individuals who were role-models. In their work points from Eastern California and Central Nevada, @bettinger1999point interpreted correlation coefficient values of around 0.5 and higher as evidence of indirect bias, and lower values as evidence of guided variation.
+Following @bettinger1999point we computed Pearson's correlation coefficients for all attributes on the stemmed points. The correlation of artifact attributes was proposed by @bettinger1999point to be a key indicator of indirect bias during cultural transmission. This is based on the assumption that artifact-making was transmitted in packages of traits taken from socially successful individuals who were role-models. In their work, @bettinger1999point interpreted correlation coefficient values of around 0.5 and higher as evidence of indirect bias, and lower values as evidence of guided variation. In this research, we examine correlation between attributes and explore other variables such as different phases, raw materials and assemblages.
 
-To measure the variation among the measurements of the stemmed points, we computed Coefficients of Variation (CV) with confidence intervals. The CV is the ratio of the standard deviation to the mean. It has been used as a robust statistical method to calculate the degree of standardization, precision, equality, homogeneity, etc. in various disciplines [@ng2006performance; @panichkitkosolkul2009improved; @panichkitkosolkul2013confidence]. In archaeological studies, CV has been applied to measure the variation between artifacts and to test hypotheses about cultural evolutionary processes, including distinguishing between different types of learning biases affecting cultural transmission [@eerkens2001techniques; @eerkens2005cultural; @schillinger2014copying; @garvey2018current]. Based on the Weber Fraction for visual measurement of line lenght, Eerkens and Bettinger [-@eerkens2001techniques] claim that over 57.7% of the CV is the result of random production and below 1.7% is the byproduct of using a scale or template. They also presented average CV values (%) for artifacts made from various materials (See Table 1 from @eerkens2001techniques). Among those various material artifacts, the most comparable artifacts to the stemmed points are Great Basin projectiles points, whose CV value ranged from 6-55, with an average of 22. Additionally, projectile points from the US Southwest have CV values ranged from 11 to 33 [@garvey2018current]. We sat `r threshold_value` as a rough threshold to evaluate the transmission biases referring to the example of Great Basin projectile points. Specifically, we calculated CV values of Rosegate points from Monitor Valley, which was speculated as the byproducts of indirect bias (raw data from table 5 of @bettinger1999point). With the exception of weight, the CV range for metric attributes is 17.01 to 24.59. Variation is generated by small errors that are transmitted between individuals and the errors gets bigger through generations [@eerkens2005cultural]. The errors are also highly associated with raw materials. Some raw materials, such as clay, are easier to control while, less predictable and controllable materials such as stone are likely to have inflated CV values [@eerkens2001techniques].
-We chose higher side on the CV range of Rosegate points as the threshold of our research considering the lower quality raw materials of stemmed points and longer duration of their transmission process, which is roughly whole period of the Korean Late Paleolithic (approx.30,000yrs). We premised that CV values that are lower than `r threshold_value` represent guided variation while CV values over `r threshold_value` reflect indirect bias.
+We chose Coefficients of Variation (CV) to measure the variation among the measurements of the stemmed points. The CV is the ratio (%) of the standard deviation to the mean. It has been used as a robust statistical method to calculate the degree of standardization, precision, equality, homogeneity, etc. in various disciplines [@ng2006performance; @panichkitkosolkul2009improved; @panichkitkosolkul2013confidence]. In archaeological studies, CV has been applied to measure the variation between artifacts and to test hypotheses about cultural evolutionary processes, including distinguishing between different types of learning biases affecting cultural transmission [@eerkens2001techniques; @eerkens2005cultural; @schillinger2014copying; @garvey2018current]. Based on the Weber Fraction for visual measurement of line length, Eerkens and Bettinger [-@eerkens2001techniques] claim that over 57.7% of the CV is the result of random production and below 1.7% is the byproduct of using a scale or template.
 
 Sample size can impact the accuracy of CV estimates [@toebe2018sample; @kelley2007sample; @vanpool2011quantitative]. In previous archaeological studies, sample sizes for CV values has varied from five to more than a thousand artifacts [@bettinger1999point; @garvey2018current; @costin1995standardization; @wierer2013variability; @kvamme1996alternative; @rivals2009new]. A variety of methods are available for improving the reliability of CV measurements when using small samples. For example, @vanpool2011quantitative proposed a "corrected CV", for a smaller sample (i.e. n\<25). Statistical research has resulted in several methods for computing confidence intervals on CVs to show uncertainty [@koopmans1964confidence; @miller1991asymptomatic; @sharma1994asymptotic; @mckay1932distribution; @vangel1996confidence; @curto2009coefficient; @banik2011estimating; @panichkitkosolkul2013confidence; @mahmoudvand2009two; @gulhar2012comparison]. Although we have a total of `r total_number_of_sp` artifacts, most of our analyses here involves comparisons of smaller subsets of this sample. For example to explore temporal and regional patterns we compared samples of well under 25 pieces. Given these relatively small sample sizes in our study, we used the corrected CV formula, which we have implemented here in a function in the R programming language for others to use. We also computed confidence intervals using method proposed by @sharma1994asymptotic to increase the credibility of the comparisons and be transparent about the precision and accuracy of our results [@kelley2007sample; @albatineh2014confidence].
+
+-@eerkens2001techniques presented some average CV values (%) of artifacts made from various materials (See Table 1 from @eerkens2001techniques). 
+Among those various material artifacts, the most comparable artifacts to the stemmed points are Great Basin projectiles points, whose CV value ranged from 6-55, with an average of 22. Also, projectile points from the US Southwest have CV values ranged from 11 to 33 [@garvey2018current]. Unlike correlation, @bettinger1999point had vaguely mention about the threshold for CV values. Therefore, here we sat `r threshold_value` as a rough threshold to evaluate the transmission biases referring to the example of Great Basin projectile points. We calculated CV values of Rosegate points from Monitor Valley, which was speculated as the byproducts of indirect bias (raw data from table 5 of @bettinger1999point). With the exception of weight, the CV range for metric attributes on the points is 17.01 to 24.59. We chose higher side on the CV range of Rosegate points as the threshold of our research based on following reasons. 1) Variation is generated by small errors that are transmitted between individuals and the errors gets bigger through generations [@eerkens2005cultural]. The duration of transmission process for stemmed points is much longer (approx.30,000yrs) than the case of Rosegate (approx.500yrs in Fremont region) [@bischoff2021rosegate]. 2) The errors are also highly associated with raw materials. Some raw materials, such as clay, are easier to control while, less predictable and controllable materials such as stone are likely to have inflated CV values [@eerkens2001techniques]. We assume that Rosegate projectile points were made from more finer grained raw materials such as flint compared to raw materials for stemmed points such as shale, rhyolite, porphyry, etc. (@fig-raw-materials-by-phase). 3) Compared to normal CV, corrected CV has slightly higher values [@vanpool2011quantitative]. Based on the threshold, we premised that CV values that are lower than `r threshold_value` represent guided variation while CV values over `r threshold_value` reflect indirect bias.
 
 All data preparation, analyses and visualization were computed in the R environment [@RCoreTeam]. Our R code and data, including the original artifact images, are fully and openly available in our compendium [@Marwick2018compendium] online at https://doi.org/10.17605/osf.io/eb8mx to enable transparency and reproducibility [@marwick2017computational].
 
 # Results {.unnumbered}
 
+## Correlation coefficients over time
 
-## Correlation analysis of attributes
-
-
-@fig-corr-analysis
+Our results show positive correlation between attributes. Panel A and B of @fig-corr-analysis indicate that some attributes such as BL and ML have stronger correlation than others. The correlations between attributes became stronger over time as we can clearly see in the Panel C of @fig-corr-analysis. The median for Phase 2 is much lower than `r threshold_value_cor`, which @bettinger1999point interpreted as a threshold to evaluate transmission biases. Therefore, we assume that the earlier transmission for stemmed points was more likely the results of guided variation. In Phase 3, the median is close to `r threshold_value_cor`, which means the Phase 3 could be more associated with indirect bias. 
 
 ```{r}
 #| label: fig-corr-analysis
-#| fig-cap: "Correlation analysis by chronological phases. A: xxx. B. xxx. C. xxx"
+#| fig-cap: "Correlation analysis by chronological phases in the Korean Late Paleolithic period. A: Correlation coefficient between attributes for Phase 1. B. Correlation coefficient between attributes for Phase 2. C. Correlation coefficient for the second and third chronological phases. The grey points represent correlation between two attributes. "
 #| fig-width: 7
 #| fig-height: 3
-
-# BM: I added this section of analysis to replace the PCA sections. 
 
 library(corrr)
 
@@ -460,7 +471,10 @@ list(`phase 2` = df_sitename_corr_p2_long,
                                alpha = 0.3) +
   theme_minimal() +
   labs(y = "Correlation coefficient") +
-theme(axis.title.y = element_text(size = 13))
+theme(axis.title.y = element_text(size = 13)) +
+  # draw a line to show our threshold value
+  geom_hline(yintercept = threshold_value_cor, colour = "red") +
+  theme_bw()
 
 plot_grid(plot_grid(
           plot_grid(p2_corr_plot, 
@@ -474,6 +488,55 @@ plot_grid(plot_grid(
 
 ```
 
+
+
+```{r}
+#| label: fig-plot-cor-four-assemblage
+#| fig-cap: Correlation for assemblages with more than 5 stemmed points. Among the four assemblages, SYG1_2 and SYG6_2 are from Phase 2 of the Korean Late Paleolithic chronology and SYG1_3 and YS_3 are from Phase 3.
+#| fig-width:   4.5
+#| fig-height:  4
+
+#### plot cors by site with number of artifacts showing >5
+
+cor_by_site_df_label_more_than_5 <-
+  df_sitename %>%
+  unite(col = "site_phase",
+        c(sitename,
+          SPstage.Stage),
+        sep = "_") %>%
+  dplyr::select(-SPstage.Raw_material) %>%
+  dplyr::group_by(site_phase) %>%
+  add_tally() %>%
+  dplyr::filter( n > 5) %>%
+  mutate(label = as.factor(paste0(site_phase,' (N = ', n, ")"))) %>%
+  nest(-site_phase) %>%
+  mutate(corrr = purrr::map(data, ~correlate(.x) %>%  
+                                   shave() %>% 
+                                  pivot_longer(-term))) %>% 
+  unnest(corrr) %>% 
+  filter()
+
+#better arrangement for x axis for the plot
+level_order <- c('SYG1_2', 'SYG6_2', 'SYG1_3', 'YS_3')
+
+  ggplot(cor_by_site_df_label_more_than_5) +
+  aes(x=factor(site_phase, level=level_order), y=value) +
+  geom_boxplot() +
+  ggbeeswarm::geom_quasirandom(size = 2,
+                               alpha = 0.3) +
+  theme_minimal() +
+  labs(y = "Correlation coefficient",
+       x = "Assemblage") +
+theme(axis.title.y = element_text(size = 7.5)) +
+  # draw a line to show our threshold value
+  geom_hline(yintercept = threshold_value_cor, colour = "red") +
+  theme_bw()
+
+```
+
+
+## Correlation between sites and raw materials
+
 @fig-corr-raw-ass
 
 ```{r}
@@ -483,11 +546,40 @@ plot_grid(plot_grid(
 #| fig-width:7
 #| fig-height:5
 
+# correlation by site
+df_sitename_corr_site <- 
+  df_sitename %>%
+  group_by(sitename) %>% 
+  filter(n() > 5) %>% 
+  dplyr::select(-sitename, 
+                -SPstage.Stage) %>% 
+  nest(-sitename) %>% 
+  mutate(corrr = purrr::map(data, ~correlate(.x) %>%  
+                                   shave() %>% 
+                                  pivot_longer(-term))) %>% 
+  unnest(corrr) %>% 
+  filter()
+
+correlations_by_site <- 
+  ggplot(df_sitename_corr_site) +
+  aes(sitename,
+      value) +
+  geom_boxplot() +
+  ggbeeswarm::geom_quasirandom(size = 2,
+                               alpha = 0.3) +
+  theme_minimal() +
+  labs(y = "Correlation coefficient",
+       x = "Site") +
+theme(axis.title.y = element_text(size = 7.5)) +
+  # draw a line to show our threshold value
+  geom_hline(yintercept = threshold_value_cor, colour = "red") +
+  theme_bw()
+
 # correlation by raw material
 df_sitename_corr_raw_material <- 
   df_sitename %>%
   group_by(SPstage.Raw_material) %>% 
-  filter(n() >= 3) %>% 
+  filter(n() > 2) %>% 
   dplyr::select(-sitename, 
                 -SPstage.Stage) %>% 
   nest(-SPstage.Raw_material) %>% 
@@ -507,43 +599,30 @@ correlations_by_raw_material <-
   theme_minimal() +
   labs(y = "Correlation coefficient",
        x = "Raw material") +
-theme(axis.title.y = element_text(size = 7.5)) 
+theme(axis.title.y = element_text(size = 7.5)) +
+  # draw a line to show our threshold value
+  geom_hline(yintercept = threshold_value_cor, colour = "red") +
+  scale_x_discrete(guide = guide_axis(n.dodge = 2))+
+  theme_bw()
 
-# correlation by site
-df_sitename_corr_site <- 
-  df_sitename %>%
-  group_by(sitename) %>% 
-  filter(n() >= 5) %>% 
-  dplyr::select(-sitename, 
-                -SPstage.Stage) %>% 
-  nest(-sitename) %>% 
-  mutate(corrr = purrr::map(data, ~correlate(.x) %>%  
-                                   shave() %>% 
-                                  pivot_longer(-term))) %>% 
-  unnest(corrr) %>% 
-  filter()
 
-correlations_by_site <- 
-  ggplot(df_sitename_corr_site) +
-  aes(sitename,
-      value) +
-  geom_boxplot() +
-  ggbeeswarm::geom_quasirandom(size = 2,
-                               alpha = 0.3) +
-  theme_minimal() +
-  labs(y = "Correlation coefficient",
-       x = "Assemblage") +
-theme(axis.title.y = element_text(size = 7.5))
 
 
 library(cowplot)
-plot_grid(correlations_by_raw_material,
-          correlations_by_site,
+plot_grid(correlations_by_site,
+          correlations_by_raw_material,
                     ncol = 1,
                     labels = c("A", "B"))
           
           
 ```
+
+
+
+
+
+
+
 
 
 
