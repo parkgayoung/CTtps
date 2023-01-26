@@ -715,12 +715,12 @@ cv_data_all <- gather(cv_all)
 library(MKmisc)
 library(purrr)
 # CV value
-sharma_cv <- function(x,...) sharma_cvCI(x, conf.level = 0.95, method = "sharma", na.rm = FALSE)$estimate *100
+sharma_cv <- function(x,...) sharma_cvCI(x, conf.level = 0.95, method = "sharma", na.rm = FALSE)$estimate * 100
 
 #CV sharma interval values
-sharma_int_low <- function(x,...) sharma_cvCI(x, conf.level = 0.95, method = "sharma", na.rm = FALSE)$conf.int[1] *100
+sharma_int_low <- function(x,...) sharma_cvCI(x, conf.level = 0.95, method = "sharma", na.rm = FALSE)$conf.int[1] * 100
 
-sharma_int_high <- function(x,...) sharma_cvCI(x, conf.level = 0.95, method = "sharma", na.rm = FALSE)$conf.int[2] *100
+sharma_int_high <- function(x,...) sharma_cvCI(x, conf.level = 0.95, method = "sharma", na.rm = FALSE)$conf.int[2] * 100
 
 all_cv_sharma <- map_dbl(DF, sharma_cv)
 all_low_sharma <- map_dbl(DF, sharma_int_low)
