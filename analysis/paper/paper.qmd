@@ -398,11 +398,13 @@ All data preparation, analyses and visualization were computed in the R environm
 
 ## Correlation coefficients over time
 
-Our results show positive correlation between attributes. Panel A and B of @fig-corr-analysis indicate that some attributes such as BL and ML have stronger correlation than others. The correlations between attributes became stronger over time as we can clearly see in the Panel C of @fig-corr-analysis. The median for Phase 2 is much lower than `r threshold_value_cor`, which @bettinger1999point interpreted as a threshold to evaluate transmission biases. Therefore, we assume that the earlier transmission for stemmed points was more likely the results of guided variation. In Phase 3, the median is close to `r threshold_value_cor`, which means the Phase 3 could be more associated with indirect bias. 
+To understand temporal patterns in the modes of cultural transmission, we grouped our assemblages into the three Korean Late Paleolithic chronological phases summarized in @tbl-korean-chronology, and computed correlation for all complete stemmed points each phase. Among the three choronological phases, we excluded Phase 1 from our analysis because there are only two complete stemmed points from Yonghodong and Sachang that date to this phase.
+
+Our results show positive correlation between attributes throughout the Late Paleolithic. Panel A and B of @fig-corr-analysis indicate that some attributes such as BL and ML have stronger correlation (i.e. darker-blue points) than others (i.e. lighter-blue or almost invisible points). The correlations between attributes became stronger over time as we can clearly see in the the Panel C of @fig-corr-analysis. The median for Phase 2 is much lower than `r threshold_value_cor`, which @bettinger1999point interpreted as a threshold to evaluate transmission biases, while the Phase 3 median is close to the threshold. Based on this results, we assume that the earlier transmission for stemmed points was more likely the results of guided variation. On the other hand, Phase 3 could be more associated with indirect bias. 
 
 ```{r}
 #| label: fig-corr-analysis
-#| fig-cap: "Correlation analysis by chronological phases in the Korean Late Paleolithic period. A: Correlation coefficient between attributes for Phase 1. B. Correlation coefficient between attributes for Phase 2. C. Correlation coefficient for the second and third chronological phases. The grey points represent correlation between two attributes. "
+#| fig-cap: "Correlation analysis by chronological phases in the Korean Late Paleolithic period. A: Correlation coefficient between attributes for Phase 1. B. Correlation coefficient between attributes for Phase 2. The individual point represesnts correlation between two attributes. Some points are invisible due to their weak relationship. C. Correlation coefficient for the second and third chronological phases. The grey points represent correlation between two attributes. "
 #| fig-width: 7
 #| fig-height: 3
 
@@ -540,6 +542,10 @@ theme(axis.title.y = element_text(size = 7.5)) +
 ## Correlation between sites and raw materials
 
 @fig-corr-raw-ass
+
+One limitation of this aggregation of all stemmed points in our sample into each chronological phase is that the sample consists of a relatively large number of assemblages with only 1-2 stemmed points. These isolated finds are ambiguous with respect to a local tradition of artifact making, so to further investigate temporal change, we focus only the four assemblages that have five or more stemmed points in one chronological phase
+
+
 
 ```{r}
 #| label: fig-corr-raw-ass
@@ -802,8 +808,6 @@ plot_grid(plot_raw_measurements_for_attributes,
 ```
 
 ## Variation Over Time
-
-To understand temporal patterns in the modes of cultural transmission, we grouped our assemblages into the three Korean Late Paleolithic chronological phases summarised in @tbl-korean-chronology, and computed CV values for all complete stemmed points each phase. We excluded Phase 1 from our analysis because there are only two complete stemmed points from Yonghodong and Sachang that date to this phase.
 
 @fig-plot-cv-over-time shows that the directional trend in CV values of artifact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above. Only body length crosses the threshold value, changing from \<`r threshold_value` to \>`r threshold_value` over time, indicating a shift from indirect bias to guided variation. For those attributes where the CV is \<`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width and tang length, indicating increasing influence of indirect bias for these attributes. For stem length, stem width and tang length, CV values remain above `r threshold_value`, and show a slight trend to increase over time, suggesting increased influence of guided variation for these attributes.
 
