@@ -491,8 +491,9 @@ plot_grid(plot_grid(
           rel_heights = c(1, 2.5)))
 
 ```
+## Correlation between assemblages
 
-One limitation of this aggregation of all stemmed points in our sample into each chronological phase is that the sample consists of a relatively large number of assemblages with only 1-2 stemmed points. These isolated finds are ambiguous with respect to a local tradition of artifact making, so to further investigate temporal change, we focus only the four assemblages that have more than five stemmed points (@fig-plot-cor-four-assemblage). We assume these four assemblages are more likely to represent a consistent, recurring way of making stemmed points than isolated finds, and thus more relevant for comparing modes of cultural transmission of artifact making. The four assemblages include three from the Suyanggae site (SYG) and one from the Yongsandong site (YS). There are more variation in correlation coefficient in Phase 2 while the median values for the two assemblages from Phase 3 are similar to each other and close to `r threshold_value_cor`. Even though SYG1_2 is from Phase 2 but it has the higher median than other assemblages.
+One limitation of this aggregation of all stemmed points in our sample into each chronological phase is that the sample consists of a relatively large number of assemblages with only 1-2 stemmed points. These isolated finds are ambiguous with respect to a local tradition of artifact making, so to further investigate temporal change, we focus only the four assemblages that have more than five stemmed points (@fig-plot-cor-four-assemblage). We assume these four assemblages are more likely to represent a consistent, recurring way of making stemmed points than isolated finds, and thus more relevant for comparing modes of cultural transmission of artifact making.The four assemblages include three from the Suyanggae site (SYG) and one from the Yongsandong site (YS). There are more variation in correlation coefficient in Phase 2 while the median values for the two assemblages from Phase 3 are similar to each other and close to `r threshold_value_cor`. There is no clear pattern between assemblages. SYG1_2 is from Phase 2 but it has the higher median than the assemblage from the same site in the later phase.
 
 
 
@@ -541,55 +542,52 @@ theme(axis.title.y = element_text(size = 7.5)) +
 ```
 
 
-## Correlation between sites and raw materials
+## Correlation between raw materials
 
-@fig-corr-raw-ass
-
-
-
+To examine the impact of raw materials on stemmed points, we computed the correlation for different raw materials. We excluded raw materials that were used for less than three points. @fig-corr-raw-ass shows that stemmed points made out of acidic volcanic rocks are highly correlated between most of the attributes but some of the attributes are negatively related. Correlation values for porphyry stemmed points have a narrow distribution. Rhyolite stemmed points have widely distributed correlations. Some of the attributes are negatively related. Like acidic volcanic rocks, the correlation of shale stemmed points is also skewed into two groups. Therefore, we assume that the correlation varies depending on raw materials.
 
 
 ```{r}
 #| label: fig-corr-raw-ass
-#| fig-cap: A. Correlation for each site that has more than five stemmed points. B. Correlation for raw materials that were used for making more than one stemmed poitns. The grey points represent correlation between two attributes.
+#| fig-cap: Correlation for raw materials that were used for making more than one stemmed poitns. The grey points represent correlation between two attributes.
 
 #| fig-width:7
 #| fig-height:5
 
 # correlation by site
-df_sitename_corr_site <- 
-  df_sitename %>%
-  group_by(sitename) %>% 
-  filter(n() > 5) %>% 
-  dplyr::select(-sitename, 
-                -SPstage.Stage) %>% 
-  nest(-sitename) %>% 
-  mutate(corrr = purrr::map(data, ~correlate(.x) %>%  
-                                   shave() %>% 
-                                  pivot_longer(-term))) %>% 
-  unnest(corrr) %>% 
-  filter()
-
-correlations_by_site <- 
-  ggplot(df_sitename_corr_site) +
-  aes(sitename,
-      value) +
-  geom_boxplot() +
-  ggbeeswarm::geom_quasirandom(size = 2,
-                               alpha = 0.3) +
-  theme_minimal() +
-  labs(y = "Correlation coefficient",
-       x = "Site") +
-theme(axis.title.y = element_text(size = 4)) +
-  # draw a line to show our threshold value
-  geom_hline(yintercept = threshold_value_cor, colour = "red") +
-  theme_bw()
+# df_sitename_corr_site <- 
+#   df_sitename %>%
+#   group_by(sitename) %>% 
+#   filter(n() > 5) %>% 
+#   dplyr::select(-sitename, 
+#                 -SPstage.Stage) %>% 
+#   nest(-sitename) %>% 
+#   mutate(corrr = purrr::map(data, ~correlate(.x) %>%  
+#                                    shave() %>% 
+#                                   pivot_longer(-term))) %>% 
+#   unnest(corrr) %>% 
+#   filter()
+# 
+# correlations_by_site <- 
+#   ggplot(df_sitename_corr_site) +
+#   aes(sitename,
+#       value) +
+#   geom_boxplot() +
+#   ggbeeswarm::geom_quasirandom(size = 2,
+#                                alpha = 0.3) +
+#   theme_minimal() +
+#   labs(y = "Correlation coefficient",
+#        x = "Site") +
+# theme(axis.title.y = element_text(size = 4)) +
+#   # draw a line to show our threshold value
+#   geom_hline(yintercept = threshold_value_cor, colour = "red") +
+#   theme_bw()
 
 # correlation by raw material
 df_sitename_corr_raw_material <- 
   df_sitename %>%
   group_by(SPstage.Raw_material) %>% 
-  filter(n() > 2) %>% 
+  filter(n() > 3) %>% 
   dplyr::select(-sitename, 
                 -SPstage.Stage) %>% 
   nest(-SPstage.Raw_material) %>% 
@@ -599,7 +597,7 @@ df_sitename_corr_raw_material <-
   unnest(corrr) %>% 
   filter()
 
-correlations_by_raw_material <- 
+# correlations_by_raw_material <- 
   ggplot(df_sitename_corr_raw_material) +
   aes(SPstage.Raw_material,
       value) +
@@ -612,25 +610,18 @@ correlations_by_raw_material <-
 theme(axis.title.y = element_text(size = 4)) +
   # draw a line to show our threshold value
   geom_hline(yintercept = threshold_value_cor, colour = "red") +
-  scale_x_discrete(guide = guide_axis(n.dodge = 2))+
+  # scale_x_discrete(guide = guide_axis(n.dodge = 2))+
   theme_bw()
 
 
 
 
-library(cowplot)
-plot_grid(correlations_by_site,
-          correlations_by_raw_material,
-                    ncol = 1,
-                    labels = c("A", "B"))
-          
           
 ```
 
 
 
 ## Coefficient of variation and Variation over time
-
 
 
 ```{r}
@@ -759,13 +750,11 @@ ggplot(data_box,
 ```
 
 
-
-
-<!-- BM: overall I think the CV values are really not that interesting or informative. They are difficult to interpret because they all cluster around 15-30, which seems to me to be the midpoint between 'highly standardized' (3-5) and 'highly different' (40-50). So I think we will struggle to convince any readers that we have any strong signals of cultural transmission biases in the CV data. Probably we can satisfy most readers that guided variation is the main bias in these data. That's my perspective after reading this paper several times, and re-reading several related papers by Bettiner and Eerkens and Lipo, and others  -->
+Panel A of @fig-plot-cv-all-attributes shows a relatively wide distribution of body length (BL) and maximum length (ML) while the other attributes are more similar and shorter (under 2.5 cm). Among these attributes, stem width (SW) is the smallest, regardless of overall size of the stemmed points.
 
 Our results show that CV values for all attributes are distributed from `r min_cv` to `r max_cv` (@fig-plot-cv-all-attributes). Compared to the CVs of Great Basin projectile points [@eerkens2001techniques], the average CV for the Korean artifacts is higher. Unlike the distribution of the linear measurements, the CVs of body length and maximum length have the lowest values. The lower CV of maximum length indicates they are highly standardized with narrowest confidence intervals. Tang and stem related attributes (e.g. SL, SW, TL, TW) are less standardized with higher CV values and wider confidence intervals than other attributes Among all the attributes, only maximum length has the CV values lower than 25, which suggests the transmission of this attribute was more influenced by indirect bias than the others.
 
-Panel A of @fig-plot-cv-all-attributes shows a relatively wide distribution of body length (BL) and maximum length (ML) while the other attributes are more similar and shorter (under 2.5 cm). Among these attributes, stem width (SW) is the smallest, regardless of overall size of the stemmed points.
+
 
 
 ```{r}
@@ -801,8 +790,6 @@ plot_grid(plot_raw_measurements_for_attributes,
 ```
 
 @fig-plot-cv-over-time shows that the directional trend in CV values of artifact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above. Only body length crosses the threshold value, changing from \<`r threshold_value` to \>`r threshold_value` over time, indicating a shift from indirect bias to guided variation. For those attributes where the CV is \<`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width and tang length, indicating increasing influence of indirect bias for these attributes. For stem length, stem width and tang length, CV values remain above `r threshold_value`, and show a slight trend to increase over time, suggesting increased influence of guided variation for these attributes.
-
-\newpage
 
 ```{r}
 #| label: fig-plot-cv-over-time
