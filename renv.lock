@@ -76,6 +76,30 @@
         "lattice"
       ]
     },
+    "Momocs": {
+      "Package": "Momocs",
+      "Version": "1.4.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "02f96cb5d7334e19a710074486e791fa",
+      "Requirements": [
+        "MASS",
+        "RColorBrewer",
+        "cluster",
+        "dendextend",
+        "dplyr",
+        "geometry",
+        "geomorph",
+        "ggplot2",
+        "jpeg",
+        "magrittr",
+        "progress",
+        "rgeos",
+        "sp",
+        "tibble",
+        "vegan"
+      ]
+    },
     "R6": {
       "Package": "R6",
       "Version": "2.5.1",
@@ -92,12 +116,32 @@
       "Hash": "45f0398006e83a5b10b72a90663d8d8c",
       "Requirements": []
     },
+    "RRPP": {
+      "Package": "RRPP",
+      "Version": "1.3.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ae1c9530ebaa85e3009bfc22ec48bd91",
+      "Requirements": [
+        "Matrix",
+        "ape",
+        "ggplot2"
+      ]
+    },
     "Rcpp": {
       "Package": "Rcpp",
       "Version": "1.0.10",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "e749cae40fa9ef469b6050959517453c",
+      "Requirements": []
+    },
+    "RcppProgress": {
+      "Package": "RcppProgress",
+      "Version": "0.4.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1c0aa18b97e6aaa17f93b8b866c0ace5",
       "Requirements": []
     },
     "RgoogleMaps": {
@@ -119,6 +163,26 @@
       "Hash": "13a08202e10c249d45d91ab596ae9269",
       "Requirements": [
         "foreach"
+      ]
+    },
+    "abind": {
+      "Package": "abind",
+      "Version": "1.4-5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4f57884290cc75ab22f4af9e9d4ca862",
+      "Requirements": []
+    },
+    "ape": {
+      "Package": "ape",
+      "Version": "5.6-2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "894108412a7ec23d5de85cdcce871c8b",
+      "Requirements": [
+        "Rcpp",
+        "lattice",
+        "nlme"
       ]
     },
     "askpass": {
@@ -451,6 +515,18 @@
         "withr"
       ]
     },
+    "dendextend": {
+      "Package": "dendextend",
+      "Version": "1.16.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "a4b6b1c544c040d8ca640f466f146e1f",
+      "Requirements": [
+        "ggplot2",
+        "magrittr",
+        "viridis"
+      ]
+    },
     "desc": {
       "Package": "desc",
       "Version": "1.4.2",
@@ -702,6 +778,35 @@
       "Hash": "15e9634c0fcd294799e9b2e929ed1b86",
       "Requirements": []
     },
+    "geometry": {
+      "Package": "geometry",
+      "Version": "0.4.7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8e5ba8a115dee2730bab618934db4b85",
+      "Requirements": [
+        "Rcpp",
+        "RcppProgress",
+        "linprog",
+        "lpSolve",
+        "magic"
+      ]
+    },
+    "geomorph": {
+      "Package": "geomorph",
+      "Version": "4.0.5",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "4af3b61ee640e1f204901fb263867dcf",
+      "Requirements": [
+        "Matrix",
+        "RRPP",
+        "ape",
+        "ggplot2",
+        "jpeg",
+        "rgl"
+      ]
+    },
     "gert": {
       "Package": "gert",
       "Version": "1.9.2",
@@ -874,6 +979,16 @@
         "rlang",
         "tibble",
         "vctrs"
+      ]
+    },
+    "gridExtra": {
+      "Package": "gridExtra",
+      "Version": "2.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "7d7f283939f563670a697165b2cf5560",
+      "Requirements": [
+        "gtable"
       ]
     },
     "gtable": {
@@ -1133,6 +1248,24 @@
       "Hash": "e23db0b76e0fe4ec94d4d46c42ecbd9f",
       "Requirements": []
     },
+    "linprog": {
+      "Package": "linprog",
+      "Version": "0.9-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "66e9d4ebd71ddcd6f86a2a9a34f5cdc5",
+      "Requirements": [
+        "lpSolve"
+      ]
+    },
+    "lpSolve": {
+      "Package": "lpSolve",
+      "Version": "5.6.18",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "12c7a918599d5700e4265dd8a21f684f",
+      "Requirements": []
+    },
     "lubridate": {
       "Package": "lubridate",
       "Version": "1.9.2",
@@ -1142,6 +1275,28 @@
       "Requirements": [
         "generics",
         "timechange"
+      ]
+    },
+    "magic": {
+      "Package": "magic",
+      "Version": "1.6-1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "1da6217cea8a3ef496258819b80770e1",
+      "Requirements": [
+        "abind"
+      ]
+    },
+    "magick": {
+      "Package": "magick",
+      "Version": "2.7.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "56fbad418aa50939ed8c3028126af8d7",
+      "Requirements": [
+        "Rcpp",
+        "curl",
+        "magrittr"
       ]
     },
     "magrittr": {
@@ -1259,6 +1414,25 @@
       "Requirements": [
         "askpass"
       ]
+    },
+    "pdftools": {
+      "Package": "pdftools",
+      "Version": "3.3.3",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "8072f379ae37e914e5adc0a3fd8c513c",
+      "Requirements": [
+        "Rcpp",
+        "qpdf"
+      ]
+    },
+    "permute": {
+      "Package": "permute",
+      "Version": "0.9-7",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "abf0ca85c1c752e0d04f46334e635046",
+      "Requirements": []
     },
     "pillar": {
       "Package": "pillar",
@@ -1461,6 +1635,18 @@
       "Hash": "21c4fc168ebf32add2db6a358ce4714c",
       "Requirements": []
     },
+    "qpdf": {
+      "Package": "qpdf",
+      "Version": "1.3.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "c483a5cbb08463128f1bd714e6e9e914",
+      "Requirements": [
+        "Rcpp",
+        "askpass",
+        "curl"
+      ]
+    },
     "ragg": {
       "Package": "ragg",
       "Version": "1.2.5",
@@ -1616,6 +1802,23 @@
       "Hash": "07df8c444f11dac661779efe0df80705",
       "Requirements": [
         "sp"
+      ]
+    },
+    "rgl": {
+      "Package": "rgl",
+      "Version": "1.0.1",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "116f3de82cb82aaa203a0dc3acc341fa",
+      "Requirements": [
+        "R6",
+        "base64enc",
+        "htmltools",
+        "htmlwidgets",
+        "jsonlite",
+        "knitr",
+        "magrittr",
+        "mime"
       ]
     },
     "rlang": {
@@ -1892,6 +2095,20 @@
         "Rcpp"
       ]
     },
+    "tesseract": {
+      "Package": "tesseract",
+      "Version": "5.1.0",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "bad30984019cf778ddcd70a550c860bc",
+      "Requirements": [
+        "Rcpp",
+        "curl",
+        "digest",
+        "pdftools",
+        "rappdirs"
+      ]
+    },
     "testthat": {
       "Package": "testthat",
       "Version": "3.1.6",
@@ -2119,6 +2336,20 @@
         "rlang"
       ]
     },
+    "vegan": {
+      "Package": "vegan",
+      "Version": "2.6-4",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "659fe7589b8e0b16baa49043a61a0ce0",
+      "Requirements": [
+        "MASS",
+        "cluster",
+        "lattice",
+        "mgcv",
+        "permute"
+      ]
+    },
     "vipor": {
       "Package": "vipor",
       "Version": "0.4.5",
@@ -2126,6 +2357,18 @@
       "Repository": "CRAN",
       "Hash": "ea85683da7f2bfa63a98dc6416892591",
       "Requirements": []
+    },
+    "viridis": {
+      "Package": "viridis",
+      "Version": "0.6.2",
+      "Source": "Repository",
+      "Repository": "CRAN",
+      "Hash": "ee96aee95a7a563e5496f8991e9fde4b",
+      "Requirements": [
+        "ggplot2",
+        "gridExtra",
+        "viridisLite"
+      ]
     },
     "viridisLite": {
       "Package": "viridisLite",
