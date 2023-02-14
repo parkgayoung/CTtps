@@ -9,7 +9,7 @@ COPY . /CTtps
 
 
 RUN  sudo apt-get update -y \
-  && sudo apt-get install -y libnlopt-dev libpoppler-cpp-dev libtesseract-dev tesseract-ocr-dev libleptonica-dev \
+  && sudo apt-get install -y libnlopt-dev libpoppler-cpp-dev libtesseract-dev  \
   && R -e "install.packages(c('BiocManager', 'remotes'), repos = c(CRAN = 'https://cloud.r-project.org'))" \
   && R -e "remotes::install_github(c('rstudio/renv', 'quarto-dev/quarto-r'))" \
   # install pkgs we need
