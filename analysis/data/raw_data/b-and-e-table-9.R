@@ -1,6 +1,4 @@
-library(magrittr)
-library(magick)
-library(tesseract)
+
 library(tidyverse)
 library(readxl)
 
