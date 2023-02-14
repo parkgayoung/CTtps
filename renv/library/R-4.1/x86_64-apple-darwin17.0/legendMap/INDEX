@@ -1,7 +1,0 @@
-create_orientation_arrow
-                        Creates a list containing coordinates for the
-                        orientation arrow. (Internal use.)
-create_scale_bar        Creates a list containing coordinates for the
-                        orientation arrow. (Internal use.)
-legendMap-package       North arrow and scale bar for ggplot2 graphics.
-scale_bar               Scale bar and orrientation arrow
