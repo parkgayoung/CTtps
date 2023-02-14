@@ -547,35 +547,6 @@ To examine the impact of raw materials on the shape of stemmed points, we comput
 #| fig-width:7
 #| fig-height:5
 
-# correlation by site
-# df_sitename_corr_site <- 
-#   df_sitename %>%
-#   group_by(sitename) %>% 
-#   filter(n() > 5) %>% 
-#   dplyr::select(-sitename, 
-#                 -SPstage.Stage) %>% 
-#   nest(-sitename) %>% 
-#   mutate(corrr = purrr::map(data, ~correlate(.x) %>%  
-#                                    shave() %>% 
-#                                   pivot_longer(-term))) %>% 
-#   unnest(corrr) %>% 
-#   filter()
-# 
-# correlations_by_site <- 
-#   ggplot(df_sitename_corr_site) +
-#   aes(sitename,
-#       value) +
-#   geom_boxplot() +
-#   ggbeeswarm::geom_quasirandom(size = 2,
-#                                alpha = 0.3) +
-#   theme_minimal() +
-#   labs(y = "Correlation coefficient",
-#        x = "Site") +
-# theme(axis.title.y = element_text(size = 4)) +
-#   # draw a line to show our threshold value
-#   geom_hline(yintercept = threshold_value_cor, colour = "red") +
-#   theme_bw()
-
 # correlation by raw material
 df_sitename_corr_raw_material <- 
   df_sitename %>%
@@ -605,11 +576,6 @@ theme(axis.title.y = element_text(size = 4)) +
   geom_hline(yintercept = threshold_value_cor, colour = "red") +
   scale_x_discrete(guide = guide_axis(n.dodge = 2))+
   theme_bw()
-
-
-
-
-          
 ```
 
 ## Coefficient of variation
@@ -736,18 +702,15 @@ ggplot(data_box,
   theme_bw()
 ```
 
-Panel A of @fig-plot-cv-all-attributes shows a relatively wide distribution of body length (BL) and maximum length (ML) while the other attributes are more similar and shorter (under 2.5 cm). Among these attributes, stem width (SW) is the smallest, regardless of overall size of the stemmed points.
-
-Panel B of @fig-plot-cv-all-attributes shows that CV values for all attributes are distributed from `r min_cv` to `r max_cv`. Compared to the CVs of Great Basin projectile points [@eerkens2001techniques], the average CV for the Korean artifacts is higher. Unlike the distribution of the linear measurements, the CVs of body length and maximum length have the lowest values. The lower CV of maximum length indicates they are highly standardized with narrowest confidence intervals. Tang and stem related attributes (e.g. SL, SW, TL, TW) are less standardized with higher CV values and wider confidence intervals than other attributes. Overall, our results suggests that transmission of stemmed points could be more influenced by guided variation.
+In addition to correlation coefficients of point attributes, we measured coefficients of variation (CVs) to quantify variability in individual attributes. @fig-plot-cv-all-attributes shows that CV values for all attributes are distributed from `r min_cv` to `r max_cv`. Compared to the CVs of Great Basin projectile points [@eerkens2001techniques], the average CV for the Korean artifacts is higher. The CVs of body length (BL) and maximum length (ML) have the lowest values. The low CV and narrow confidence intervals of maximum length indicates that this dimension is highly standardized, relative to the others. Tang and stem related attributes (e.g. SL, SW, TL, TW) are less standardized with higher CV values and wider confidence intervals than other attributes. Overall, with all but one attribute having CV values above our threshold value, our results suggests that the transmission of stemmed points was mostly influenced by guided variation.
 
 ```{r}
 #| label: fig-plot-cv-all-attributes
-#| fig-cap: A. Boxplot for each attribute measured on the stemmed points. The black bold horizontal lines in the middle of boxes represent the median value. The dots represent individual artifacts. B. The points and blue colored numbers represent CV values for each attribute measured on the stemmed points. 95% confidence intervals for the CVs were computed using Sharma and Krishna's method. The vertical lines indicate the confidence intervals.
+#| fig-cap: The points and numbers represent the CV values for each attribute measured on the stemmed points. The vertical lines indicate the 95% confidence intervals for the CV values, which were computed using Sharma and Krishna's method. 
 
 #| fig-width:7
 #| fig-height:4
 
-plot_cv_all_attributes <- 
 ggplot(cv_data_sharma_named,
        aes(attribute,
            all_cv_sharma)) +        # ggplot2 plot with confidence intervals
@@ -765,16 +728,11 @@ ggplot(cv_data_sharma_named,
   geom_hline(yintercept = threshold_value, colour = "red") +
   theme_bw()
 
-library(cowplot)
-plot_grid(plot_raw_measurements_for_attributes,
-          plot_cv_all_attributes,
-          ncol = 1, 
-          labels = "AUTO")
 ```
 
-Similar to Panel D of @fig-corr-analysis, we divided the stemmed points into three chronological phases and computed CV to examine temporal patterns in the modes of cultural transmission. Again, we excluded stemmed points for Phase 1 due to the limited number of artifacts.
+@fig-plot-cv-over-time shows CV values for stemmed points grouped into three chronological phases to examine temporal patterns in the modes of cultural transmission. We excluded stemmed points for Phase 1 due to the limited number of artifacts dating to this time.
 
-@fig-plot-cv-over-time shows that the directional trend in CV values of artifact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above. Only body length crosses the threshold value, changing from \<`r threshold_value` to \>`r threshold_value` over time, indicating a shift from indirect bias to guided variation. For those attributes where the CV is \<`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width and tang length, indicating increasing influence of indirect bias for these attributes. For stem length, stem width and tang length, CV values remain above `r threshold_value`, and show a slight trend to increase over time, suggesting increased influence of guided variation for these attributes.
+@fig-plot-cv-over-time shows that the directional trend in CV values of artifact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above for both phases. Only body length (BL) crosses the threshold value, changing from \<`r threshold_value` to \>`r threshold_value` over time, indicating a shift from indirect bias to guided variation. For those attributes where the CV is \<`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width (MW) and tang width (TW), indicating increasing influence of indirect bias for these attributes. For stem length (SL), stem width (SW) and tang length (TL), CV values remain above `r threshold_value`, and show a slight trend to increase over time, suggesting increased influence of guided variation for these stem and tang attributes.
 
 ```{r}
 #| label: fig-plot-cv-over-time
@@ -819,7 +777,7 @@ cv_by_stage_df %>%
   theme_bw()
 ```
 
-Following the previous studies of [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we only compared CV values of attributes, body length, maximum length, mid width, and tang width for the assemblages that have more than five stemmed points. @fig-plot-cv-four-assemblage shows that CV values for the four assemblages are mostly slightly below `r threshold_value`. Among the assemblages, SYG1_2 has higher CV values as well as the widest ranges of confidence intervals. It is interesting because SYG1_2 has the strong correlation between attributes (@fig-plot-cor-four-assemblage). Perhaps it could be related to its small sample size, relative to the other assemblages compared here. Overall we see only subtle changes in CV values from Phase 2 to Phase 3 in @fig-plot-cv-four-assemblage. This suggests that the complex directional trends in @fig-plot-cv-over-time might be best interpreted as noise in an overall signal of guided variation, rather than substantial changes in the type of bias dominating cultural transmission.
+We further analysed temporal change by looking at specific assemblages in each chronological phase. Following previous studies [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we included CV values of body length, maximum length, mid width, and tang width for assemblages that have five or more stemmed points. @fig-plot-cv-four-assemblage shows that CV values for the four assemblages are mostly slightly below `r threshold_value`, with no directional trend apparent between Phase 2 and Phase 3. Overall we see only subtle changes in CV values from Phase 2 to Phase 3 in @fig-plot-cv-four-assemblage. Among the assemblages, SYG1_2 has higher CV values as well as the widest ranges of confidence intervals. It is interesting because SYG1_2 has the strong correlation between attributes (@fig-plot-cor-four-assemblage). Perhaps it could be related to its small sample size, relative to the other assemblages compared here. These results suggest that the complex directional trends in @fig-plot-cv-over-time might be best interpreted as noise in an overall signal of guided variation, rather than substantial changes in the type of bias dominating cultural transmission.
 
 ```{r}
 #| label: fig-plot-cv-four-assemblage
