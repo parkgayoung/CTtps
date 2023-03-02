@@ -253,6 +253,12 @@ ggdraw() +
   ) +
   theme(panel.background = element_rect(fill='white', colour="white"),
         plot.background = element_rect(fill='white', colour="white"))
+
+# ggsave(here::here("analysis/figures/fig-map.png"),
+#        width = 4,
+#        height = 4.5,
+#        units = "in")
+
 ```
 
 \newpage
@@ -343,6 +349,12 @@ plot_grid(p1, p2,
           ncol = 1,
           rel_heights = c(1.5, 0.75),
           labels = c("A", "B"))
+
+# ggsave(here::here("analysis/figures/fig-raw-materials-by-phase.png"),
+#        width = 4,
+#        height = 3,
+#        units = "in")
+
 ```
 
 \newpage
@@ -493,6 +505,12 @@ plot_grid(plot_grid(
           labels = c("", "D"),
           rel_heights = c(1, 2.5)))
 
+
+# ggsave(here::here("analysis/figures/fig-corr-analysis.png"),
+#        width = 4,
+#        height = 3,
+#        units = "in")
+
 ```
 
 One limitation of this aggregation of stemmed points into chronological phases is that the sample consists of a relatively large number of assemblages with only 1-2 stemmed points. These isolated finds are ambiguous with respect to a local tradition of artifact making, so to further investigate temporal change, we focus only on the four assemblages that have more than five stemmed points (@fig-plot-cor-four-assemblage). We assume these four assemblages are more likely to represent a consistent, recurring way of making stemmed points than isolated finds, and thus more relevant for comparing modes of cultural transmission of artifact making. The four assemblages include three from Suyanggae (SYG) and one from Yongsandong (YS). @fig-plot-cor-four-assemblage shows that at this finer scale of resolution the picture is more complex. Phase 2 shows both highly correlated attributes, from SYG1_2, and relatively uncorrelated attributes, from SYG6_2. The two assemblages from Phase 3 show similarly highly correlated attributes, with the median right around our threshold value of `r threshold_value_cor`; however, the spread of correlations is high, suggesting a mixture of transmission biases.
@@ -538,6 +556,11 @@ theme(axis.title.y = element_text(size = 7.5)) +
   # draw a line to show our threshold value
   geom_hline(yintercept = threshold_value_cor, colour = "red") +
   theme_bw()
+  
+# ggsave(here::here("analysis/figures/fig-plot-cor-four-assemblage.png"),
+#        width = 4,
+#        height = 3,
+#        units = "in")
 
 ```
 
@@ -581,6 +604,11 @@ theme(axis.title.y = element_text(size = 4)) +
   geom_hline(yintercept = threshold_value_cor, colour = "red") +
   scale_x_discrete(guide = guide_axis(n.dodge = 2))+
   theme_bw()
+  
+# ggsave(here::here("analysis/figures/fig-corr-raw-ass.png"),
+#        width = 4,
+#        height = 3,
+#        units = "in")
 ```
 
 ### Coefficient of variation
@@ -733,6 +761,11 @@ ggplot(cv_data_sharma_named,
   geom_hline(yintercept = threshold_value, colour = "red") +
   theme_bw()
 
+# ggsave(here::here("analysis/figures/fig-plot-cv-all-attributes.png"),
+#        width = 4.3,
+#        height = 3,
+#        units = "in")
+
 ```
 
 In @fig-plot-cv-over-time, CV values for stemmed points are grouped into three chronological phases to analyze temporal patterns in cultural transmission. We excluded stemmed points from Phase 1 due to the limited number of artifacts dating to this time. @fig-plot-cv-over-time shows that the temporal trend in CV values of artifact attributes is complicated. Half of the attributes are below our threshold value of `r threshold_value`, and half are above for both phases. Only body length (BL) crosses the threshold value, changing from \<`r threshold_value` to \>`r threshold_value` over time, suggesting a shift from indirect bias to guided variation. For those attributes where the CV is \<`r threshold_value`, the trend is decreasing CV values from Phase 2 to Phase 3 for maximum width (MW) and tang width (TW), indicating increasing influence of indirect bias for these attributes. For stem length (SL), stem width (SW) and tang length (TL), CV values remain above `r threshold_value`, and show a slight trend to increase over time, suggesting increased influence of guided variation for these stem and tang attributes.
@@ -778,6 +811,13 @@ cv_by_stage_df %>%
   geom_hline(yintercept = threshold_value, colour = "red") +
   facet_wrap( ~ variable, scales = "free_y") +
   theme_bw()
+
+# ggsave(here::here("analysis/figures/fig-plot-cv-over-time.png"),
+#        width = 4.3,
+#        height = 3,
+#        units = "in")
+
+
 ```
 
 We further analyzed temporal change by looking at specific assemblages in each chronological phase. Following previous studies [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @mesoudi2008cultural; @garvey2018current], we focused on CV values for body length (BL), maximum length (ML), mid width (MW), and tang width (TW) for assemblages that have five or more stemmed points. @fig-plot-cv-four-assemblage shows that CV values for the four assemblages are mostly slightly below `r threshold_value`, with no temporal trend apparent between Phase 2 and Phase 3. Overall we see only subtle changes in CV values from Phase 2 to Phase 3 in @fig-plot-cv-four-assemblage. Among the assemblages, SYG1_2 has higher CV values as well as the widest ranges of confidence intervals. This is unexpected because SYG1_2 has a strong correlation between attributes (@fig-plot-cor-four-assemblage). Perhaps it could be related to its small sample size, relative to the other assemblages compared here. The larger assemblages in @fig-plot-cv-four-assemblage indicate guided variation, while the smaller assemblages that dominate @fig-plot-cv-over-time suggest indirect bias. Perhaps smaller assemblages represented a social context of higher fidelity copying because the cost of failure was greater due to low social insurance because of low population network sizes and densities [@fitzhugh2011modeling]. Another interpretation is that these results suggest that the complex temporal trends in @fig-plot-cv-over-time might be best interpreted as noise in an overall signal of guided variation, rather than substantial changes in the type of bias dominating cultural transmission.
@@ -825,6 +865,13 @@ cv_by_site_df_label_more_than_5 %>%
   facet_wrap( ~ label, scales = "free_y") +
   coord_cartesian(ylim = c(15,60)) +
   theme_bw()
+
+# ggsave(here::here("analysis/figures/fig-plot-cv-four-assemblage.png"),
+#        width = 4,
+#        height = 3,
+#        units = "in")
+
+
 
 ```
 
@@ -885,6 +932,14 @@ cv_plot_raw_materials_label %>%
   facet_wrap( ~ label, scales = "free_y") +
   coord_cartesian(ylim = c(0,250)) +
   theme_bw() 
+
+
+
+# ggsave(here::here("analysis/figures/fig-plot-cv-by-raw-material.png"),
+#        width = 4.3,
+#        height = 3,
+#        units = "in")
+
 ```
 
 ## Discussion
