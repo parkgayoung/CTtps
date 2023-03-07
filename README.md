@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# CTtps
+# Cultural Transmission and the Social Contexts of Technological Transitions during the Late Paleolithic of Korea
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/parkgayoung/CTtps/actions/workflows/render-in-docker.yaml/badge.svg)](https://github.com/parkgayoung/CTtps/actions/workflows/render-in-docker.yaml)
@@ -9,24 +9,31 @@
 Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/parkgayoung/CTtps/master?urlpath=rstudio)
 <!-- badges: end -->
 
-This repository contains the data and code for our paper:
+This repository contains the data and code for our paper. Our pre-print is online here:
 
-> Authors, (YYYY). *Title of your paper goes here*. Name of journal/book
-> <https://doi.org/xxx/xxx>
+> Park, G., B. Marwick, (2023). *Cultural Transmission and the Social Contexts of Technological Transitions during the Late Paleolithic of Korea*. 
+> Accessed 29 Aug 2022. Online at
+> <https://doi.org/10.17605/osf.io/eb8mx>
 
-Our pre-print is online here:
-
-> Authors, (YYYY). *Title of your paper goes here*. Name of
-> journal/book, Accessed 29 Aug 2022. Online at
-> <https://doi.org/xxx/xxx>
 
 ### How to cite
 
 Please cite this compendium as:
 
-> Authors, (2022). *Compendium of R code and data for Title of your
-> paper goes here*. Accessed 29 Aug 2022. Online at
-> <https://doi.org/xxx/xxx>
+> Park, G., B. Marwick, (2023). *Cultural Transmission and the Social Contexts of Technological Transitions during the Late Paleolithic of Korea*. 
+> Accessed 29 Aug 2022. Online at
+> <https://doi.org/10.17605/osf.io/eb8mx>
+
+## Contents
+
+The most important parts of the compendium, for most users, are:
+
+-   [:file\_folder: analysis/data](/analysis/data): Data used in the
+    analysis.
+-   [:file\_folder: analysis/figures](/analysis/figures): Plots and
+    other illustrations.
+-   [:file\_folder: analysis/paper](/analysis/paper): Quarto markdown
+    document contains our narrative text and codes for figures. 
 
 ### How to download or install
 
