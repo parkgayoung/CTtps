@@ -11,7 +11,7 @@ Binder](http://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/parkgayo
 
 This repository contains the data and code for our paper. Our pre-print is online here:
 
-> Park, G. and B. Marwick, (2023). *Cultural Transmission and the Social Contexts of Technological Transitions during the Late Paleolithic of Korea*. 
+> Park, G. and Marwick, B., (2023). *Cultural Transmission and the Social Contexts of Technological Transitions during the Late Paleolithic of Korea*. 
 > Accessed 29 Aug 2022. Online at
 > <https://doi.org/10.17605/osf.io/eb8mx>
 
@@ -20,7 +20,7 @@ This repository contains the data and code for our paper. Our pre-print is onlin
 
 Please cite this compendium as:
 
-> Park, G. and B. Marwick, (2023). *Cultural Transmission and the Social Contexts of Technological Transitions during the Late Paleolithic of Korea*. 
+> Park, G. and Marwick, B., (2023). *Cultural Transmission and the Social Contexts of Technological Transitions during the Late Paleolithic of Korea*. 
 > Accessed 29 Aug 2022. Online at
 > <https://doi.org/10.17605/osf.io/eb8mx>
 
