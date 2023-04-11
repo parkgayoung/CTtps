@@ -877,7 +877,7 @@ cv_by_site_df_label_more_than_5 %>%
 
 ### Variation Between Raw Materials
 
-We examined the relationship between CV values and raw materials to test the hypothesis that the shape variability of stemmed points was dependent on raw materials. We excluded raw materials that were used for less than three points. @fig-plot-cv-by-raw-material shows that quartzite, the raw material for stemmed points at Sachang, has the highest CV values, and also has wide conference intervals. Other raw materials are generally low, right around our threshold value, and stable in variation across the attributes.
+We examined the relationship between CV values and raw materials to test the hypothesis that the shape variability of stemmed points was dependent on raw materials. We excluded raw materials that were used for less than three points. @fig-plot-cv-by-raw-material shows that quartzite, the raw material for stemmed points at Sachang, has the highest CV values, and also has wide confidence intervals. Other raw materials are generally low, right around our threshold value, and stable in variation across the attributes.
 
 ```{r}
 #| label: fig-plot-cv-by-raw-material
