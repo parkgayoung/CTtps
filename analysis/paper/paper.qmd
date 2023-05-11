@@ -74,7 +74,7 @@ To contextualize this further, on one end of the spectrum we have socially isola
 
 On the other end of the spectrum, we have socially connected groups that occupied places close to other groups or had regular contact with them. Relatively high degrees of social connectivity provide frequent opportunities for observing others and acquiring information. Individuals or groups learned the technology of stemmed points by copying a model from another individual or group. In this scenario, it is likely that the model, or ideal, stemmed point has been highly successful and frequently chosen, and learners copy all information about the point design as a package. This implies a small number of locations, or a single point (perhaps from a source external to the Korean peninsula, cf. Bae's migration model), where stemmed points first appeared and then spread from. In this social context, indirect bias is the dominant influence on the transmission of lithic technology. If indirect bias was prominent in the Korean Paleolithic, we expect that stemmed points would be more standardized, attributes on the stemmed points would be more correlated, and assemblages from multiple sites would exhibit less variance between and within them.
 
-## Materials and methods {.unnumbered}
+## Methods {.unnumbered}
 
 ```{r}
 #| label: summary-of-data
@@ -289,7 +289,7 @@ here::here("analysis/data/raw_data/Korean-paleolithic-chronology.csv") %>%
 
 \newpage
 
-Panel A of @fig-raw-materials-by-phase summarizes the amount of stemmed points in each chronological phase, and the distribution of raw materials across the phases. We exclude Phase 1 from our analyses below because we consider the sample size too small to compute reliable correlations and CVs. Shale is the dominant raw material in both Phase 2 and 3. In Phase 3 there is an increase in the proportion of porphyry, driven largely by finds from Yongsangdong, and other raw materials. Panel B of @fig-raw-materials-by-phase shows the count of stemmed points by raw material type in assemblages with more than five stemmed points. Much of the raw material diversity comes from isolated finds, with those assemblages containing more than five points, showing high homogeneity in raw materials.
+Panel A of @fig-raw-materials-by-phase summarizes the amount of stemmed points in each chronological phase, and the distribution of raw materials across the phases. We exclude Phase 1 from our analyses below because we consider the sample size too small to compute reliable correlations and CVs. Shale is the dominant raw material in both Phase 2 and 3. In Phase 3 there is an increase in the proportion of porphyry, driven largely by findings from Yongsangdong, and other raw materials. Panel B of @fig-raw-materials-by-phase shows the count of stemmed points by raw material type in assemblages with more than five stemmed points. Much of the raw material diversity comes from isolated finds, with those assemblages containing more than five points, showing high homogeneity in raw materials.
 
 ```{r}
 #| label: fig-raw-materials-by-phase
@@ -351,7 +351,7 @@ plot_grid(p1, p2,
           labels = c("A", "B"))
 
 # ggsave(here::here("analysis/figures/fig-raw-materials-by-phase.png"),
-#        width = 4,
+#        width = 5,
 #        height = 3,
 #        units = "in")
 
@@ -359,7 +359,7 @@ plot_grid(p1, p2,
 
 \newpage
 
-### Methods
+### Morphometric Analysis
 
 Following the metric attributes used in previous studies of cultural transmission and projectile points, i.e. maximum length and width [@bettinger1997evolutionary; @bettinger1999point; @eerkens2008cultural; @garvey2018current], we examined variations in shape and the relationship between each attribute using morphological attributes on stemmed points (@fig-labelled-schematic). We obtained our morphological attribute data from landmark analysis of digitized images of stemmed points. Compared to traditional caliper measurements, morphometric data yield easily interpretable numerical and visual outcomes [@buchanan2010geometric; @thulman2012discriminating; @cardillo2016environment; @petvrik2018shape; @macleod2018quantitative; @okumura2019archaeology; @suarez2019life]. We did not include weight and thickness because these measurements were not available to us. For the landmark analysis, we placed 11 landmarks on the outline of each stemmed point and calculated distances between landmark coordinate pairs to derive attributes for statistical analysis. The landmarks we recorded are described in @tbl-landmark-abbreviations and shown in @fig-labelled-schematic. Using the point tool in ImageJ [@schneider2012nih], we captured the landmarks from images of the artifacts, and exported them as XY coordinate data for further analysis. We consider that the stone artifacts were generally modified very little during their use life by reuse and resharpening. While retouching can alter artefact shapes independent of transmission biases (i.e. the Frison Effect) [@dibble1995middle; @jelinek1976form; @frison1968functional], retouch is very rare on the margins and tip of stemmed points, so we consider that the majority of stemmed points used in our sample have retained their original shape.
 
@@ -414,7 +414,7 @@ Panel D of @fig-corr-analysis shows that the correlations between attributes bec
 
 ```{r}
 #| label: fig-corr-analysis
-#| fig-cap: "Correlation analysis by chronological phases in the Korean Late Paleolithic period. A. Correlation coefficient between attributes for all periods. B. Correlation coefficient between attributes for Phase 1. C. Correlation coefficient between attributes for Phase 2. The individual point represents correlation between two attributes. Some points are invisible due to their weak relationship. D. Correlation coefficient for the second and third chronological phases. The grey points represent correlation between two attributes."
+#| fig-cap: "Correlation analysis by chronological phases in the Korean Late Paleolithic period. A. Correlation coefficient between attributes for all periods. B. Correlation coefficient between attributes for Phase 1. C. Correlation coefficient between attributes for Phase 2. The individual point represents correlation between two attributes. Some points are invisible due to their weak relationship. D. Correlation coefficient for the second and third chronological phases. The gray points represent correlation between two attributes."
 #| fig-width: 7
 #| fig-height: 5
 
@@ -517,7 +517,7 @@ One limitation of this aggregation of stemmed points into chronological phases i
 
 ```{r}
 #| label: fig-plot-cor-four-assemblage
-#| fig-cap: Correlation for assemblages with more than 5 stemmed points. Among the four assemblages, SYG1_2 and SYG6_2 are from Phase 2 of the Korean Late Paleolithic chronology and SYG1_3 and YS_3 are from Phase 3. The grey points represent correlation between two attributes.
+#| fig-cap: Correlation for assemblages with more than 5 stemmed points. Among the four assemblages, SYG1_2 and SYG6_2 are from Phase 2 of the Korean Late Paleolithic chronology and SYG1_3 and YS_3 are from Phase 3. The gray points represent correlation between two attributes.
 #| fig-width:   4.5
 #| fig-height:  3.5
 
@@ -570,7 +570,7 @@ To examine the impact of raw materials on the shape of stemmed points, we comput
 
 ```{r}
 #| label: fig-corr-raw-ass
-#| fig-cap: Correlation for raw materials that were used for making more than one stemmed points. The grey points represent correlation between two attributes.
+#| fig-cap: Correlation for raw materials that were used for making more than one stemmed points. The gray points represent correlation between two attributes.
 
 #| fig-width:7
 #| fig-height:5
@@ -931,7 +931,8 @@ cv_plot_raw_materials_label %>%
   ylab("Coefficient of Variation") +
   facet_wrap( ~ label, scales = "free_y") +
   coord_cartesian(ylim = c(0,250)) +
-  theme_bw() 
+  theme_bw()+
+  theme(strip.text.x = element_text(size = 5))
 
 
 
