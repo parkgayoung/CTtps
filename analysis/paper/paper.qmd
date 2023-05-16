@@ -932,7 +932,8 @@ cv_plot_raw_materials_label %>%
   facet_wrap( ~ label, scales = "free_y") +
   coord_cartesian(ylim = c(0,250)) +
   theme_bw()+
-  theme(strip.text.x = element_text(size = 5))
+  theme(strip.text.x = element_text(size = 5),
+        axis.text.x = element_text(size = 5))
 
 
 
