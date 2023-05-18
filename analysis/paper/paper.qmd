@@ -340,7 +340,8 @@ p2 <-
   labs(fill = "Raw material",
        x = "Site") +
  theme(legend.position = "none",
-       axis.text.x = element_text(size = 5)  ) +
+       axis.text.x = element_text(size = 5),
+        axis.text.y = element_text(size = 5)) +
   scale_x_discrete(guide = guide_axis(n.dodge= 2.3)) +
    colScale
 
@@ -445,7 +446,7 @@ df_sitename_corr_p2 <-
 
 p2_corr_plot <- rplot(df_sitename_corr_p2, 
                       print_cor = TRUE,
-                      legend = FALSE)
+                      legend = FALSE) 
   
 df_sitename_corr_p2_long <- 
   df_sitename_corr_p2 %>% 
@@ -488,7 +489,7 @@ list(`phase 2` = df_sitename_corr_p2_long,
                                alpha = 0.3) +
   theme_minimal() +
   labs(y = "Correlation coefficient") +
-theme(axis.title.y = element_text(size = 13)) +
+theme(axis.title.y = element_text(size = 11)) +
   # draw a line to show our threshold value
   geom_hline(yintercept = threshold_value_cor, colour = "red") +
   theme_bw()
@@ -599,7 +600,8 @@ df_sitename_corr_raw_material <-
   theme_minimal() +
   labs(y = "Correlation coefficient",
        x = "Raw material") +
-theme(axis.title.y = element_text(size = 4)) +
+theme(axis.title.y = element_text(size = 4),
+      axis.title.x = element_text(size = 2.7)) +
   # draw a line to show our threshold value
   geom_hline(yintercept = threshold_value_cor, colour = "red") +
   scale_x_discrete(guide = guide_axis(n.dodge = 2))+
@@ -933,7 +935,7 @@ cv_plot_raw_materials_label %>%
   coord_cartesian(ylim = c(0,250)) +
   theme_bw()+
   theme(strip.text.x = element_text(size = 5),
-        axis.text.x = element_text(size = 4))
+        axis.text.x = element_text(size = 4.5))
 
 
 
@@ -1014,7 +1016,8 @@ A key difference between our work and that of Bettinger and Eerkens and Garvey, 
 
 # Acknowledgements
 
-We would like to thank Yongjoon Chang, Seonsook Park, Jaeyoung Kim, Soonmi Lee, Taeyoung Kim, and the staff in Korean national museums, and Sangtaek Lim, Chuntaek Seong, Sangmin Cha, Sooa Kim, Gigil Lee, Myeongjin Choi, and Chanho Park in local archaeological institutions and university museums in Korea for permitting access to their collection used in this study and assisting our trip to Korea. We thank the Quaternary Research Center, Department of Anthropology and Center for Statistics and the Social Sciences at the University of Washington for supporting our research trip. We also appreciate Ben Fitzhugh and Peter Lape for their insightful comments that have greatly improved this manuscript.
+We thank Yongjoon Chang, Seonsook Park, Jaeyoung Kim, Soonmi Lee, Taeyoung Kim, and the staff in Korean national museums, and Sangtaek Lim, Chuntaek Seong, Sangmin Cha, Sooa Kim, Gigil Lee, Myeongjin Choi, and Chanho Park from local archaeological institutions and university museums in Korea. Their assistance and support in accessing the data used in this paper and accommodating our research visits to their collections are greatly appreciated. We would also like to acknowledge the financial support provided by the Quaternary Research Center and the travel grants from the Department of Anthropology and the Center for Statistics and the Social Sciences at the University of Washington. Furthermore, we express our sincere thanks to Ben Fitzhugh and Peter Lape for their insightful feedback on an early draft, which significantly contributed to the improvement of our work.
+
 
 # CRediT authorship contribution statement
 
