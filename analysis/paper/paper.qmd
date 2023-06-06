@@ -571,7 +571,7 @@ To examine the impact of raw materials on the shape of stemmed points, we comput
 
 ```{r}
 #| label: fig-corr-raw-ass
-#| fig-cap: Correlation for raw materials that were used for making more than one stemmed points. The gray points represent correlation between two attributes.
+#| fig-cap: Correlation for raw materials that were used for making more than three stemmed points. The gray points represent correlation between two attributes.
 
 #| fig-width:7
 #| fig-height:5
